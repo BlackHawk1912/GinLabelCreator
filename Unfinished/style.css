@@ -1,0 +1,458 @@
+:root {
+    --padding: 40px;
+    --decoration-level: 5;
+    --main-color: #000;
+    --background-color: #fff;
+    --border-width: 2px;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: #f0f0f0;
+}
+
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.controls {
+    flex: 1;
+    min-width: 400px;
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.preview-container {
+    flex: 1;
+    min-width: 400px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.label-preview {
+    margin-bottom: 20px;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--background-color);
+    min-width: 300px;
+    max-width: 90%;
+    padding-top: 20px;
+}
+
+.label {
+    position: relative;
+    background-color: var(--background-color);
+    color: var(--main-color);
+    border: var(--border-width) solid var(--main-color);
+    padding: calc(var(--padding) * 1px);
+    margin: 0 auto;
+    text-align: center;
+    width: fit-content;
+    height: fit-content;
+    box-sizing: content-box;
+    overflow: hidden;
+}
+
+.label-content {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 10px;
+    z-index: 1;
+}
+
+h1 {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.control-group {
+    margin-bottom: 15px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 15px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+input, textarea {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+textarea {
+    min-height: 60px;
+    resize: vertical;
+}
+
+button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 16px;
+    transition: background-color 0.3s;
+    margin-top: 10px;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+.slider-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.slider-container label {
+    flex: 1;
+    margin-bottom: 0;
+}
+
+.slider-container input {
+    flex: 2;
+    margin-bottom: 0;
+}
+
+.slider-value {
+    width: 40px;
+    text-align: center;
+    margin-left: 10px;
+}
+
+.brand-name {
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.gin-name {
+    margin-bottom: 15px;
+}
+
+.ingredients, .alcohol-content, .amount {
+    margin-bottom: 10px;
+}
+
+/* Decorative elements based on decoration level */
+.decoration {
+    position: absolute;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.inner-border {
+    position: absolute;
+    top: calc(var(--padding) * 0.5px);
+    left: calc(var(--padding) * 0.5px);
+    right: calc(var(--padding) * 0.5px);
+    bottom: calc(var(--padding) * 0.5px);
+    border: 1px solid var(--main-color);
+    opacity: 0;
+}
+
+.corner {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    opacity: 0;
+}
+
+.corner-tl {
+    top: calc(var(--padding) * 0.7px);
+    left: calc(var(--padding) * 0.7px);
+    border-top: 2px solid var(--main-color);
+    border-left: 2px solid var(--main-color);
+}
+
+.corner-tr {
+    top: calc(var(--padding) * 0.7px);
+    right: calc(var(--padding) * 0.7px);
+    border-top: 2px solid var(--main-color);
+    border-right: 2px solid var(--main-color);
+}
+
+.corner-bl {
+    bottom: calc(var(--padding) * 0.7px);
+    left: calc(var(--padding) * 0.7px);
+    border-bottom: 2px solid var(--main-color);
+    border-left: 2px solid var(--main-color);
+}
+
+.corner-br {
+    bottom: calc(var(--padding) * 0.7px);
+    right: calc(var(--padding) * 0.7px);
+    border-bottom: 2px solid var(--main-color);
+    border-right: 2px solid var(--main-color);
+}
+
+.divider {
+    height: 2px;
+    background-color: var(--main-color);
+    margin: 10px 0;
+    position: relative;
+    opacity: 0;
+}
+
+.divider::before, .divider::after {
+    content: '';
+    position: absolute;
+    height: 6px;
+    width: 6px;
+    background-color: var(--main-color);
+    border-radius: 50%;
+    top: -2px;
+}
+
+.divider::before {
+    left: 0;
+}
+
+.divider::after {
+    right: 0;
+}
+
+.ornament {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    font-size: 20px;
+    opacity: 0;
+}
+
+.ornament svg {
+    width: 100%;
+    height: 100%;
+    color: var(--main-color);
+}
+
+.ornament-tl {
+    top: calc(var(--padding) * 0.3px);
+    left: calc(var(--padding) * 0.3px);
+}
+
+.ornament-tr {
+    top: calc(var(--padding) * 0.3px);
+    right: calc(var(--padding) * 0.3px);
+}
+
+.ornament-bl {
+    bottom: calc(var(--padding) * 0.3px);
+    left: calc(var(--padding) * 0.3px);
+}
+
+.ornament-br {
+    bottom: calc(var(--padding) * 0.3px);
+    right: calc(var(--padding) * 0.3px);
+}
+
+.squiggle-top, .squiggle-bottom {
+    position: absolute;
+    left: 0;
+    right: 0;
+    text-align: center;
+    opacity: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.squiggle-top svg, .squiggle-bottom svg, .flourish svg {
+    color: var(--main-color);
+}
+
+.squiggle-top {
+    top: calc(var(--padding) * 0.25px);
+}
+
+.squiggle-bottom {
+    bottom: calc(var(--padding) * 0.25px);
+}
+
+.flourish {
+    text-align: center;
+    margin: 8px 0;
+    opacity: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.double-border {
+    position: absolute;
+    top: calc(var(--padding) * 0.25px);
+    left: calc(var(--padding) * 0.25px);
+    right: calc(var(--padding) * 0.25px);
+    bottom: calc(var(--padding) * 0.25px);
+    border: 1px dashed var(--main-color);
+    opacity: 0;
+}
+
+.triple-border {
+    position: absolute;
+    top: calc(var(--padding) * 0.12px);
+    left: calc(var(--padding) * 0.12px);
+    right: calc(var(--padding) * 0.12px);
+    bottom: calc(var(--padding) * 0.12px);
+    border: 1px dotted var(--main-color);
+    opacity: 0;
+}
+
+.toggle-switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+}
+
+.toggle-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+    border-radius: 34px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+}
+
+input:checked + .slider {
+    background-color: #2196F3;
+}
+
+input:checked + .slider:before {
+    transform: translateX(26px);
+}
+
+.toggle-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.toggle-container label {
+    margin-right: 10px;
+    margin-bottom: 0;
+}
+
+/* Font families for different decoration levels */
+.dec-level-0 .brand-name { font-family: 'Arial', sans-serif; }
+.dec-level-0 .gin-name { font-family: 'Arial', sans-serif; }
+.dec-level-0 .ingredients { font-family: 'Arial', sans-serif; }
+.dec-level-0 .alcohol-content { font-family: 'Arial', sans-serif; }
+.dec-level-0 .amount { font-family: 'Arial', sans-serif; }
+
+.dec-level-1 .brand-name { font-family: 'Playfair Display', serif; }
+.dec-level-1 .gin-name { font-family: 'Playfair Display', serif; }
+.dec-level-1 .ingredients { font-family: 'Playfair Display', serif; }
+.dec-level-1 .alcohol-content { font-family: 'Playfair Display', serif; }
+.dec-level-1 .amount { font-family: 'Playfair Display', serif; }
+
+.dec-level-2 .brand-name { font-family: 'IM Fell English SC', serif; }
+.dec-level-2 .gin-name { font-family: 'IM Fell DW Pica', serif; }
+.dec-level-2 .ingredients { font-family: 'IM Fell DW Pica', serif; }
+.dec-level-2 .alcohol-content { font-family: 'IM Fell DW Pica', serif; }
+.dec-level-2 .amount { font-family: 'IM Fell DW Pica', serif; }
+
+.dec-level-3 .brand-name { font-family: 'Cinzel Decorative', cursive; }
+.dec-level-3 .gin-name { font-family: 'Playfair Display', serif; }
+.dec-level-3 .ingredients { font-family: 'Playfair Display', serif; }
+.dec-level-3 .alcohol-content { font-family: 'Playfair Display', serif; }
+.dec-level-3 .amount { font-family: 'Playfair Display', serif; }
+
+.dec-level-4 .brand-name { font-family: 'UnifrakturMaguntia', cursive; }
+.dec-level-4 .gin-name { font-family: 'Cinzel Decorative', cursive; }
+.dec-level-4 .ingredients { font-family: 'IM Fell DW Pica', serif; }
+.dec-level-4 .alcohol-content { font-family: 'IM Fell DW Pica', serif; }
+.dec-level-4 .amount { font-family: 'IM Fell DW Pica', serif; }
+
+.dec-level-5 .brand-name { font-family: 'Berkshire Swash', cursive; }
+.dec-level-5 .gin-name { font-family: 'Cinzel Decorative', cursive; }
+.dec-level-5 .ingredients { font-family: 'Playfair Display', serif; }
+.dec-level-5 .alcohol-content { font-family: 'Playfair Display', serif; }
+.dec-level-5 .amount { font-family: 'Playfair Display', serif; }
+
+.dec-level-6 .brand-name { font-family: 'Rye', cursive; }
+.dec-level-6 .gin-name { font-family: 'Pirata One', cursive; }
+.dec-level-6 .ingredients { font-family: 'IM Fell DW Pica', serif; }
+.dec-level-6 .alcohol-content { font-family: 'IM Fell DW Pica', serif; }
+.dec-level-6 .amount { font-family: 'IM Fell DW Pica', serif; }
+
+.dec-level-7 .brand-name { font-family: 'UnifrakturMaguntia', cursive; }
+.dec-level-7 .gin-name { font-family: 'Berkshire Swash', cursive; }
+.dec-level-7 .ingredients { font-family: 'Playfair Display', serif; font-style: italic; }
+.dec-level-7 .alcohol-content { font-family: 'IM Fell English SC', serif; }
+.dec-level-7 .amount { font-family: 'IM Fell English SC', serif; }
+
+.dec-level-8 .brand-name { font-family: 'Ruslan Display', cursive; }
+.dec-level-8 .gin-name { font-family: 'Rye', cursive; }
+.dec-level-8 .ingredients { font-family: 'IM Fell DW Pica', serif; font-style: italic; }
+.dec-level-8 .alcohol-content { font-family: 'Cinzel Decorative', cursive; }
+.dec-level-8 .amount { font-family: 'Cinzel Decorative', cursive; }
+
+.dec-level-9 .brand-name { font-family: 'UnifrakturMaguntia', cursive; }
+.dec-level-9 .gin-name { font-family: 'Pirata One', cursive; }
+.dec-level-9 .ingredients { font-family: 'Playfair Display', serif; font-style: italic; }
+.dec-level-9 .alcohol-content { font-family: 'IM Fell English SC', serif; }
+.dec-level-9 .amount { font-family: 'IM Fell English SC', serif; }
+
+.dec-level-10 .brand-name { font-family: 'UnifrakturMaguntia', cursive; }
+.dec-level-10 .gin-name { font-family: 'Berkshire Swash', cursive; }
+.dec-level-10 .ingredients { font-family: 'IM Fell DW Pica', serif; font-style: italic; }
+.dec-level-10 .alcohol-content { font-family: 'Cinzel Decorative', cursive; }
+.dec-level-10 .amount { font-family: 'Tangerine', cursive; font-weight: 700; }

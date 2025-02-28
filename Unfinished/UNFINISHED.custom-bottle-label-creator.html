@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Custom Gin Bottle Label Creator</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=UnifrakturMaguntia&family=Tangerine:wght@400;700&family=IM+Fell+English+SC&family=IM+Fell+DW+Pica:ital@0;1&family=Pirata+One&family=Berkshire+Swash&family=Rye&family=Ruslan+Display&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+</head>
+<body>
+    <h1>Custom Gin Bottle Label Creator</h1>
+    
+    <div class="container">
+        <div class="controls">
+            <div class="control-group">
+                <label for="brandName">Brand / Gin Type:</label>
+                <input type="text" id="brandName" value="ARTISANAL LONDON DRY">
+                <div class="slider-container">
+                    <label for="brandNameSize">Font Size:</label>
+                    <input type="range" id="brandNameSize" min="0" max="72" value="24">
+                    <span id="brandNameSizeValue" class="slider-value">24px</span>
+                </div>
+            </div>
+            
+            <div class="control-group">
+                <label for="ginName">Gin Name:</label>
+                <input type="text" id="ginName" value="JUNIPER BOTANIST">
+                <div class="slider-container">
+                    <label for="ginNameSize">Font Size:</label>
+                    <input type="range" id="ginNameSize" min="0" max="72" value="36">
+                    <span id="ginNameSizeValue" class="slider-value">36px</span>
+                </div>
+            </div>
+            
+            <div class="control-group">
+                <label for="ingredients">Ingredients:</label>
+                <textarea id="ingredients">Handcrafted with juniper berries, coriander seed, angelica root, orris root, licorice, cassia bark, and a hint of citrus</textarea>
+                <div class="slider-container">
+                    <label for="ingredientsSize">Font Size:</label>
+                    <input type="range" id="ingredientsSize" min="0" max="72" value="12">
+                    <span id="ingredientsSizeValue" class="slider-value">12px</span>
+                </div>
+            </div>
+            
+            <div class="control-group">
+                <label for="alcoholContent">Alcohol Content:</label>
+                <input type="text" id="alcoholContent" value="43.5% ABV">
+                <div class="slider-container">
+                    <label for="alcoholContentSize">Font Size:</label>
+                    <input type="range" id="alcoholContentSize" min="0" max="72" value="14">
+                    <span id="alcoholContentSizeValue" class="slider-value">14px</span>
+                </div>
+            </div>
+            
+            <div class="control-group">
+                <label for="amount">Amount:</label>
+                <input type="text" id="amount" value="750ml / 25.4 fl oz">
+                <div class="slider-container">
+                    <label for="amountSize">Font Size:</label>
+                    <input type="range" id="amountSize" min="0" max="72" value="14">
+                    <span id="amountSizeValue" class="slider-value">14px</span>
+                </div>
+            </div>
+            
+            <div class="control-group">
+                <div class="slider-container">
+                    <label for="decorationLevel">Decoration Level:</label>
+                    <input type="range" id="decorationLevel" min="0" max="10" value="5">
+                    <span id="decorationLevelValue" class="slider-value">5</span>
+                </div>
+            </div>
+            
+            <div class="control-group">
+                <div class="slider-container">
+                    <label for="padding">Padding (px):</label>
+                    <input type="range" id="padding" min="10" max="100" value="40">
+                    <span id="paddingValue" class="slider-value">40px</span>
+                </div>
+            </div>
+            
+            <div class="control-group">
+                <div class="toggle-container">
+                    <label for="blackAndWhite">Black & White Only:</label>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="blackAndWhite" checked>
+                        <span class="slider"></span>
+                    </label>
+                </div>
+            </div>
+            
+            <button id="saveButton">Download Label as PNG</button>
+        </div>
+        
+        <div class="preview-container">
+            <div class="label-preview">
+                <div class="label dec-level-5">
+                    <div class="inner-border decoration"></div>
+                    <div class="double-border decoration"></div>
+                    <div class="triple-border decoration"></div>
+                    
+                    <div class="corner corner-tl decoration"></div>
+                    <div class="corner corner-tr decoration"></div>
+                    <div class="corner corner-bl decoration"></div>
+                    <div class="corner corner-br decoration"></div>
+                    
+                    <div class="ornament ornament-tl decoration">
+                        <svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M10 1L12 8H19L13 12L15 19L10 15L5 19L7 12L1 8H8L10 1Z" stroke="currentColor" fill="none" />
+                        </svg>
+                    </div>
+                    <div class="ornament ornament-tr decoration">
+                        <svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M10 1L12 8H19L13 12L15 19L10 15L5 19L7 12L1 8H8L10 1Z" stroke="currentColor" fill="none" />
+                        </svg>
+                    </div>
+                    <div class="ornament ornament-bl decoration">
+                        <svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M10 1L12 8H19L13 12L15 19L10 15L5 19L7 12L1 8H8L10 1Z" stroke="currentColor" fill="none" />
+                        </svg>
+                    </div>
+                    <div class="ornament ornament-br decoration">
+                        <svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M10 1L12 8H19L13 12L15 19L10 15L5 19L7 12L1 8H8L10 1Z" stroke="currentColor" fill="none" />
+                        </svg>
+                    </div>
+                    
+                    <div class="squiggle-top decoration">
+                        <svg width="100" height="10" viewBox="0 0 100 10" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M0 5C10 0 15 10 25 5C35 0 40 10 50 5C60 0 65 10 75 5C85 0 90 10 100 5" stroke="currentColor" fill="none" />
+                        </svg>
+                    </div>
+                    <div class="squiggle-bottom decoration">
+                        <svg width="100" height="10" viewBox="0 0 100 10" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M0 5C10 0 15 10 25 5C35 0 40 10 50 5C60 0 65 10 75 5C85 0 90 10 100 5" stroke="currentColor" fill="none" />
+                        </svg>
+                    </div>
+                    
+                    <div class="label-content">
+                        <div class="brand-name"></div>
+                        <div class="flourish decoration">
+                            <svg width="100" height="20" viewBox="0 0 100 20" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M20 10H40M60 10H80M50 5L50 15" stroke="currentColor" stroke-width="1" />
+                                <circle cx="50" cy="10" r="3" stroke="currentColor" fill="none" />
+                            </svg>
+                        </div>
+                        <div class="gin-name">von SchnakenGin</div>
+                        <div class="divider decoration"></div>
+                        <div class="ingredients">Wacholder, Orangenschale, Ingwer, Kardamom, Zitronengras, Malvenblüte</div>
+                        <div class="flourish decoration">
+                            <svg width="100" height="20" viewBox="0 0 100 20" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M20 10H40M60 10H80M50 5L50 15" stroke="currentColor" stroke-width="1" />
+                                <circle cx="50" cy="10" r="3" stroke="currentColor" fill="none" />
+                            </svg>
+                        </div>
+                        <div class="alcohol-content">40%</div>
+                        <div class="amount">250ml</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Declare variables first
+            const textInputs = ['brandName','ginName','ingredients','alcoholContent','amount'];
+            const fontSizeSliders = ['brandNameSize','ginNameSize','ingredientsSize','alcoholContentSize','amountSize'];
+            const decorationLevelSlider = document.getElementById('decorationLevel');
+            const decorationLevelValue = document.getElementById('decorationLevelValue');
+            const blackAndWhiteToggle = document.getElementById('blackAndWhite');
+            const paddingSlider = document.getElementById('padding');
+            const paddingValue = document.getElementById('paddingValue');
+
+            function adjustLayout() {
+                // Stub to prevent errors
+            }
+
+            function idToClass(id) {
+                return id.replace(/([A-Z])/g, '-$1').toLowerCase();
+            }
+
+            function updateLabel() {
+                textInputs.forEach(id => {
+                    const inputEl = document.getElementById(id); // define inputEl
+                    const className = idToClass(id);
+                    const targetEl = document.querySelector(`.${className}`);
+                    if (!targetEl) return; // Handle missing DOM elements safely
+                    
+                    // Handle line breaks for textareas
+                    if (inputEl.tagName === 'TEXTAREA') {
+                        targetEl.innerHTML = inputEl.value.replace(/\n/g, '<br>');
+                    } else {
+                        targetEl.textContent = inputEl.value;
+                    }
+                    
+                    // Hide if empty
+                    if (!inputEl.value.trim()) {
+                        targetEl.style.display = 'none';
+                    } else {
+                        targetEl.style.display = 'block';
+                        
+                        // Update font size
+                        const fontSizeEl = document.getElementById(`${id}Size`);
+                        targetEl.style.fontSize = `${fontSizeEl.value}px`;
+                        
+                        // Adjust line height for better readability
+                        if (fontSizeEl.value > 20) {
+                            targetEl.style.lineHeight = '1.2';
+                        } else {
+                            targetEl.style.lineHeight = '1.5';
+                        }
+                    }
+                });
+                
+                // Adjust layout to prevent overflow
+                adjustLayout();
+            }
+
+            function updateDecorationLevel() {
+                const level = parseInt(decorationLevelSlider.value);
+                const label = document.querySelector('.label');
+                
+                // Update decoration class
+                label.className = label.className.replace(/dec-level-\d+/, `dec-level-${level}`);
+                
+                // Show/hide decorative elements based on level
+                const decorations = document.querySelectorAll('.decoration');
+                decorations.forEach((el, index) => {
+                    // Different elements appear at different levels
+                    let thresholdLevel;
+                    
+                    if (el.classList.contains('inner-border')) {
+                        thresholdLevel = 1;
+                    } else if (el.classList.contains('divider')) {
+                        thresholdLevel = 2;
+                    } else if (el.classList.contains('corner')) {
+                        thresholdLevel = 3;
+                    } else if (el.classList.contains('flourish')) {
+                        thresholdLevel = 4;
+                    } else if (el.classList.contains('ornament')) {
+                        thresholdLevel = 5;
+                    } else if (el.classList.contains('double-border')) {
+                        thresholdLevel = 6;
+                    } else if (el.classList.contains('squiggle-top') || el.classList.contains('squiggle-bottom')) {
+                        thresholdLevel = 7;
+                    } else if (el.classList.contains('triple-border')) {
+                        thresholdLevel = 8;
+                    }
+                    
+                    if (level >= thresholdLevel) {
+                        el.style.opacity = '1';
+                    } else {
+                        el.style.opacity = '0';
+                    }
+                });
+
+                // Update squiggle content based on level
+                const squiggleTop = document.querySelector('.squiggle-top');
+                const squiggleBottom = document.querySelector('.squiggle-bottom');
+                
+                if (level >= 7) {
+                    // Increase complexity with level
+                    if (level === 7) {
+                        squiggleTop.innerHTML = `
+                            <svg width="100" height="10" viewBox="0 0 100 10" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M0 5C10 0 15 10 25 5C35 0 40 10 50 5C60 0 65 10 75 5C85 0 90 10 100 5" stroke="currentColor" fill="none" />
+                            </svg>
+                        `;
+                        squiggleBottom.innerHTML = `
+                            <svg width="100" height="10" viewBox="0 0 100 10" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M0 5C10 0 15 10 25 5C35 0 40 10 50 5C60 0 65 10 75 5C85 0 90 10 100 5" stroke="currentColor" fill="none" />
+                            </svg>
+                        `;
+                    } else if (level === 8) {
+                        squiggleTop.innerHTML = `
+                            <svg width="120" height="10" viewBox="0 0 120 10" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M10 5L20 1L30 5L40 9L50 5L60 1L70 5L80 9L90 5L100 1L110 5" stroke="currentColor" fill="none" />
+                                <circle cx="10" cy="5" r="2" stroke="currentColor" fill="none" />
+                                <circle cx="50" cy="5" r="2" stroke="currentColor" fill="none" />
+                                <circle cx="90" cy="5" r="2" stroke="currentColor" fill="none" />
+                            </svg>
+                        `;
+                        squiggleBottom.innerHTML = `
+                            <svg width="120" height="10" viewBox="0 0 120 10" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M10 5L20 1L30 5L40 9L50 5L60 1L70 5L80 9L90 5L100 1L110 5" stroke="currentColor" fill="none" />
+                                <circle cx="10" cy="5" r="2" stroke="currentColor" fill="none" />
+                                <circle cx="50" cy="5" r="2" stroke="currentColor" fill="none" />
+                                <circle cx="90" cy="5" r="2" stroke="currentColor" fill="none" />
+                            </svg>
+                        `;
+                    } else if (level === 9) {
+                        squiggleTop.innerHTML = `
+                            <svg width="150" height="15" viewBox="0 0 150 15" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M0 7.5C15 2.5 20 12.5 35 7.5C50 2.5 55 12.5 70 7.5C85 2.5 90 12.5 105 7.5C120 2.5 125 12.5 140 7.5" stroke="currentColor" fill="none" />
+                                <path d="M25 7.5L35 2.5L45 7.5" stroke="currentColor" fill="none" />
+                                <path d="M95 7.5L105 2.5L115 7.5" stroke="currentColor" fill="none" />
+                                <circle cx="75" cy="7.5" r="3" stroke="currentColor" fill="none" />
+                            </svg>
+                        `;
+                        squiggleBottom.innerHTML = `
+                            <svg width="150" height="15" viewBox="0 0 150 15" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M0 7.5C15 2.5 20 12.5 35 7.5C50 2.5 55 12.5 70 7.5C85 2.5 90 12.5 105 7.5C120 2.5 125 12.5 140 7.5" stroke="currentColor" fill="none" />
+                                <path d="M25 7.5L35 2.5L45 7.5" stroke="currentColor" fill="none" />
+                                <path d="M95 7.5L105 2.5L115 7.5" stroke="currentColor" fill="none" />
+                                <circle cx="75" cy="7.5" r="3" stroke="currentColor" fill="none" />
+                            </svg>
+                        `;
+                    } else if (level === 10) {
+                        squiggleTop.innerHTML = `
+                            <svg width="180" height="20" viewBox="0 0 180 20" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M0 10C15 5 20 15 35 10C50 5 55 15 70 10C85 5 90 15 105 10C120 5 125 15 140 10C155 5 160 15 175 10" stroke="currentColor" fill="none" />
+                                <path d="M20 10L30 5L40 10" stroke="currentColor" fill="none" />
+                                <path d="M80 10L90 5L100 10" stroke="currentColor" fill="none" />
+                                <path d="M140 10L150 5L160 10" stroke="currentColor" fill="none" />
+                                <circle cx="60" cy="10" r="3" stroke="currentColor" fill="none" />
+                                <circle cx="120" cy="10" r="3" stroke="currentColor" fill="none" />
+                                <path d="M45 15L55 5" stroke="currentColor" fill="none" />
+                                <path d="M105 15L115 5" stroke="currentColor" fill="none" />
+                            </svg>
+                        `;
+                        squiggleBottom.innerHTML = `
+                            <svg width="180" height="20" viewBox="0 0 180 20" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M0 10C15 5 20 15 35 10C50 5 55 15 70 10C85 5 90 15 105 10C120 5 125 15 140 10C155 5 160 15 175 10" stroke="currentColor" fill="none" />
+                                <path d="M20 10L30 5L40 10" stroke="currentColor" fill="none" />
+                                <path d="M80 10L90 5L100 10" stroke="currentColor" fill="none" />
+                                <path d="M140 10L150 5L160 10" stroke="currentColor" fill="none" />
+                                <circle cx="60" cy="10" r="3" stroke="currentColor" fill="none" />
+                                <circle cx="120" cy="10" r="3" stroke="currentColor" fill="none" />
+                                <path d="M45 15L55 5" stroke="currentColor" fill="none" />
+                                <path d="M105 15L115 5" stroke="currentColor" fill="none" />
+                            </svg>
+                        `;
+                    }
+                }
+            }
+
+            function saveAsPNG() {
+                html2canvas(document.querySelector('.label-preview')).then(canvas => {
+                    const link = document.createElement('a');
+                    link.download = 'label.png';
+                    link.href = canvas.toDataURL();
+                    link.click();
+                });
+            }
+
+            // Set up listeners
+            textInputs.forEach(id => {
+                document.getElementById(id).addEventListener('input', updateLabel);
+            });
+
+            fontSizeSliders.forEach(id => {
+                const slider = document.getElementById(id);
+                slider.addEventListener('input', updateLabel);
+            });
+
+            decorationLevelSlider.addEventListener('input', () => {
+                decorationLevelValue.textContent = decorationLevelSlider.value;
+                document.documentElement.style.setProperty('--decoration-level', decorationLevelSlider.value);
+                updateDecorationLevel();
+            });
+
+            paddingSlider.addEventListener('input', () => {
+                paddingValue.textContent = `${paddingSlider.value}px`;
+                document.documentElement.style.setProperty('--padding', paddingSlider.value);
+                updateLabel();
+            });
+
+            blackAndWhiteToggle.addEventListener('change', () => {
+                if (blackAndWhiteToggle.checked) {
+                    document.documentElement.style.setProperty('--main-color', '#000');
+                    document.documentElement.style.setProperty('--background-color', '#fff');
+                } else {
+                    document.documentElement.style.setProperty('--main-color', '#28536B');
+                    document.documentElement.style.setProperty('--background-color', '#F6F0ED');
+                }
+            });
+
+            document.getElementById('saveButton').addEventListener('click', saveAsPNG);
+
+            // Initial calls
+            updateLabel();
+            updateDecorationLevel();
+        });
+    </script>
+</body>
+</html>
