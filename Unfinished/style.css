@@ -23,9 +23,14 @@ body {
     background-color: #f0f0f0;
 }
 
+h1 {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
 .container {
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: row;
     gap: 20px;
     width: 100%;
     max-width: 1400px;
@@ -34,33 +39,96 @@ body {
 
 .controls {
     flex: 1;
-    min-width: 400px;
     background-color: white;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    overflow-y: auto;
 }
 
 .preview-container {
     flex: 1;
-    min-width: 400px;
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: flex-start;
+}
+
+/* Make preview fixed on desktop */
+@media (min-width: 1024px) {
+    .preview-container {
+        position: sticky;
+        top: 20px;
+        overflow-y: auto;
+        align-self: flex-start;
+    }
+}
+
+/* Mobile responsive design */
+@media (max-width: 1023px) {
+    .container {
+        flex-direction: column;
+    }
+    
+    .preview-container {
+        order: 1;
+        width: 100%;
+    }
+    
+    .controls {
+        order: 2;
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        padding: 10px;
+    }
+    
+    h1 {
+        font-size: 1.5rem;
+        margin-bottom: 15px;
+    }
+    
+    .controls {
+        min-width: unset;
+        padding: 12px;
+    }
+    
+    .label {
+        transform: scale(0.85);
+        transform-origin: top center;
+        padding: calc(var(--padding) * 0.8px);
+    }
+    
+    .control-group {
+        margin-bottom: 10px;
+        padding-bottom: 10px;
+    }
+    
+    textarea {
+        min-height: 35px;
+    }
+    
+    .slider-container {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .slider-container input[type="range"] {
+        width: 100%;
+        margin: 5px 0;
+    }
 }
 
 .label-preview {
-    margin-bottom: 20px;
     position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background-color: var(--background-color);
-    min-width: 300px;
-    max-width: 90%;
 }
-
 
 .label {
     position: relative;
@@ -86,11 +154,6 @@ body {
     z-index: 1;
 }
 
-h1 {
-    margin-bottom: 20px;
-    text-align: center;
-}
-
 .control-group {
     margin-bottom: 15px;
     border-bottom: 1px solid #eee;
@@ -112,8 +175,51 @@ input, textarea {
 }
 
 textarea {
-    min-height: 60px;
+    min-height: 40px;
     resize: vertical;
+    font-family: inherit;
+    font-size: 14px;
+    line-height: 1.4;
+    overflow-y: auto;
+}
+
+.slider-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    gap: 10px;
+}
+
+.slider-container label {
+    flex: 0 0 100px;
+    margin-bottom: 0;
+}
+
+.slider-container input[type="range"] {
+    flex: 1;
+    margin: 0;
+    padding: 0;
+}
+
+.slider-value {
+    flex: 0 0 50px;
+    text-align: right;
+}
+
+/* Medium screens - adjust control layout */
+@media (max-width: 768px) {
+    .slider-container {
+        flex-wrap: wrap;
+    }
+    
+    .slider-container label {
+        flex: 0 0 100%;
+        margin-bottom: 5px;
+    }
+    
+    .slider-container input[type="range"] {
+        flex: 1;
+    }
 }
 
 button {
@@ -145,28 +251,6 @@ button:hover {
     background-color: white;
     color: #a83232;
     border: 1px solid #a83232;
-}
-
-.slider-container {
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
-}
-
-.slider-container label {
-    flex: 1;
-    margin-bottom: 0;
-}
-
-.slider-container input {
-    flex: 2;
-    margin-bottom: 0;
-}
-
-.slider-value {
-    width: 40px;
-    text-align: center;
-    margin-left: 10px;
 }
 
 .brand-name {

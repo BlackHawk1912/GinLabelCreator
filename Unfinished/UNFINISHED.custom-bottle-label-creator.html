@@ -14,10 +14,71 @@
     <h1>Custom Gin Bottle Label Creator</h1>
     
     <div class="container">
+        <div class="preview-container">
+            <div class="label-preview">
+                <div class="label dec-level-5">
+                    <div class="inner-border decoration"></div>
+                    <div class="double-border decoration"></div>
+                    <div class="triple-border decoration"></div>
+                    
+                    <div class="corner corner-tl decoration">
+                        <svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M2 2C2 10 10 10 18 2" stroke="currentColor" fill="none" stroke-width="1" />
+                            <path d="M2 6C2 12 8 12 14 6" stroke="currentColor" fill="none" stroke-width="1" />
+                            <path d="M6 2C12 2 12 8 6 14" stroke="currentColor" fill="none" stroke-width="1" />
+                        </svg>
+                    </div>
+                    <div class="corner corner-tr decoration">
+                        <svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M18 2C10 2 10 10 18 18" stroke="currentColor" fill="none" stroke-width="1" />
+                            <path d="M14 2C8 2 8 8 14 14" stroke="currentColor" fill="none" stroke-width="1" />
+                            <path d="M18 6C12 6 12 12 6 12" stroke="currentColor" fill="none" stroke-width="1" />
+                        </svg>
+                    </div>
+                    <div class="corner corner-bl decoration">
+                        <svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M2 18C10 18 10 10 2 2" stroke="currentColor" fill="none" stroke-width="1" />
+                            <path d="M6 18C12 18 12 12 6 6" stroke="currentColor" fill="none" stroke-width="1" />
+                            <path d="M2 14C8 14 8 8 14 8" stroke="currentColor" fill="none" stroke-width="1" />
+                        </svg>
+                    </div>
+                    <div class="corner corner-br decoration">
+                        <svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M18 18C10 18 10 10 18 2" stroke="currentColor" fill="none" stroke-width="1" />
+                            <path d="M14 18C8 18 8 12 14 6" stroke="currentColor" fill="none" stroke-width="1" />
+                            <path d="M18 14C12 14 12 8 6 8" stroke="currentColor" fill="none" stroke-width="1" />
+                        </svg>
+                    </div>
+                    
+                    <div class="label-content">
+                        <div class="brand-name"></div>
+                        <div class="flourish decoration">
+                            <svg width="100" height="20" viewBox="0 0 100 20" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M20 10H40M60 10H80M50 5L50 15" stroke="currentColor" stroke-width="1" />
+                                <circle cx="50" cy="10" r="3" stroke="currentColor" fill="none" />
+                            </svg>
+                        </div>
+                        <div class="gin-name">von SchnakenGin</div>
+                        <div class="divider decoration">
+                            <div class="divider-center"></div>
+                        </div>
+                        <div class="ingredients">Wacholder, Orangenschale, Ingwer, Kardamom, Zitronengras, Malvenblüte</div>
+                        <div class="divider decoration">
+                            <div class="divider-center"></div>
+                        </div>
+                        <div class="bottom-info">
+                            <span class="amount"></span>
+                            <span class="alcohol-content"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
         <div class="controls">
             <div class="control-group">
                 <label for="brandName">Brand Name:</label>
-                <input type="text" id="brandName" value="ARTISANAL LONDON DRY">
+                <textarea id="brandName">ARTISANAL LONDON DRY</textarea>
                 <div class="slider-container">
                     <label for="brandNameSize">Font Size:</label>
                     <input type="range" id="brandNameSize" min="0" max="100" value="24">
@@ -32,7 +93,7 @@
             
             <div class="control-group">
                 <label for="ginName">Gin Name:</label>
-                <input type="text" id="ginName" value="London Dry Gin">
+                <textarea id="ginName">London Dry Gin</textarea>
                 <div class="slider-container">
                     <label for="ginNameSize">Font Size:</label>
                     <input type="range" id="ginNameSize" min="0" max="100" value="36">
@@ -47,7 +108,7 @@
             
             <div class="control-group">
                 <label for="ingredients">Ingredients:</label>
-                <input type="text" id="ingredients" value="Juniper, Coriander Seeds, Angelica Root, Orris Root, Cassia Bark, Cinnamon, Lemon Peel, Orange Peel">
+                <textarea id="ingredients">Juniper, Coriander Seeds, Angelica Root, Orris Root, Cassia Bark, Cinnamon, Lemon Peel, Orange Peel</textarea>
                 <div class="slider-container">
                     <label for="ingredientsSize">Font Size:</label>
                     <input type="range" id="ingredientsSize" min="0" max="100" value="12">
@@ -62,7 +123,7 @@
             
             <div class="control-group">
                 <label for="alcoholContent">Alcohol Content:</label>
-                <input type="text" id="alcoholContent" value="43.3% ALC/VOL">
+                <textarea id="alcoholContent">43.3% ALC/VOL</textarea>
                 <div class="slider-container">
                     <label for="alcoholContentSize">Font Size:</label>
                     <input type="range" id="alcoholContentSize" min="0" max="100" value="14">
@@ -77,7 +138,7 @@
             
             <div class="control-group">
                 <label for="amount">Amount:</label>
-                <input type="text" id="amount" value="750ml / 25.4 fl oz">
+                <textarea id="amount">750ml / 25.4 fl oz</textarea>
                 <div class="slider-container">
                     <label for="amountSize">Font Size:</label>
                     <input type="range" id="amountSize" min="0" max="100" value="14">
@@ -154,67 +215,6 @@
                 <button id="clearButton">Reset All</button>
             </div>
         </div>
-        
-        <div class="preview-container">
-            <div class="label-preview">
-                <div class="label dec-level-5">
-                    <div class="inner-border decoration"></div>
-                    <div class="double-border decoration"></div>
-                    <div class="triple-border decoration"></div>
-                    
-                    <div class="corner corner-tl decoration">
-                        <svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M2 2C2 10 10 10 18 2" stroke="currentColor" fill="none" stroke-width="1" />
-                            <path d="M2 6C2 12 8 12 14 6" stroke="currentColor" fill="none" stroke-width="1" />
-                            <path d="M6 2C12 2 12 8 6 14" stroke="currentColor" fill="none" stroke-width="1" />
-                        </svg>
-                    </div>
-                    <div class="corner corner-tr decoration">
-                        <svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M18 2C10 2 10 10 18 18" stroke="currentColor" fill="none" stroke-width="1" />
-                            <path d="M14 2C8 2 8 8 14 14" stroke="currentColor" fill="none" stroke-width="1" />
-                            <path d="M18 6C12 6 12 12 6 12" stroke="currentColor" fill="none" stroke-width="1" />
-                        </svg>
-                    </div>
-                    <div class="corner corner-bl decoration">
-                        <svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M2 18C10 18 10 10 2 2" stroke="currentColor" fill="none" stroke-width="1" />
-                            <path d="M6 18C12 18 12 12 6 6" stroke="currentColor" fill="none" stroke-width="1" />
-                            <path d="M2 14C8 14 8 8 14 8" stroke="currentColor" fill="none" stroke-width="1" />
-                        </svg>
-                    </div>
-                    <div class="corner corner-br decoration">
-                        <svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M18 18C10 18 10 10 18 2" stroke="currentColor" fill="none" stroke-width="1" />
-                            <path d="M14 18C8 18 8 12 14 6" stroke="currentColor" fill="none" stroke-width="1" />
-                            <path d="M18 14C12 14 12 8 6 8" stroke="currentColor" fill="none" stroke-width="1" />
-                        </svg>
-                    </div>
-                    
-                    <div class="label-content">
-                        <div class="brand-name"></div>
-                        <div class="flourish decoration">
-                            <svg width="100" height="20" viewBox="0 0 100 20" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M20 10H40M60 10H80M50 5L50 15" stroke="currentColor" stroke-width="1" />
-                                <circle cx="50" cy="10" r="3" stroke="currentColor" fill="none" />
-                            </svg>
-                        </div>
-                        <div class="gin-name">von SchnakenGin</div>
-                        <div class="divider decoration">
-                            <div class="divider-center"></div>
-                        </div>
-                        <div class="ingredients">Wacholder, Orangenschale, Ingwer, Kardamom, Zitronengras, Malvenblüte</div>
-                        <div class="divider decoration">
-                            <div class="divider-center"></div>
-                        </div>
-                        <div class="bottom-info">
-                            <span class="amount"></span>
-                            <span class="alcohol-content"></span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
     
     <script>
@@ -268,12 +268,12 @@
                 const alcoholContentBoldness = document.getElementById('alcoholContentBoldness').value;
                 const amountBoldness = document.getElementById('amountBoldness').value;
                 
-                // Update the preview
-                document.querySelector('.brand-name').textContent = brandName;
-                document.querySelector('.gin-name').textContent = ginName;
-                document.querySelector('.ingredients').textContent = ingredients;
-                document.querySelector('.alcohol-content').textContent = alcoholContent;
-                document.querySelector('.amount').textContent = amount;
+                // Update the preview with line breaks converted to <br> tags
+                document.querySelector('.brand-name').innerHTML = brandName.replace(/\n/g, '<br>');
+                document.querySelector('.gin-name').innerHTML = ginName.replace(/\n/g, '<br>');
+                document.querySelector('.ingredients').innerHTML = ingredients.replace(/\n/g, '<br>');
+                document.querySelector('.alcohol-content').innerHTML = alcoholContent.replace(/\n/g, '<br>');
+                document.querySelector('.amount').innerHTML = amount.replace(/\n/g, '<br>');
                 
                 // Update font sizes
                 document.querySelector('.brand-name').style.fontSize = `${brandNameSize}px`;
@@ -676,6 +676,14 @@
                 // Update the preview
                 updateLabel();
                 updateDecorationLevel();
+                
+                // Initialize padding value on page load
+                document.documentElement.style.setProperty('--padding', paddingSlider.value);
+                paddingValue.textContent = `${paddingSlider.value}px`;
+                
+                // Initialize internal margin value on page load
+                document.documentElement.style.setProperty('--internal-margin', internalMarginSlider.value + 'px');
+                internalMarginValue.textContent = `${internalMarginSlider.value}px`;
                 
                 // Hide all font size and boldness sliders since all inputs are empty
                 textInputs.forEach(id => {
