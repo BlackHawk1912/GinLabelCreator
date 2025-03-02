@@ -94,12 +94,28 @@ document.addEventListener('DOMContentLoaded', function() {
         const alcoholContentBoldness = document.getElementById('alcoholContentBoldness').value;
         const amountBoldness = document.getElementById('amountBoldness').value;
         
-        // Update the preview with line breaks converted to <br> tags
-        document.querySelector('.brand-name').innerHTML = brandName.replace(/\n/g, '<br>');
-        document.querySelector('.gin-name').innerHTML = ginName.replace(/\n/g, '<br>');
-        document.querySelector('.ingredients').innerHTML = ingredients.replace(/\n/g, '<br>');
-        document.querySelector('.alcohol-content').innerHTML = alcoholContent;
-        document.querySelector('.amount').innerHTML = amount;
+        // Function to preserve whitespace and line breaks
+        function preserveWhitespace(text) {
+            return text
+                .replace(/\n/g, '<br>')
+                .replace(/ {2,}/g, function(match) {
+                    return '&nbsp;'.repeat(match.length);
+                });
+        }
+        
+        // Update the preview with preserved whitespace
+        document.querySelector('.brand-name').innerHTML = preserveWhitespace(brandName);
+        document.querySelector('.gin-name').innerHTML = preserveWhitespace(ginName);
+        document.querySelector('.ingredients').innerHTML = preserveWhitespace(ingredients);
+        document.querySelector('.alcohol-content').innerHTML = preserveWhitespace(alcoholContent);
+        document.querySelector('.amount').innerHTML = preserveWhitespace(amount);
+        
+        // Apply white-space: pre-wrap to preserve multiple spaces
+        document.querySelector('.brand-name').style.whiteSpace = 'pre-wrap';
+        document.querySelector('.gin-name').style.whiteSpace = 'pre-wrap';
+        document.querySelector('.ingredients').style.whiteSpace = 'pre-wrap';
+        document.querySelector('.alcohol-content').style.whiteSpace = 'pre-wrap';
+        document.querySelector('.amount').style.whiteSpace = 'pre-wrap';
         
         // Update font sizes
         document.querySelector('.brand-name').style.fontSize = `${brandNameSize}px`;
