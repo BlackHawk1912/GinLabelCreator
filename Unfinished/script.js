@@ -419,8 +419,8 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Set initial visibility of font size and boldness sliders based on input values
         textInputs.forEach(id => {
-            const inputValue = document.getElementById(id).value;
-            toggleSliderVisibility(id, inputValue);
+            const initialValue = document.getElementById(id).value;
+            toggleSliderVisibility(id, initialValue);
         });
     }
     
@@ -436,6 +436,52 @@ document.addEventListener('DOMContentLoaded', function() {
         const g = getRandomNumber(30, 220);
         const b = getRandomNumber(30, 220);
         return `#${r.toString(16).padStart(2, '0')}${g.toString(16).padStart(2, '0')}${b.toString(16).padStart(2, '0')}`;
+    }
+
+    // Calculate color luminance (for contrast checking)
+    function getLuminance(hexColor) {
+        // Remove # if present
+        hexColor = hexColor.replace('#', '');
+        
+        // Convert hex to RGB
+        const r = parseInt(hexColor.substr(0, 2), 16) / 255;
+        const g = parseInt(hexColor.substr(2, 2), 16) / 255;
+        const b = parseInt(hexColor.substr(4, 2), 16) / 255;
+        
+        // Calculate luminance using the formula for relative luminance in sRGB space
+        const R = r <= 0.03928 ? r / 12.92 : Math.pow((r + 0.055) / 1.055, 2.4);
+        const G = g <= 0.03928 ? g / 12.92 : Math.pow((g + 0.055) / 1.055, 2.4);
+        const B = b <= 0.03928 ? b / 12.92 : Math.pow((b + 0.055) / 1.055, 2.4);
+        
+        return 0.2126 * R + 0.7152 * G + 0.0722 * B;
+    }
+
+    // Calculate contrast ratio between two colors
+    function getContrastRatio(color1, color2) {
+        const lum1 = getLuminance(color1);
+        const lum2 = getLuminance(color2);
+        
+        // Calculate contrast ratio using WCAG formula
+        const brightest = Math.max(lum1, lum2);
+        const darkest = Math.min(lum1, lum2);
+        
+        return (brightest + 0.05) / (darkest + 0.05);
+    }
+
+    // Generate a color with sufficient contrast to the reference color
+    function getContrastingColor(referenceColor, minContrast = 4.5) {
+        let attempts = 0;
+        let newColor;
+        let contrast;
+        
+        // Try up to 20 times to find a color with sufficient contrast
+        do {
+            newColor = getRandomColor();
+            contrast = getContrastRatio(referenceColor, newColor);
+            attempts++;
+        } while (contrast < minContrast && attempts < 20);
+        
+        return newColor;
     }
 
     // Function to randomize all settings
@@ -552,10 +598,15 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('blackAndWhite').checked = !useColors;
         
         if (useColors) {
-            // Randomize colors with pleasing combinations
+            // Randomize colors with pleasing combinations and sufficient contrast
             const backgroundColor = getRandomColor();
-            const primaryColor = getRandomColor();
-            const secondaryColor = getRandomColor();
+            
+            // Generate primary color with good contrast against background
+            const primaryColor = getContrastingColor(backgroundColor, 4.5);
+            
+            // Generate secondary color with decent contrast against background
+            // but not necessarily as high contrast as primary color
+            const secondaryColor = getContrastingColor(backgroundColor, 3);
             
             document.getElementById('backgroundColor').value = backgroundColor;
             document.getElementById('primaryColor').value = primaryColor;
