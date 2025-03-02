@@ -159,14 +159,36 @@ document.addEventListener('DOMContentLoaded', function() {
         const fontSizeSliderContainer = document.getElementById(`${inputId}Size`).closest('.slider-container');
         const fontBoldnessSliderContainer = document.getElementById(`${inputId}Boldness`).closest('.slider-container');
         
+        // Find the parent control-group and the preceding tab-section-title
+        const controlGroup = fontSizeSliderContainer.closest('.control-group');
+        const sectionTitle = controlGroup.previousElementSibling;
+        
         if (inputValue.trim() === '') {
-            // Hide sliders if input is empty
-            fontSizeSliderContainer.style.display = 'none';
-            fontBoldnessSliderContainer.style.display = 'none';
-        } else {
-            // Show sliders if input has content
+            // Set opacity to 0.5 for sliders if input is empty
+            fontSizeSliderContainer.style.opacity = '0.5';
+            fontBoldnessSliderContainer.style.opacity = '0.5';
+            
+            // Make sure display is set correctly
             fontSizeSliderContainer.style.display = 'flex';
             fontBoldnessSliderContainer.style.display = 'flex';
+            
+            // Also set opacity for the section title if it has the tab-section-title class
+            if (sectionTitle && sectionTitle.classList.contains('tab-section-title')) {
+                sectionTitle.style.opacity = '0.5';
+            }
+        } else {
+            // Show sliders if input has content
+            fontSizeSliderContainer.style.opacity = '1';
+            fontBoldnessSliderContainer.style.opacity = '1';
+            
+            // Make sure display is set correctly
+            fontSizeSliderContainer.style.display = 'flex';
+            fontBoldnessSliderContainer.style.display = 'flex';
+            
+            // Also show the section title if it has the tab-section-title class
+            if (sectionTitle && sectionTitle.classList.contains('tab-section-title')) {
+                sectionTitle.style.opacity = '1';
+            }
         }
     }
 
@@ -365,6 +387,9 @@ document.addEventListener('DOMContentLoaded', function() {
             if (savedValue) {
                 document.getElementById(id).value = savedValue;
             }
+            
+            // Toggle visibility based on loaded value
+            toggleSliderVisibility(id, document.getElementById(id).value);
         });
         
         // Load font size sliders

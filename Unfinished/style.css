@@ -189,8 +189,8 @@ textarea {
 }
 
 .slider-container label {
-    flex: 0 0 100px;
     margin-bottom: 0;
+    width: 130px;
 }
 
 .slider-container input[type="range"] {
