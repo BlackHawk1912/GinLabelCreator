@@ -17,6 +17,40 @@ document.addEventListener('DOMContentLoaded', function() {
     const primaryColorInput = document.getElementById('primaryColor');
     const secondaryColorInput = document.getElementById('secondaryColor');
 
+    // Tab Functionality
+    function setupTabs() {
+        const tabButtons = document.querySelectorAll('.tab-button');
+        const tabContents = document.querySelectorAll('.tab-content');
+        
+        tabButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // Remove active class from all buttons and content
+                tabButtons.forEach(btn => btn.classList.remove('active'));
+                tabContents.forEach(content => content.classList.remove('active'));
+                
+                // Add active class to current button
+                button.classList.add('active');
+                
+                // Show the corresponding tab content
+                const tabId = button.getAttribute('data-tab');
+                document.getElementById(tabId).classList.add('active');
+                
+                // Save the active tab to localStorage
+                localStorage.setItem('activeTab', tabId);
+            });
+        });
+        
+        // Check if there's a saved active tab
+        const savedTab = localStorage.getItem('activeTab');
+        if (savedTab) {
+            // Find the button that corresponds to the saved tab
+            const savedButton = document.querySelector(`.tab-button[data-tab="${savedTab}"]`);
+            if (savedButton) {
+                savedButton.click();
+            }
+        }
+    }
+
     function adjustLayout() {
         // Stub to prevent errors
     }
@@ -505,170 +539,182 @@ document.addEventListener('DOMContentLoaded', function() {
     const debouncedSaveToLocalStorage = debounce(saveToLocalStorage, 500);
     const debouncedUpdateDecorationLevel = rafDebounce(updateDecorationLevel);
     
-    // Set up text input listeners
-    textInputs.forEach(id => {
-        document.getElementById(id).addEventListener('input', () => {
-            // Get the current input value
-            const inputValue = document.getElementById(id).value;
-            
-            // Toggle slider visibility based on input value
-            toggleSliderVisibility(id, inputValue);
-            
-            debouncedUpdateLabel();
-            debouncedSaveToLocalStorage();
-        });
-    });
-    
-    // Font size slider event listeners with improved performance
-    fontSizeSliders.forEach(id => {
-        const slider = document.getElementById(id);
-        const valueSpan = document.getElementById(`${id}Value`);
+    // Initialize the application
+    function init() {
+        // Initial update
+        setupTabs();
+        updateLabel();
+        updateDecorationLevel();
+        adjustLayout();
         
-        // Use input event for real-time updates
-        slider.addEventListener('input', function() {
-            // Update the value display immediately
-            valueSpan.textContent = `${this.value}px`;
-            
-            // Update the corresponding element's font size directly for immediate feedback
-            const className = idToClass(id.replace('Size', ''));
-            const targetEl = document.querySelector(`.${className}`);
-            if (targetEl) {
-                targetEl.style.fontSize = `${this.value}px`;
-            }
-            
-            // Use requestAnimationFrame for the heavier operations
-            debouncedUpdateLabel();
-            debouncedSaveToLocalStorage();
+        // Check for saved settings
+        if (localStorage.getItem('labelSettings')) {
+            loadFromLocalStorage();
+        }
+        
+        // Set up text input listeners
+        textInputs.forEach(id => {
+            document.getElementById(id).addEventListener('input', () => {
+                // Get the current input value
+                const inputValue = document.getElementById(id).value;
+                
+                // Toggle slider visibility based on input value
+                toggleSliderVisibility(id, inputValue);
+                
+                debouncedUpdateLabel();
+                debouncedSaveToLocalStorage();
+            });
         });
-    });
+        
+        // Font size slider event listeners with improved performance
+        fontSizeSliders.forEach(id => {
+            const slider = document.getElementById(id);
+            const valueSpan = document.getElementById(`${id}Value`);
+            
+            // Use input event for real-time updates
+            slider.addEventListener('input', function() {
+                // Update the value display immediately
+                valueSpan.textContent = `${this.value}px`;
+                
+                // Update the corresponding element's font size directly for immediate feedback
+                const className = idToClass(id.replace('Size', ''));
+                const targetEl = document.querySelector(`.${className}`);
+                if (targetEl) {
+                    targetEl.style.fontSize = `${this.value}px`;
+                }
+                
+                // Use requestAnimationFrame for the heavier operations
+                debouncedUpdateLabel();
+                debouncedSaveToLocalStorage();
+            });
+        });
 
-    // Font boldness slider event listeners with improved performance
-    fontBoldnessSliders.forEach(id => {
-        const slider = document.getElementById(id);
-        if (!slider) return;
-        
-        // Use input event for real-time updates
-        slider.addEventListener('input', function() {
-            // Update the value display immediately
-            updateFontBoldnessValue(id, this.value);
+        // Font boldness slider event listeners with improved performance
+        fontBoldnessSliders.forEach(id => {
+            const slider = document.getElementById(id);
+            if (!slider) return;
             
-            // Update the corresponding element's font boldness directly for immediate feedback
-            const className = idToClass(id.replace('Boldness', ''));
-            const targetEl = document.querySelector(`.${className}`);
-            if (targetEl) {
-                targetEl.style.fontWeight = this.value;
-            }
+            // Use input event for real-time updates
+            slider.addEventListener('input', function() {
+                // Update the value display immediately
+                updateFontBoldnessValue(id, this.value);
+                
+                // Update the corresponding element's font boldness directly for immediate feedback
+                const className = idToClass(id.replace('Boldness', ''));
+                const targetEl = document.querySelector(`.${className}`);
+                if (targetEl) {
+                    targetEl.style.fontWeight = this.value;
+                }
+                
+                // Use optimized functions for heavier operations
+                debouncedSaveToLocalStorage();
+            });
+        });
+
+        // Decoration level slider with improved performance
+        decorationLevelSlider.addEventListener('input', function() {
+            // Update the value display immediately
+            decorationLevelValue.textContent = this.value;
+            
+            // Set the CSS property immediately
+            document.documentElement.style.setProperty('--decoration-level', this.value);
+            
+            // Use optimized functions for heavier operations
+            debouncedUpdateDecorationLevel();
+            debouncedSaveToLocalStorage();
+        });
+
+        // Border thickness slider with improved performance
+        borderThicknessSlider.addEventListener('input', function() {
+            // Update the value display immediately
+            borderThicknessValue.textContent = `${this.value}px`;
+            
+            // Set the CSS property immediately
+            document.documentElement.style.setProperty('--border-width', this.value + 'px');
             
             // Use optimized functions for heavier operations
             debouncedSaveToLocalStorage();
         });
-    });
 
-    // Decoration level slider with improved performance
-    decorationLevelSlider.addEventListener('input', function() {
-        // Update the value display immediately
-        decorationLevelValue.textContent = this.value;
-        
-        // Set the CSS property immediately
-        document.documentElement.style.setProperty('--decoration-level', this.value);
-        
-        // Use optimized functions for heavier operations
-        debouncedUpdateDecorationLevel();
-        debouncedSaveToLocalStorage();
-    });
-
-    // Border thickness slider with improved performance
-    borderThicknessSlider.addEventListener('input', function() {
-        // Update the value display immediately
-        borderThicknessValue.textContent = `${this.value}px`;
-        
-        // Set the CSS property immediately
-        document.documentElement.style.setProperty('--border-width', this.value + 'px');
-        
-        // Use optimized functions for heavier operations
-        debouncedSaveToLocalStorage();
-    });
-
-    // Padding slider with improved performance
-    paddingSlider.addEventListener('input', function() {
-        // Update the value display immediately
-        paddingValue.textContent = `${this.value}px`;
-        
-        // Set the CSS property immediately
-        document.documentElement.style.setProperty('--padding', this.value);
-        
-        // Use optimized functions for heavier operations
-        debouncedUpdateLabel();
-        debouncedSaveToLocalStorage();
-    });
-
-    // Internal margin slider with improved performance
-    internalMarginSlider.addEventListener('input', function() {
-        // Update the value display immediately
-        internalMarginValue.textContent = `${this.value}px`;
-        
-        // Set the CSS property immediately
-        document.documentElement.style.setProperty('--internal-margin', this.value + 'px');
-        
-        // Use optimized functions for heavier operations
-        debouncedUpdateLabel();
-        debouncedSaveToLocalStorage();
-    });
-
-    blackAndWhiteToggle.addEventListener('change', () => {
-        const colorControls = document.getElementById('colorControls');
-        
-        if (blackAndWhiteToggle.checked) {
-            // Black & White mode
-            document.documentElement.style.setProperty('--main-color', '#000');
-            document.documentElement.style.setProperty('--secondary-color', '#555555');
-            document.documentElement.style.setProperty('--background-color', '#fff');
-            colorControls.style.display = 'none';
-        } else {
-            // Color mode
-            const primaryColor = document.getElementById('primaryColor').value;
-            const secondaryColor = document.getElementById('secondaryColor').value;
-            const bgColor = document.getElementById('backgroundColor').value;
+        // Padding slider with improved performance
+        paddingSlider.addEventListener('input', function() {
+            // Update the value display immediately
+            paddingValue.textContent = `${this.value}px`;
             
-            document.documentElement.style.setProperty('--main-color', primaryColor);
-            document.documentElement.style.setProperty('--secondary-color', secondaryColor);
-            document.documentElement.style.setProperty('--background-color', bgColor);
-            colorControls.style.display = 'block';
-        }
+            // Set the CSS property immediately
+            document.documentElement.style.setProperty('--padding', this.value);
+            
+            // Use optimized functions for heavier operations
+            debouncedUpdateLabel();
+            debouncedSaveToLocalStorage();
+        });
+
+        // Internal margin slider with improved performance
+        internalMarginSlider.addEventListener('input', function() {
+            // Update the value display immediately
+            internalMarginValue.textContent = `${this.value}px`;
+            
+            // Set the CSS property immediately
+            document.documentElement.style.setProperty('--internal-margin', this.value + 'px');
+            
+            // Use optimized functions for heavier operations
+            debouncedUpdateLabel();
+            debouncedSaveToLocalStorage();
+        });
+
+        blackAndWhiteToggle.addEventListener('change', () => {
+            const colorControls = document.getElementById('colorControls');
+            
+            if (blackAndWhiteToggle.checked) {
+                // Black & White mode
+                document.documentElement.style.setProperty('--main-color', '#000');
+                document.documentElement.style.setProperty('--secondary-color', '#555555');
+                document.documentElement.style.setProperty('--background-color', '#fff');
+                colorControls.style.display = 'none';
+            } else {
+                // Color mode
+                const primaryColor = document.getElementById('primaryColor').value;
+                const secondaryColor = document.getElementById('secondaryColor').value;
+                const bgColor = document.getElementById('backgroundColor').value;
+                
+                document.documentElement.style.setProperty('--main-color', primaryColor);
+                document.documentElement.style.setProperty('--secondary-color', secondaryColor);
+                document.documentElement.style.setProperty('--background-color', bgColor);
+                colorControls.style.display = 'block';
+            }
+            
+            saveToLocalStorage();
+        });
+
+        // Color input event listeners
+        document.getElementById('backgroundColor').addEventListener('input', function() {
+            document.documentElement.style.setProperty('--background-color', this.value);
+            saveToLocalStorage();
+        });
         
-        saveToLocalStorage();
-    });
+        document.getElementById('primaryColor').addEventListener('input', function() {
+            document.documentElement.style.setProperty('--main-color', this.value);
+            saveToLocalStorage();
+        });
+        
+        document.getElementById('secondaryColor').addEventListener('input', function() {
+            document.documentElement.style.setProperty('--secondary-color', this.value);
+            saveToLocalStorage();
+        });
 
-    // Color input event listeners
-    document.getElementById('backgroundColor').addEventListener('input', function() {
-        document.documentElement.style.setProperty('--background-color', this.value);
-        saveToLocalStorage();
-    });
-    
-    document.getElementById('primaryColor').addEventListener('input', function() {
-        document.documentElement.style.setProperty('--main-color', this.value);
-        saveToLocalStorage();
-    });
-    
-    document.getElementById('secondaryColor').addEventListener('input', function() {
-        document.documentElement.style.setProperty('--secondary-color', this.value);
-        saveToLocalStorage();
-    });
+        document.getElementById('saveButton').addEventListener('click', saveAsPNG);
 
-    document.getElementById('saveButton').addEventListener('click', saveAsPNG);
+        document.getElementById('clearButton').addEventListener('click', resetAll);
+        
+        // Initialize padding value on page load
+        document.documentElement.style.setProperty('--padding', paddingSlider.value);
+        paddingValue.textContent = `${paddingSlider.value}px`;
+        
+        // Initialize internal margin value on page load
+        document.documentElement.style.setProperty('--internal-margin', internalMarginSlider.value + 'px');
+        internalMarginValue.textContent = `${internalMarginSlider.value}px`;
+    }
 
-    document.getElementById('clearButton').addEventListener('click', resetAll);
-
-    // Initial calls
-    loadFromLocalStorage(); // Load saved data first
-    updateLabel();
-    updateDecorationLevel();
-    
-    // Initialize padding value on page load
-    document.documentElement.style.setProperty('--padding', paddingSlider.value);
-    paddingValue.textContent = `${paddingSlider.value}px`;
-    
-    // Initialize internal margin value on page load
-    document.documentElement.style.setProperty('--internal-margin', internalMarginSlider.value + 'px');
-    internalMarginValue.textContent = `${internalMarginSlider.value}px`;
+    // Start the app
+    init();
 });

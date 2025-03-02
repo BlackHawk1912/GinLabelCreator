@@ -40,7 +40,6 @@ h1 {
 .controls {
     flex: 1;
     background-color: white;
-    padding: 20px;
     border-radius: 8px;
     box-shadow: 0 2px 10px rgba(0,0,0,0.1);
     overflow-y: auto;
@@ -155,15 +154,13 @@ h1 {
 }
 
 .control-group {
-    margin-bottom: 15px;
-    border-bottom: 1px solid #eee;
-    padding-bottom: 15px;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
 }
 
 label {
     display: block;
     margin-bottom: 5px;
-    font-weight: bold;
 }
 
 input, textarea {
@@ -230,7 +227,6 @@ button {
     margin: 10px 5px;
     border-radius: 5px;
     cursor: pointer;
-    font-family: 'Cormorant Unicase', serif;
     font-size: 16px;
     transition: all 0.3s ease;
 }
@@ -238,7 +234,6 @@ button {
 button:hover {
     background-color: var(--background-color);
     color: var(--main-color);
-    border: 1px solid var(--main-color);
 }
 
 #clearButton {
@@ -827,4 +822,78 @@ input:checked + .slider:before {
 
 .preview-container button {
     margin-top: 20px;
+}
+
+/* Tab System Styling */
+.tab-container {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.tab-navigation {
+    display: flex;
+    background-color: #f5f5f5;
+    border-radius: 8px 8px 0 0;
+    overflow: hidden;
+}
+
+.tab-button {
+    flex: 1;
+    background-color: #f5f5f5;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    margin: 0;
+    border-radius: 0;
+    color: #666;
+    border-right: 1px solid #ddd;
+}
+
+.tab-button:last-child {
+    border-right: none;
+}
+
+.tab-button:hover {
+    background-color: #ebebeb;
+}
+
+.tab-button.active {
+    background-color:white;
+    color: black;
+}
+
+.tab-content {
+    display: none;
+    padding: 30px;
+    background-color: #fff;
+    border-radius: 0 0 8px 8px;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+.tab-section-title {
+    font-size: 16px;
+    font-weight: bold;
+    margin: 10px 0;
+    padding-bottom: 5px;
+    color: var(--main-color);
+}
+
+/* Accordion for mobile view */
+@media (max-width: 768px) {
+    .tab-navigation {
+        flex-direction: column;
+    }
+    
+    .tab-button {
+        border-right: none;
+        border-bottom: 1px solid #ddd;
+    }
+    
+    .tab-button:last-child {
+        border-bottom: none;
+    }
 }
