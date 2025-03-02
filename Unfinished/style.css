@@ -6,6 +6,7 @@
     --background-color: #fff;
     --border-width: 2px;
     --internal-margin: 10px;
+    --label-width: 300px;
 }
 
 * {
@@ -137,7 +138,7 @@ h1 {
     text-align: center;
     font-family: 'Cormorant Unicase', serif;
     color: var(--main-color);
-    width: fit-content;
+    width: calc(var(--label-width) * 1px);
     height: fit-content;
     box-sizing: content-box;
     overflow: hidden;
@@ -149,7 +150,7 @@ h1 {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    gap: var(--internal-margin);
+    gap: calc(var(--internal-margin) * 1px);
     z-index: 1;
 }
 
@@ -280,11 +281,11 @@ button:hover {
 }
 
 .gin-name {
-    margin-bottom: calc(var(--internal-margin) * 1.2);
+    margin-bottom: calc(var(--internal-margin) * 1.2px);
 }
 
 .ingredients, .alcohol-content, .amount {
-    margin-bottom: calc(var(--internal-margin) * 1.2);
+    margin-bottom: calc(var(--internal-margin) * 1.2px);
 }
 
 .bottom-info {
@@ -367,7 +368,7 @@ button:hover {
 .divider {
     height: 2px;
     background-color: var(--secondary-color);
-    margin: var(--internal-margin) auto;
+    margin: calc(var(--internal-margin) * 1px) auto;
     position: relative;
     opacity: 0;
     width: 50%;
@@ -518,7 +519,7 @@ button:hover {
     background: none;
     border: none;
     width: 50%;
-    margin: calc(var(--internal-margin) * 1.2) auto;
+    margin: calc(var(--internal-margin) * 1.2px) auto;
 }
 
 .dec-level-7 .divider::before,
@@ -563,7 +564,7 @@ button:hover {
 /* Level 8: More pronounced wavy divider */
 .dec-level-8 .divider {
     height: 15px;
-    margin: calc(var(--internal-margin) * 1.3) auto;
+    margin: calc(var(--internal-margin) * 1.3px) auto;
     width: 50%;
 }
 
@@ -579,7 +580,7 @@ button:hover {
 /* Level 9: Deeper wavy divider */
 .dec-level-9 .divider {
     height: 18px;
-    margin: calc(var(--internal-margin) * 1.4) auto;
+    margin: calc(var(--internal-margin) * 1.4px) auto;
     width: 50%;
 }
 
@@ -595,7 +596,7 @@ button:hover {
 /* Level 10: Double wavy divider */
 .dec-level-10 .divider {
     height: 20px;
-    margin: calc(var(--internal-margin) * 1.5) auto;
+    margin: calc(var(--internal-margin) * 1.5px) auto;
     width: 50%;
 }
 
@@ -758,7 +759,6 @@ input:checked + .slider:before {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 10px;
 }
 
 .color-control label {

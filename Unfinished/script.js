@@ -12,6 +12,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const paddingValue = document.getElementById('paddingValue');
     const internalMarginSlider = document.getElementById('internalMargin');
     const internalMarginValue = document.getElementById('internalMarginValue');
+    const labelWidthSlider = document.getElementById('labelWidth');
+    const labelWidthValue = document.getElementById('labelWidthValue');
     const colorControls = document.getElementById('colorControls');
     const backgroundColorInput = document.getElementById('backgroundColor');
     const primaryColorInput = document.getElementById('primaryColor');
@@ -257,6 +259,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 divider.appendChild(centerDiv);
             }
         });
+        
+        // Update internal margin value on page load
+        document.documentElement.style.setProperty('--internal-margin', internalMarginSlider.value);
+        internalMarginValue.textContent = `${internalMarginSlider.value}px`;
     }
 
     function updateFontBoldnessValue(id, value) {
@@ -316,6 +322,9 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Save internal margin
         localStorage.setItem('internalMargin', internalMarginSlider.value);
+        
+        // Save label width
+        localStorage.setItem('labelWidth', labelWidthSlider.value);
         
         // Save color mode
         localStorage.setItem('blackAndWhite', blackAndWhiteToggle.checked);
@@ -384,7 +393,15 @@ document.addEventListener('DOMContentLoaded', function() {
         if (savedInternalMargin) {
             internalMarginSlider.value = savedInternalMargin;
             internalMarginValue.textContent = `${savedInternalMargin}px`;
-            document.documentElement.style.setProperty('--internal-margin', savedInternalMargin + 'px');
+            document.documentElement.style.setProperty('--internal-margin', savedInternalMargin);
+        }
+        
+        // Load label width
+        const savedLabelWidth = localStorage.getItem('labelWidth');
+        if (savedLabelWidth) {
+            labelWidthSlider.value = savedLabelWidth;
+            labelWidthValue.textContent = `${savedLabelWidth}px`;
+            document.documentElement.style.setProperty('--label-width', savedLabelWidth);
         }
         
         // Load color mode and colors
@@ -407,7 +424,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 document.documentElement.style.setProperty('--main-color', '#000');
                 document.documentElement.style.setProperty('--secondary-color', '#555555');
                 document.documentElement.style.setProperty('--background-color', '#fff');
-                colorControls.style.display = 'block';
+                colorControls.style.display = 'none';
             } else {
                 // Color mode
                 document.documentElement.style.setProperty('--main-color', savedPrimaryColor);
@@ -422,6 +439,10 @@ document.addEventListener('DOMContentLoaded', function() {
             const initialValue = document.getElementById(id).value;
             toggleSliderVisibility(id, initialValue);
         });
+        
+        // Call updateLabel to ensure all elements are properly aligned
+        updateLabel();
+        updateDecorationLevel();
     }
     
     // Utility function to get a random number within a range
@@ -603,6 +624,9 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('padding').value = getRandomNumber(25, 60);
         document.getElementById('internalMargin').value = getRandomNumber(5, 20);
         
+        // Randomize label width
+        document.getElementById('labelWidth').value = getRandomNumber(250, 400);
+        
         // Randomly decide if we should use colors
         const useColors = Math.random() > 0.5;
         document.getElementById('blackAndWhite').checked = !useColors;
@@ -670,6 +694,7 @@ document.addEventListener('DOMContentLoaded', function() {
         borderThicknessValue.textContent = `${borderThicknessSlider.value}px`;
         paddingValue.textContent = `${paddingSlider.value}px`;
         internalMarginValue.textContent = `${internalMarginSlider.value}px`;
+        labelWidthValue.textContent = `${labelWidthSlider.value}px`;
     }
 
     // Debounce function to limit how often a function is called
@@ -826,10 +851,22 @@ document.addEventListener('DOMContentLoaded', function() {
             internalMarginValue.textContent = `${this.value}px`;
             
             // Set the CSS property immediately
-            document.documentElement.style.setProperty('--internal-margin', this.value + 'px');
+            document.documentElement.style.setProperty('--internal-margin', this.value);
             
             // Use optimized functions for heavier operations
             debouncedUpdateLabel();
+            debouncedSaveToLocalStorage();
+        });
+
+        // Label width slider with improved performance
+        labelWidthSlider.addEventListener('input', function() {
+            // Update the value display immediately
+            labelWidthValue.textContent = `${this.value}px`;
+            
+            // Set the CSS property immediately
+            document.documentElement.style.setProperty('--label-width', this.value);
+            
+            // Use optimized functions for heavier operations
             debouncedSaveToLocalStorage();
         });
 
@@ -877,9 +914,13 @@ document.addEventListener('DOMContentLoaded', function() {
         document.documentElement.style.setProperty('--padding', paddingSlider.value);
         paddingValue.textContent = `${paddingSlider.value}px`;
         
-        // Initialize internal margin value on page load
-        document.documentElement.style.setProperty('--internal-margin', internalMarginSlider.value + 'px');
-        internalMarginValue.textContent = `${internalMarginSlider.value}px`;
+        // Initialize label width value on page load
+        document.documentElement.style.setProperty('--label-width', labelWidthSlider.value);
+        labelWidthValue.textContent = `${labelWidthSlider.value}px`;
+        
+        // Call updateLabel to ensure all elements are properly aligned
+        updateLabel();
+        updateDecorationLevel();
     }
 
     // Start the app
