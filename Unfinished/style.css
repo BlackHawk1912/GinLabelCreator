@@ -729,6 +729,11 @@ input:checked + .slider:before {
     width: 48%;
 }
 
+#brandName, #ginName {
+    min-height: 60px;
+    height: 60px;
+}
+
 #colorControls {
     margin-top: 10px;
 }
