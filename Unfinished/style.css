@@ -263,7 +263,173 @@ button:hover {
     opacity: 0;
 }
 
-.divider::before, .divider::after {
+.divider-center {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+}
+
+/* Level 2: Basic line */
+.dec-level-2 .divider {
+    background-color: var(--secondary-color);
+}
+
+/* Level 3: Line with dots on ends */
+.dec-level-3 .divider::before, 
+.dec-level-3 .divider::after,
+.dec-level-4 .divider::before,
+.dec-level-4 .divider::after,
+.dec-level-5 .divider::before,
+.dec-level-5 .divider::after,
+.dec-level-6 .divider::before,
+.dec-level-6 .divider::after,
+.dec-level-7 .divider::before,
+.dec-level-7 .divider::after,
+.dec-level-8 .divider::before,
+.dec-level-8 .divider::after,
+.dec-level-9 .divider::before,
+.dec-level-9 .divider::after,
+.dec-level-10 .divider::before,
+.dec-level-10 .divider::after {
+    content: '';
+    position: absolute;
+    height: 6px;
+    width: 6px;
+    background-color: var(--secondary-color);
+    border-radius: 50%;
+    top: -2px;
+}
+
+.dec-level-3 .divider::before,
+.dec-level-4 .divider::before,
+.dec-level-5 .divider::before,
+.dec-level-6 .divider::before,
+.dec-level-7 .divider::before,
+.dec-level-8 .divider::before,
+.dec-level-9 .divider::before,
+.dec-level-10 .divider::before {
+    left: 0;
+}
+
+.dec-level-3 .divider::after,
+.dec-level-4 .divider::after,
+.dec-level-5 .divider::after,
+.dec-level-6 .divider::after,
+.dec-level-7 .divider::after,
+.dec-level-8 .divider::after,
+.dec-level-9 .divider::after,
+.dec-level-10 .divider::after {
+    right: 0;
+}
+
+/* Level 4: Line with center dot */
+.dec-level-4 .divider::after,
+.dec-level-5 .divider::after,
+.dec-level-6 .divider::after,
+.dec-level-7 .divider::after,
+.dec-level-8 .divider::after,
+.dec-level-9 .divider::after,
+.dec-level-10 .divider::after {
+    right: 0;
+}
+
+.dec-level-4 .divider::before,
+.dec-level-5 .divider::before,
+.dec-level-6 .divider::before,
+.dec-level-7 .divider::before,
+.dec-level-8 .divider::before,
+.dec-level-9 .divider::before,
+.dec-level-10 .divider::before {
+    left: 0;
+}
+
+.dec-level-4 .divider::after,
+.dec-level-5 .divider::after,
+.dec-level-6 .divider::after,
+.dec-level-7 .divider::after,
+.dec-level-8 .divider::after,
+.dec-level-9 .divider::after,
+.dec-level-10 .divider::after {
+    content: '';
+    position: absolute;
+    height: 6px;
+    width: 6px;
+    background-color: var(--secondary-color);
+    border-radius: 50%;
+    top: -2px;
+}
+
+/* Level 5: Dashed line with dots */
+.dec-level-5 .divider,
+.dec-level-6 .divider,
+.dec-level-7 .divider,
+.dec-level-8 .divider,
+.dec-level-9 .divider,
+.dec-level-10 .divider {
+    background: repeating-linear-gradient(
+        to right,
+        var(--secondary-color),
+        var(--secondary-color) 8px,
+        transparent 8px,
+        transparent 12px
+    );
+}
+
+/* Level 6: Double line with dots */
+.dec-level-6 .divider,
+.dec-level-7 .divider,
+.dec-level-8 .divider,
+.dec-level-9 .divider,
+.dec-level-10 .divider {
+    height: 5px;
+    background: none;
+    border-top: 1px solid var(--secondary-color);
+    border-bottom: 1px solid var(--secondary-color);
+}
+
+/* Level 7: Wavy divider with center element */
+.dec-level-7 .divider,
+.dec-level-8 .divider,
+.dec-level-9 .divider,
+.dec-level-10 .divider {
+    height: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: none;
+    position: relative;
+    margin: 15px 0;
+}
+
+.dec-level-7 .divider::before,
+.dec-level-7 .divider::after {
+    content: '';
+    position: absolute;
+    height: 6px;
+    width: 6px;
+    background-color: var(--secondary-color);
+    border-radius: 50%;
+    top: 2px;
+}
+
+.dec-level-7 .divider::before {
+    left: 0;
+}
+
+.dec-level-7 .divider::after {
+    right: 0;
+}
+
+/* Divider base styles */
+.divider::before,
+.divider::after {
     content: '';
     position: absolute;
     height: 6px;
@@ -279,6 +445,51 @@ button:hover {
 
 .divider::after {
     right: 0;
+}
+
+/* Level 8: More pronounced wavy divider */
+.dec-level-8 .divider {
+    height: 15px;
+    margin: 18px 0;
+}
+
+.dec-level-8 .divider::before,
+.dec-level-8 .divider::after {
+    height: 8px;
+    width: 8px;
+    background-color: var(--secondary-color);
+    border-radius: 50%;
+    top: 3.5px;
+}
+
+/* Level 9: Deeper wavy divider */
+.dec-level-9 .divider {
+    height: 18px;
+    margin: 20px 0;
+}
+
+.dec-level-9 .divider::before,
+.dec-level-9 .divider::after {
+    height: 9px;
+    width: 9px;
+    background-color: var(--secondary-color);
+    border-radius: 50%;
+    top: 4.5px;
+}
+
+/* Level 10: Double wavy divider */
+.dec-level-10 .divider {
+    height: 20px;
+    margin: 22px 0;
+}
+
+.dec-level-10 .divider::before,
+.dec-level-10 .divider::after {
+    height: 10px;
+    width: 10px;
+    background-color: var(--secondary-color);
+    border-radius: 50%;
+    top: 5px;
 }
 
 .ornament {
@@ -313,29 +524,6 @@ button:hover {
 .ornament-br {
     bottom: calc(var(--padding) * 0.3px);
     right: calc(var(--padding) * 0.3px);
-}
-
-.squiggle-top, .squiggle-bottom {
-    position: absolute;
-    left: 0;
-    right: 0;
-    text-align: center;
-    opacity: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.squiggle-top svg, .squiggle-bottom svg, .flourish svg {
-    color: var(--main-color);
-}
-
-.squiggle-top {
-    top: calc(var(--padding) * 0.25px);
-}
-
-.squiggle-bottom {
-    bottom: calc(var(--padding) * 0.25px);
 }
 
 .flourish {
