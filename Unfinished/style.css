@@ -60,18 +60,20 @@ body {
     max-width: 90%;
 }
 
+
 .label {
     position: relative;
     background-color: var(--background-color);
-    color: var(--main-color);
-    border: var(--border-width) solid var(--main-color);
     padding: calc(var(--padding) * 1px);
     margin: 0 auto;
     text-align: center;
+    font-family: 'Cormorant Unicase', serif;
+    color: var(--main-color);
     width: fit-content;
     height: fit-content;
     box-sizing: content-box;
     overflow: hidden;
+    border: var(--border-width) solid var(--main-color);
 }
 
 .label-content {
@@ -216,8 +218,9 @@ button:hover {
     left: calc(var(--padding) * 0.5px);
     right: calc(var(--padding) * 0.5px);
     bottom: calc(var(--padding) * 0.5px);
-    border: 1px solid var(--main-color);
+    border: var(--border-width) solid var(--main-color);
     opacity: 0;
+    pointer-events: none;
 }
 
 .corner {
@@ -548,8 +551,9 @@ button:hover {
     left: calc(var(--padding) * 0.25px);
     right: calc(var(--padding) * 0.25px);
     bottom: calc(var(--padding) * 0.25px);
-    border: 1px dashed var(--main-color);
+    border: var(--border-width) dashed var(--main-color);
     opacity: 0;
+    pointer-events: none;
 }
 
 .triple-border {
@@ -558,8 +562,9 @@ button:hover {
     left: calc(var(--padding) * 0.12px);
     right: calc(var(--padding) * 0.12px);
     bottom: calc(var(--padding) * 0.12px);
-    border: 1px dotted var(--main-color);
+    border: var(--border-width) dotted var(--main-color);
     opacity: 0;
+    pointer-events: none;
 }
 
 .toggle-switch {

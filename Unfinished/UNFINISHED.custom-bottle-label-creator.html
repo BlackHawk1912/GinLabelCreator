@@ -16,42 +16,62 @@
     <div class="container">
         <div class="controls">
             <div class="control-group">
-                <label for="brandName">Brand / Gin Type:</label>
+                <label for="brandName">Brand Name:</label>
                 <input type="text" id="brandName" value="ARTISANAL LONDON DRY">
                 <div class="slider-container">
                     <label for="brandNameSize">Font Size:</label>
                     <input type="range" id="brandNameSize" min="0" max="100" value="24">
                     <span id="brandNameSizeValue" class="slider-value">24px</span>
                 </div>
+                <div class="slider-container">
+                    <label for="brandNameBoldness">Font Boldness:</label>
+                    <input type="range" id="brandNameBoldness" min="100" max="900" step="100" value="400">
+                    <span id="brandNameBoldnessValue" class="slider-value">Normal</span>
+                </div>
             </div>
             
             <div class="control-group">
                 <label for="ginName">Gin Name:</label>
-                <input type="text" id="ginName" value="JUNIPER BOTANIST">
+                <input type="text" id="ginName" value="London Dry Gin">
                 <div class="slider-container">
                     <label for="ginNameSize">Font Size:</label>
                     <input type="range" id="ginNameSize" min="0" max="100" value="36">
                     <span id="ginNameSizeValue" class="slider-value">36px</span>
                 </div>
+                <div class="slider-container">
+                    <label for="ginNameBoldness">Font Boldness:</label>
+                    <input type="range" id="ginNameBoldness" min="100" max="900" step="100" value="400">
+                    <span id="ginNameBoldnessValue" class="slider-value">Normal</span>
+                </div>
             </div>
             
             <div class="control-group">
                 <label for="ingredients">Ingredients:</label>
-                <textarea id="ingredients">Handcrafted with juniper berries, coriander seed, angelica root, orris root, licorice, cassia bark, and a hint of citrus</textarea>
+                <input type="text" id="ingredients" value="Juniper, Coriander Seeds, Angelica Root, Orris Root, Cassia Bark, Cinnamon, Lemon Peel, Orange Peel">
                 <div class="slider-container">
                     <label for="ingredientsSize">Font Size:</label>
                     <input type="range" id="ingredientsSize" min="0" max="100" value="12">
                     <span id="ingredientsSizeValue" class="slider-value">12px</span>
                 </div>
+                <div class="slider-container">
+                    <label for="ingredientsBoldness">Font Boldness:</label>
+                    <input type="range" id="ingredientsBoldness" min="100" max="900" step="100" value="400">
+                    <span id="ingredientsBoldnessValue" class="slider-value">Normal</span>
+                </div>
             </div>
             
             <div class="control-group">
                 <label for="alcoholContent">Alcohol Content:</label>
-                <input type="text" id="alcoholContent" value="43.5% ABV">
+                <input type="text" id="alcoholContent" value="43.3% ALC/VOL">
                 <div class="slider-container">
                     <label for="alcoholContentSize">Font Size:</label>
                     <input type="range" id="alcoholContentSize" min="0" max="100" value="14">
                     <span id="alcoholContentSizeValue" class="slider-value">14px</span>
+                </div>
+                <div class="slider-container">
+                    <label for="alcoholContentBoldness">Font Boldness:</label>
+                    <input type="range" id="alcoholContentBoldness" min="100" max="900" step="100" value="400">
+                    <span id="alcoholContentBoldnessValue" class="slider-value">Normal</span>
                 </div>
             </div>
             
@@ -62,6 +82,19 @@
                     <label for="amountSize">Font Size:</label>
                     <input type="range" id="amountSize" min="0" max="100" value="14">
                     <span id="amountSizeValue" class="slider-value">14px</span>
+                </div>
+                <div class="slider-container">
+                    <label for="amountBoldness">Font Boldness:</label>
+                    <input type="range" id="amountBoldness" min="100" max="900" step="100" value="400">
+                    <span id="amountBoldnessValue" class="slider-value">Normal</span>
+                </div>
+            </div>
+            
+            <div class="control-group">
+                <div class="slider-container">
+                    <label for="borderThickness">Border Thickness (px):</label>
+                    <input type="range" id="borderThickness" min="1" max="5" value="2">
+                    <span id="borderThicknessValue" class="slider-value">2px</span>
                 </div>
             </div>
             
@@ -181,8 +214,11 @@
             // Declare variables first
             const textInputs = ['brandName','ginName','ingredients','alcoholContent','amount'];
             const fontSizeSliders = ['brandNameSize','ginNameSize','ingredientsSize','alcoholContentSize','amountSize'];
+            const fontBoldnessSliders = ['brandNameBoldness','ginNameBoldness','ingredientsBoldness','alcoholContentBoldness','amountBoldness'];
             const decorationLevelSlider = document.getElementById('decorationLevel');
             const decorationLevelValue = document.getElementById('decorationLevelValue');
+            const borderThicknessSlider = document.getElementById('borderThickness');
+            const borderThicknessValue = document.getElementById('borderThicknessValue');
             const blackAndWhiteToggle = document.getElementById('blackAndWhite');
             const paddingSlider = document.getElementById('padding');
             const paddingValue = document.getElementById('paddingValue');
@@ -196,7 +232,8 @@
             }
 
             function idToClass(id) {
-                return id.replace(/([A-Z])/g, '-$1').toLowerCase();
+                // Convert camelCase to kebab-case
+                return id.replace(/([a-z0-9])([A-Z])/g, '$1-$2').toLowerCase();
             }
 
             function updateLabel() {
@@ -214,6 +251,13 @@
                 const alcoholContentSize = document.getElementById('alcoholContentSize').value;
                 const amountSize = document.getElementById('amountSize').value;
                 
+                // Get font boldness
+                const brandNameBoldness = document.getElementById('brandNameBoldness').value;
+                const ginNameBoldness = document.getElementById('ginNameBoldness').value;
+                const ingredientsBoldness = document.getElementById('ingredientsBoldness').value;
+                const alcoholContentBoldness = document.getElementById('alcoholContentBoldness').value;
+                const amountBoldness = document.getElementById('amountBoldness').value;
+                
                 // Update the preview
                 document.querySelector('.brand-name').textContent = brandName;
                 document.querySelector('.gin-name').textContent = ginName;
@@ -227,6 +271,13 @@
                 document.querySelector('.ingredients').style.fontSize = `${ingredientsSize}px`;
                 document.querySelector('.alcohol-content').style.fontSize = `${alcoholContentSize}px`;
                 document.querySelector('.amount').style.fontSize = `${amountSize}px`;
+                
+                // Update font boldness
+                document.querySelector('.brand-name').style.fontWeight = brandNameBoldness;
+                document.querySelector('.gin-name').style.fontWeight = ginNameBoldness;
+                document.querySelector('.ingredients').style.fontWeight = ingredientsBoldness;
+                document.querySelector('.alcohol-content').style.fontWeight = alcoholContentBoldness;
+                document.querySelector('.amount').style.fontWeight = amountBoldness;
                 
                 // Get all flourish decorations
                 const flourishElements = document.querySelectorAll('.flourish.decoration');
@@ -361,6 +412,23 @@
                 });
             }
 
+            function updateFontBoldnessValue(id, value) {
+                const valueSpan = document.getElementById(`${id}Value`);
+                if (!valueSpan) return;
+                
+                if (value <= 300) {
+                    valueSpan.textContent = 'Light';
+                } else if (value <= 400) {
+                    valueSpan.textContent = 'Normal';
+                } else if (value <= 600) {
+                    valueSpan.textContent = 'Semi-Bold';
+                } else if (value <= 700) {
+                    valueSpan.textContent = 'Bold';
+                } else {
+                    valueSpan.textContent = 'Extra Bold';
+                }
+            }
+
             function saveAsPNG() {
                 html2canvas(document.querySelector('.label-preview')).then(canvas => {
                     const link = document.createElement('a');
@@ -384,8 +452,17 @@
                     localStorage.setItem(id, slider.value);
                 });
                 
+                // Save font boldness sliders
+                fontBoldnessSliders.forEach(id => {
+                    const slider = document.getElementById(id);
+                    localStorage.setItem(id, slider.value);
+                });
+                
                 // Save decoration level
                 localStorage.setItem('decorationLevel', decorationLevelSlider.value);
+                
+                // Save border thickness
+                localStorage.setItem('borderThickness', borderThicknessSlider.value);
                 
                 // Save padding
                 localStorage.setItem('padding', paddingSlider.value);
@@ -418,12 +495,30 @@
                     }
                 });
                 
+                // Load font boldness sliders
+                fontBoldnessSliders.forEach(id => {
+                    const savedValue = localStorage.getItem(id);
+                    if (savedValue) {
+                        const slider = document.getElementById(id);
+                        slider.value = savedValue;
+                        updateFontBoldnessValue(id, savedValue);
+                    }
+                });
+                
                 // Load decoration level
                 const savedDecorationLevel = localStorage.getItem('decorationLevel');
                 if (savedDecorationLevel) {
                     decorationLevelSlider.value = savedDecorationLevel;
                     decorationLevelValue.textContent = savedDecorationLevel;
                     document.documentElement.style.setProperty('--decoration-level', savedDecorationLevel);
+                }
+                
+                // Load border thickness
+                const savedBorderThickness = localStorage.getItem('borderThickness');
+                if (savedBorderThickness) {
+                    borderThicknessSlider.value = savedBorderThickness;
+                    borderThicknessValue.textContent = `${savedBorderThickness}px`;
+                    document.documentElement.style.setProperty('--border-width', savedBorderThickness + 'px');
                 }
                 
                 // Load padding
@@ -487,10 +582,23 @@
                 document.getElementById('amountSize').value = 14;
                 document.getElementById('amountSizeValue').textContent = '14px';
                 
+                // Reset font boldness sliders to default values
+                fontBoldnessSliders.forEach(id => {
+                    const slider = document.getElementById(id);
+                    const valueSpan = document.getElementById(`${id}Value`);
+                    slider.value = 400;
+                    valueSpan.textContent = 'Normal';
+                });
+                
                 // Reset decoration level
                 decorationLevelSlider.value = 5;
                 decorationLevelValue.textContent = '5';
                 document.documentElement.style.setProperty('--decoration-level', 5);
+                
+                // Reset border thickness
+                borderThicknessSlider.value = 2;
+                borderThicknessValue.textContent = '2px';
+                document.documentElement.style.setProperty('--border-width', '2px');
                 
                 // Reset padding
                 paddingSlider.value = 40;
@@ -579,6 +687,28 @@
                 });
             });
 
+            // Font boldness slider event listeners with improved performance
+            fontBoldnessSliders.forEach(id => {
+                const slider = document.getElementById(id);
+                if (!slider) return;
+                
+                // Use input event for real-time updates
+                slider.addEventListener('input', function() {
+                    // Update the value display immediately
+                    updateFontBoldnessValue(id, this.value);
+                    
+                    // Update the corresponding element's font boldness directly for immediate feedback
+                    const className = idToClass(id.replace('Boldness', ''));
+                    const targetEl = document.querySelector(`.${className}`);
+                    if (targetEl) {
+                        targetEl.style.fontWeight = this.value;
+                    }
+                    
+                    // Use optimized functions for heavier operations
+                    debouncedSaveToLocalStorage();
+                });
+            });
+
             // Decoration level slider with improved performance
             decorationLevelSlider.addEventListener('input', function() {
                 // Update the value display immediately
@@ -589,6 +719,18 @@
                 
                 // Use optimized functions for heavier operations
                 debouncedUpdateDecorationLevel();
+                debouncedSaveToLocalStorage();
+            });
+
+            // Border thickness slider with improved performance
+            borderThicknessSlider.addEventListener('input', function() {
+                // Update the value display immediately
+                borderThicknessValue.textContent = `${this.value}px`;
+                
+                // Set the CSS property immediately
+                document.documentElement.style.setProperty('--border-width', this.value + 'px');
+                
+                // Use optimized functions for heavier operations
                 debouncedSaveToLocalStorage();
             });
 
