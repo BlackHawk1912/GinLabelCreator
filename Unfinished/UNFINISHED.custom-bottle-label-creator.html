@@ -279,6 +279,13 @@
                 document.querySelector('.alcohol-content').style.fontWeight = alcoholContentBoldness;
                 document.querySelector('.amount').style.fontWeight = amountBoldness;
                 
+                // Toggle visibility of font size and boldness sliders based on input values
+                toggleSliderVisibility('brandName', brandName);
+                toggleSliderVisibility('ginName', ginName);
+                toggleSliderVisibility('ingredients', ingredients);
+                toggleSliderVisibility('alcoholContent', alcoholContent);
+                toggleSliderVisibility('amount', amount);
+                
                 // Get all flourish decorations
                 const flourishElements = document.querySelectorAll('.flourish.decoration');
                 
@@ -318,6 +325,22 @@
                     // Only amount - center it
                     bottomInfo.style.justifyContent = 'center';
                     amountElement.style.textAlign = 'center';
+                }
+            }
+
+            // Function to toggle visibility of font size and boldness sliders
+            function toggleSliderVisibility(inputId, inputValue) {
+                const fontSizeSliderContainer = document.getElementById(`${inputId}Size`).closest('.slider-container');
+                const fontBoldnessSliderContainer = document.getElementById(`${inputId}Boldness`).closest('.slider-container');
+                
+                if (inputValue.trim() === '') {
+                    // Hide sliders if input is empty
+                    fontSizeSliderContainer.style.display = 'none';
+                    fontBoldnessSliderContainer.style.display = 'none';
+                } else {
+                    // Show sliders if input has content
+                    fontSizeSliderContainer.style.display = 'flex';
+                    fontBoldnessSliderContainer.style.display = 'flex';
                 }
             }
 
@@ -558,6 +581,12 @@
                         colorControls.style.display = 'block';
                     }
                 }
+                
+                // Set initial visibility of font size and boldness sliders based on input values
+                textInputs.forEach(id => {
+                    const inputValue = document.getElementById(id).value;
+                    toggleSliderVisibility(id, inputValue);
+                });
             }
             
             // Clear all saved data and reset to defaults
@@ -585,9 +614,8 @@
                 // Reset font boldness sliders to default values
                 fontBoldnessSliders.forEach(id => {
                     const slider = document.getElementById(id);
-                    const valueSpan = document.getElementById(`${id}Value`);
                     slider.value = 400;
-                    valueSpan.textContent = 'Normal';
+                    updateFontBoldnessValue(id, 400);
                 });
                 
                 // Reset decoration level
@@ -601,25 +629,32 @@
                 document.documentElement.style.setProperty('--border-width', '2px');
                 
                 // Reset padding
-                paddingSlider.value = 40;
-                paddingValue.textContent = '40px';
-                document.documentElement.style.setProperty('--padding', 40);
+                paddingSlider.value = 20;
+                paddingValue.textContent = '20px';
+                document.documentElement.style.setProperty('--padding', 20);
                 
                 // Reset color mode
-                blackAndWhiteToggle.checked = true;
-                document.documentElement.style.setProperty('--main-color', '#000');
-                document.documentElement.style.setProperty('--secondary-color', '#555555');
-                document.documentElement.style.setProperty('--background-color', '#fff');
-                document.getElementById('colorControls').style.display = 'none';
+                blackAndWhiteToggle.checked = false;
                 
-                // Reset color inputs to default values
+                // Reset colors
                 document.getElementById('backgroundColor').value = '#F6F0ED';
                 document.getElementById('primaryColor').value = '#28536B';
                 document.getElementById('secondaryColor').value = '#7EA8BE';
                 
-                // Update the label with reset values
+                document.documentElement.style.setProperty('--main-color', '#28536B');
+                document.documentElement.style.setProperty('--secondary-color', '#7EA8BE');
+                document.documentElement.style.setProperty('--background-color', '#F6F0ED');
+                
+                document.getElementById('colorControls').style.display = 'block';
+                
+                // Update the preview
                 updateLabel();
                 updateDecorationLevel();
+                
+                // Hide all font size and boldness sliders since all inputs are empty
+                textInputs.forEach(id => {
+                    toggleSliderVisibility(id, '');
+                });
             }
 
             // Debounce function to limit how often a function is called
@@ -659,6 +694,12 @@
             // Set up text input listeners
             textInputs.forEach(id => {
                 document.getElementById(id).addEventListener('input', () => {
+                    // Get the current input value
+                    const inputValue = document.getElementById(id).value;
+                    
+                    // Toggle slider visibility based on input value
+                    toggleSliderVisibility(id, inputValue);
+                    
                     debouncedUpdateLabel();
                     debouncedSaveToLocalStorage();
                 });
