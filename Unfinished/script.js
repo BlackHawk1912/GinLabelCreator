@@ -86,8 +86,8 @@ document.addEventListener('DOMContentLoaded', function() {
         document.querySelector('.brand-name').innerHTML = brandName.replace(/\n/g, '<br>');
         document.querySelector('.gin-name').innerHTML = ginName.replace(/\n/g, '<br>');
         document.querySelector('.ingredients').innerHTML = ingredients.replace(/\n/g, '<br>');
-        document.querySelector('.alcohol-content').innerHTML = alcoholContent.replace(/\n/g, '<br>');
-        document.querySelector('.amount').innerHTML = amount.replace(/\n/g, '<br>');
+        document.querySelector('.alcohol-content').innerHTML = alcoholContent;
+        document.querySelector('.amount').innerHTML = amount;
         
         // Update font sizes
         document.querySelector('.brand-name').style.fontSize = `${brandNameSize}px`;
