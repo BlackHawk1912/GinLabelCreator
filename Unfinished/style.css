@@ -44,6 +44,7 @@ h1 {
     border-radius: 8px;
     box-shadow: 0 2px 10px rgba(0,0,0,0.1);
     overflow-y: auto;
+    height: fit-content;
 }
 
 .preview-container {
@@ -858,11 +859,27 @@ input:checked + .slider:before {
     border: none;
     cursor: pointer;
     font-weight: bold;
-    transition: all 0.3s ease;
+    transition: background-color 0.3s ease;
     margin: 0;
     border-radius: 0;
     color: #666;
     border-right: 1px solid #ddd;
+    box-shadow: none;
+    transform: none;
+    padding: 10px 15px;
+}
+
+.tab-button:hover {
+    background-color: #ebebeb;
+    transform: none;
+    box-shadow: none;
+}
+
+.tab-button.active {
+    background-color: white;
+    color: black;
+    transform: none;
+    box-shadow: none;
 }
 
 .tab-button:last-child {
