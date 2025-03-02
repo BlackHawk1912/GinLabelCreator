@@ -161,8 +161,10 @@
                                 <circle cx="50" cy="10" r="3" stroke="currentColor" fill="none" />
                             </svg>
                         </div>
-                        <div class="alcohol-content">40%</div>
-                        <div class="amount">250ml</div>
+                        <div class="bottom-info">
+                            <span class="amount"></span>
+                            <span class="alcohol-content"></span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -192,34 +194,66 @@
                 textInputs.forEach(id => {
                     const inputEl = document.getElementById(id); // define inputEl
                     const className = idToClass(id);
-                    const targetEl = document.querySelector(`.${className}`);
-                    if (!targetEl) return; // Handle missing DOM elements safely
                     
-                    // Handle line breaks for textareas
-                    if (inputEl.tagName === 'TEXTAREA') {
-                        targetEl.innerHTML = inputEl.value.replace(/\n/g, '<br>');
-                    } else {
+                    // Special handling for alcohol content and amount which are now spans
+                    if (id === 'alcoholContent' || id === 'amount') {
+                        const targetEl = document.querySelector(`.${className}`);
+                        if (!targetEl) return; // Handle missing DOM elements safely
+                        
                         targetEl.textContent = inputEl.value;
-                    }
-                    
-                    // Hide if empty
-                    if (!inputEl.value.trim()) {
-                        targetEl.style.display = 'none';
-                    } else {
-                        targetEl.style.display = 'block';
                         
-                        // Update font size
-                        const fontSizeEl = document.getElementById(`${id}Size`);
-                        targetEl.style.fontSize = `${fontSizeEl.value}px`;
-                        
-                        // Adjust line height for better readability
-                        if (fontSizeEl.value > 20) {
-                            targetEl.style.lineHeight = '1.2';
+                        // Hide if empty
+                        if (!inputEl.value.trim()) {
+                            targetEl.style.display = 'none';
                         } else {
-                            targetEl.style.lineHeight = '1.5';
+                            targetEl.style.display = 'inline-block';
+                            
+                            // Update font size
+                            const fontSizeEl = document.getElementById(`${id}Size`);
+                            targetEl.style.fontSize = `${fontSizeEl.value}px`;
+                        }
+                    } else {
+                        const targetEl = document.querySelector(`.${className}`);
+                        if (!targetEl) return; // Handle missing DOM elements safely
+                        
+                        // Handle line breaks for textareas
+                        if (inputEl.tagName === 'TEXTAREA') {
+                            targetEl.innerHTML = inputEl.value.replace(/\n/g, '<br>');
+                        } else {
+                            targetEl.textContent = inputEl.value;
+                        }
+                        
+                        // Hide if empty
+                        if (!inputEl.value.trim()) {
+                            targetEl.style.display = 'none';
+                        } else {
+                            targetEl.style.display = 'block';
+                            
+                            // Update font size
+                            const fontSizeEl = document.getElementById(`${id}Size`);
+                            targetEl.style.fontSize = `${fontSizeEl.value}px`;
+                            
+                            // Adjust line height for better readability
+                            if (fontSizeEl.value > 20) {
+                                targetEl.style.lineHeight = '1.2';
+                            } else {
+                                targetEl.style.lineHeight = '1.5';
+                            }
                         }
                     }
                 });
+                
+                // Show or hide the bottom-info container based on whether its children are visible
+                const alcoholContentEl = document.querySelector('.alcohol-content');
+                const amountEl = document.querySelector('.amount');
+                const bottomInfoEl = document.querySelector('.bottom-info');
+                
+                if ((!alcoholContentEl.textContent.trim() && !amountEl.textContent.trim()) || 
+                    (alcoholContentEl.style.display === 'none' && amountEl.style.display === 'none')) {
+                    bottomInfoEl.style.display = 'none';
+                } else {
+                    bottomInfoEl.style.display = 'flex';
+                }
                 
                 // Adjust layout to prevent overflow
                 adjustLayout();
