@@ -407,7 +407,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 document.documentElement.style.setProperty('--main-color', '#000');
                 document.documentElement.style.setProperty('--secondary-color', '#555555');
                 document.documentElement.style.setProperty('--background-color', '#fff');
-                colorControls.style.display = 'none';
+                colorControls.style.display = 'block';
             } else {
                 // Color mode
                 document.documentElement.style.setProperty('--main-color', savedPrimaryColor);
@@ -564,13 +564,11 @@ document.addEventListener('DOMContentLoaded', function() {
             document.documentElement.style.setProperty('--background-color', backgroundColor);
             document.documentElement.style.setProperty('--main-color', primaryColor);
             document.documentElement.style.setProperty('--secondary-color', secondaryColor);
-            document.getElementById('colorControls').style.display = 'block';
         } else {
             // Black & White mode
             document.documentElement.style.setProperty('--main-color', '#000');
             document.documentElement.style.setProperty('--secondary-color', '#555555');
             document.documentElement.style.setProperty('--background-color', '#fff');
-            document.getElementById('colorControls').style.display = 'none';
         }
         
         // Update all slider value displays
@@ -775,14 +773,11 @@ document.addEventListener('DOMContentLoaded', function() {
         });
 
         blackAndWhiteToggle.addEventListener('change', () => {
-            const colorControls = document.getElementById('colorControls');
-            
             if (blackAndWhiteToggle.checked) {
                 // Black & White mode
                 document.documentElement.style.setProperty('--main-color', '#000');
                 document.documentElement.style.setProperty('--secondary-color', '#555555');
                 document.documentElement.style.setProperty('--background-color', '#fff');
-                colorControls.style.display = 'none';
             } else {
                 // Color mode
                 const primaryColor = document.getElementById('primaryColor').value;
@@ -792,7 +787,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 document.documentElement.style.setProperty('--main-color', primaryColor);
                 document.documentElement.style.setProperty('--secondary-color', secondaryColor);
                 document.documentElement.style.setProperty('--background-color', bgColor);
-                colorControls.style.display = 'block';
             }
             
             saveToLocalStorage();
