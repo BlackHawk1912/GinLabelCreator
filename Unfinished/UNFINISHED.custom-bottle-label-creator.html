@@ -89,6 +89,23 @@
                         <span class="slider"></span>
                     </label>
                 </div>
+                
+                <div id="colorControls" style="display: none;">
+                    <div class="color-control">
+                        <label for="backgroundColor">Background Color:</label>
+                        <input type="color" id="backgroundColor" value="#F6F0ED">
+                    </div>
+                    
+                    <div class="color-control">
+                        <label for="primaryColor">Primary Color:</label>
+                        <input type="color" id="primaryColor" value="#28536B">
+                    </div>
+                    
+                    <div class="color-control">
+                        <label for="secondaryColor">Secondary Color:</label>
+                        <input type="color" id="secondaryColor" value="#7EA8BE">
+                    </div>
+                </div>
             </div>
             
             <div class="control-group">
@@ -181,6 +198,10 @@
             const blackAndWhiteToggle = document.getElementById('blackAndWhite');
             const paddingSlider = document.getElementById('padding');
             const paddingValue = document.getElementById('paddingValue');
+            const colorControls = document.getElementById('colorControls');
+            const backgroundColorInput = document.getElementById('backgroundColor');
+            const primaryColorInput = document.getElementById('primaryColor');
+            const secondaryColorInput = document.getElementById('secondaryColor');
 
             function adjustLayout() {
                 // Stub to prevent errors
@@ -432,6 +453,11 @@
                 
                 // Save color mode
                 localStorage.setItem('blackAndWhite', blackAndWhiteToggle.checked);
+                
+                // Save color inputs
+                localStorage.setItem('backgroundColor', backgroundColorInput.value);
+                localStorage.setItem('primaryColor', primaryColorInput.value);
+                localStorage.setItem('secondaryColor', secondaryColorInput.value);
             }
             
             // Load saved values from localStorage
@@ -469,22 +495,39 @@
                     document.documentElement.style.setProperty('--padding', savedPadding);
                 }
                 
-                // Load color mode
+                // Load color mode and colors
                 const savedBlackAndWhite = localStorage.getItem('blackAndWhite');
+                const colorControls = document.getElementById('colorControls');
+                
+                // Load saved colors
+                const savedBgColor = localStorage.getItem('backgroundColor') || '#F6F0ED';
+                const savedPrimaryColor = localStorage.getItem('primaryColor') || '#28536B';
+                const savedSecondaryColor = localStorage.getItem('secondaryColor') || '#7EA8BE';
+                
+                document.getElementById('backgroundColor').value = savedBgColor;
+                document.getElementById('primaryColor').value = savedPrimaryColor;
+                document.getElementById('secondaryColor').value = savedSecondaryColor;
+                
                 if (savedBlackAndWhite !== null) {
                     blackAndWhiteToggle.checked = savedBlackAndWhite === 'true';
                     if (blackAndWhiteToggle.checked) {
+                        // Black & White mode
                         document.documentElement.style.setProperty('--main-color', '#000');
+                        document.documentElement.style.setProperty('--secondary-color', '#555555');
                         document.documentElement.style.setProperty('--background-color', '#fff');
+                        colorControls.style.display = 'none';
                     } else {
-                        document.documentElement.style.setProperty('--main-color', '#28536B');
-                        document.documentElement.style.setProperty('--background-color', '#F6F0ED');
+                        // Color mode
+                        document.documentElement.style.setProperty('--main-color', savedPrimaryColor);
+                        document.documentElement.style.setProperty('--secondary-color', savedSecondaryColor);
+                        document.documentElement.style.setProperty('--background-color', savedBgColor);
+                        colorControls.style.display = 'block';
                     }
                 }
             }
             
             // Clear all saved data and reset to defaults
-            function clearAllData() {
+            function resetAll() {
                 // Clear localStorage
                 localStorage.clear();
                 
@@ -511,9 +554,16 @@
                 document.documentElement.style.setProperty('--padding', 40);
                 
                 // Reset color mode
-                blackAndWhiteToggle.checked = false;
-                document.documentElement.style.setProperty('--main-color', '#28536B');
-                document.documentElement.style.setProperty('--background-color', '#F6F0ED');
+                blackAndWhiteToggle.checked = true;
+                document.documentElement.style.setProperty('--main-color', '#000');
+                document.documentElement.style.setProperty('--secondary-color', '#555555');
+                document.documentElement.style.setProperty('--background-color', '#fff');
+                document.getElementById('colorControls').style.display = 'none';
+                
+                // Reset color inputs to default values
+                document.getElementById('backgroundColor').value = '#F6F0ED';
+                document.getElementById('primaryColor').value = '#28536B';
+                document.getElementById('secondaryColor').value = '#7EA8BE';
                 
                 // Update the label with reset values
                 updateLabel();
@@ -551,19 +601,48 @@
             });
 
             blackAndWhiteToggle.addEventListener('change', () => {
+                const colorControls = document.getElementById('colorControls');
+                
                 if (blackAndWhiteToggle.checked) {
+                    // Black & White mode
                     document.documentElement.style.setProperty('--main-color', '#000');
+                    document.documentElement.style.setProperty('--secondary-color', '#555555');
                     document.documentElement.style.setProperty('--background-color', '#fff');
+                    colorControls.style.display = 'none';
                 } else {
-                    document.documentElement.style.setProperty('--main-color', '#28536B');
-                    document.documentElement.style.setProperty('--background-color', '#F6F0ED');
+                    // Color mode
+                    const primaryColor = document.getElementById('primaryColor').value;
+                    const secondaryColor = document.getElementById('secondaryColor').value;
+                    const bgColor = document.getElementById('backgroundColor').value;
+                    
+                    document.documentElement.style.setProperty('--main-color', primaryColor);
+                    document.documentElement.style.setProperty('--secondary-color', secondaryColor);
+                    document.documentElement.style.setProperty('--background-color', bgColor);
+                    colorControls.style.display = 'block';
                 }
+                
+                saveToLocalStorage();
+            });
+
+            // Color input event listeners
+            document.getElementById('backgroundColor').addEventListener('input', function() {
+                document.documentElement.style.setProperty('--background-color', this.value);
+                saveToLocalStorage();
+            });
+            
+            document.getElementById('primaryColor').addEventListener('input', function() {
+                document.documentElement.style.setProperty('--main-color', this.value);
+                saveToLocalStorage();
+            });
+            
+            document.getElementById('secondaryColor').addEventListener('input', function() {
+                document.documentElement.style.setProperty('--secondary-color', this.value);
                 saveToLocalStorage();
             });
 
             document.getElementById('saveButton').addEventListener('click', saveAsPNG);
 
-            document.getElementById('clearButton').addEventListener('click', clearAllData);
+            document.getElementById('clearButton').addEventListener('click', resetAll);
 
             // Initial calls
             loadFromLocalStorage(); // Load saved data first
