@@ -306,12 +306,19 @@ button:hover {
 }
 
 .flourish {
-    text-align: center;
-    margin: 8px 0;
-    opacity: 0;
+    position: relative;
+    width: 100%;
+    height: 20px;
     display: flex;
     justify-content: center;
     align-items: center;
+    margin: 10px 0;
+}
+
+.flourish svg {
+    width: 100%;
+    max-width: 200px;
+    height: auto;
 }
 
 .double-border {
@@ -391,68 +398,79 @@ input:checked + .slider:before {
 }
 
 /* Font families for different decoration levels */
+/* Dekorationslevel 0 – Extrem minimalistisch */
 .dec-level-0 .brand-name { font-family: 'Arial', sans-serif; }
 .dec-level-0 .gin-name { font-family: 'Arial', sans-serif; }
 .dec-level-0 .ingredients { font-family: 'Arial', sans-serif; }
 .dec-level-0 .alcohol-content { font-family: 'Arial', sans-serif; }
 .dec-level-0 .amount { font-family: 'Arial', sans-serif; }
 
-.dec-level-1 .brand-name { font-family: 'Playfair Display', serif; }
-.dec-level-1 .gin-name { font-family: 'Playfair Display', serif; }
-.dec-level-1 .ingredients { font-family: 'Playfair Display', serif; }
-.dec-level-1 .alcohol-content { font-family: 'Playfair Display', serif; }
-.dec-level-1 .amount { font-family: 'Playfair Display', serif; }
+/* Dekorationslevel 1 */
+.dec-level-1 .brand-name { font-family: 'Roboto', sans-serif; }
+.dec-level-1 .gin-name { font-family: 'Poppins', sans-serif; }
+.dec-level-1 .ingredients { font-family: 'Roboto', sans-serif; }
+.dec-level-1 .alcohol-content { font-family: 'Roboto', sans-serif; }
+.dec-level-1 .amount { font-family: 'Roboto', sans-serif; }
 
-.dec-level-2 .brand-name { font-family: 'IM Fell English SC', serif; }
-.dec-level-2 .gin-name { font-family: 'IM Fell DW Pica', serif; }
-.dec-level-2 .ingredients { font-family: 'IM Fell DW Pica', serif; }
-.dec-level-2 .alcohol-content { font-family: 'IM Fell DW Pica', serif; }
-.dec-level-2 .amount { font-family: 'IM Fell DW Pica', serif; }
+/* Dekorationslevel 2 */
+.dec-level-2 .brand-name { font-family: 'Lato', sans-serif; }
+.dec-level-2 .gin-name { font-family: 'Playfair Display', serif; }
+.dec-level-2 .ingredients { font-family: 'Lato', sans-serif; }
+.dec-level-2 .alcohol-content { font-family: 'Lato', sans-serif; }
+.dec-level-2 .amount { font-family: 'Lato', sans-serif; }
 
-.dec-level-3 .brand-name { font-family: 'Cinzel Decorative', cursive; }
-.dec-level-3 .gin-name { font-family: 'Playfair Display', serif; }
-.dec-level-3 .ingredients { font-family: 'Playfair Display', serif; }
-.dec-level-3 .alcohol-content { font-family: 'Playfair Display', serif; }
-.dec-level-3 .amount { font-family: 'Playfair Display', serif; }
+/* Dekorationslevel 3 */
+.dec-level-3 .brand-name { font-family: 'Merriweather', serif; }
+.dec-level-3 .gin-name { font-family: 'Marcellus', serif; }
+.dec-level-3 .ingredients { font-family: 'Poppins', sans-serif; }
+.dec-level-3 .alcohol-content { font-family: 'Poppins', sans-serif; }
+.dec-level-3 .amount { font-family: 'Poppins', sans-serif; }
 
-.dec-level-4 .brand-name { font-family: 'UnifrakturMaguntia', cursive; }
-.dec-level-4 .gin-name { font-family: 'Cinzel Decorative', cursive; }
-.dec-level-4 .ingredients { font-family: 'IM Fell DW Pica', serif; }
-.dec-level-4 .alcohol-content { font-family: 'IM Fell DW Pica', serif; }
-.dec-level-4 .amount { font-family: 'IM Fell DW Pica', serif; }
+/* Dekorationslevel 4 */
+.dec-level-4 .brand-name { font-family: 'EB Garamond', serif; }
+.dec-level-4 .gin-name { font-family: 'Prata', serif; }
+.dec-level-4 .ingredients { font-family: 'Merriweather', serif; }
+.dec-level-4 .alcohol-content { font-family: 'Merriweather', serif; }
+.dec-level-4 .amount { font-family: 'Merriweather', serif; }
 
-.dec-level-5 .brand-name { font-family: 'Berkshire Swash', cursive; }
-.dec-level-5 .gin-name { font-family: 'Cinzel Decorative', cursive; }
-.dec-level-5 .ingredients { font-family: 'Playfair Display', serif; }
-.dec-level-5 .alcohol-content { font-family: 'Playfair Display', serif; }
-.dec-level-5 .amount { font-family: 'Playfair Display', serif; }
+/* Dekorationslevel 5 */
+.dec-level-5 .brand-name { font-family: 'Cormorant Garamond', serif; }
+.dec-level-5 .gin-name { font-family: 'Italiana', serif; }
+.dec-level-5 .ingredients { font-family: 'Marcellus', serif; }
+.dec-level-5 .alcohol-content { font-family: 'Marcellus', serif; }
+.dec-level-5 .amount { font-family: 'Marcellus', serif; }
 
-.dec-level-6 .brand-name { font-family: 'Rye', cursive; }
-.dec-level-6 .gin-name { font-family: 'Pirata One', cursive; }
-.dec-level-6 .ingredients { font-family: 'IM Fell DW Pica', serif; }
-.dec-level-6 .alcohol-content { font-family: 'IM Fell DW Pica', serif; }
-.dec-level-6 .amount { font-family: 'IM Fell DW Pica', serif; }
+/* Dekorationslevel 6 */
+.dec-level-6 .brand-name { font-family: 'Cinzel', serif; }
+.dec-level-6 .gin-name { font-family: 'Dancing Script', cursive; }
+.dec-level-6 .ingredients { font-family: 'Cormorant Garamond', serif; }
+.dec-level-6 .alcohol-content { font-family: 'Cormorant Garamond', serif; }
+.dec-level-6 .amount { font-family: 'Cormorant Garamond', serif; }
 
-.dec-level-7 .brand-name { font-family: 'UnifrakturMaguntia', cursive; }
-.dec-level-7 .gin-name { font-family: 'Berkshire Swash', cursive; }
-.dec-level-7 .ingredients { font-family: 'Playfair Display', serif; font-style: italic; }
-.dec-level-7 .alcohol-content { font-family: 'IM Fell English SC', serif; }
-.dec-level-7 .amount { font-family: 'IM Fell English SC', serif; }
+/* Dekorationslevel 7 */
+.dec-level-7 .brand-name { font-family: 'Gloock', serif; }
+.dec-level-7 .gin-name { font-family: 'Great Vibes', cursive; }
+.dec-level-7 .ingredients { font-family: 'Cormorant Garamond', serif; }
+.dec-level-7 .alcohol-content { font-family: 'Cormorant Garamond', serif; }
+.dec-level-7 .amount { font-family: 'Cormorant Garamond', serif; }
 
-.dec-level-8 .brand-name { font-family: 'Ruslan Display', cursive; }
-.dec-level-8 .gin-name { font-family: 'Rye', cursive; }
-.dec-level-8 .ingredients { font-family: 'IM Fell DW Pica', serif; font-style: italic; }
-.dec-level-8 .alcohol-content { font-family: 'Cinzel Decorative', cursive; }
-.dec-level-8 .amount { font-family: 'Cinzel Decorative', cursive; }
+/* Dekorationslevel 8 */
+.dec-level-8 .brand-name { font-family: 'Libre Baskerville', serif; }
+.dec-level-8 .gin-name { font-family: 'Parisienne', cursive; }
+.dec-level-8 .ingredients { font-family: 'Gloock', serif; }
+.dec-level-8 .alcohol-content { font-family: 'Gloock', serif; }
+.dec-level-8 .amount { font-family: 'Gloock', serif; }
 
-.dec-level-9 .brand-name { font-family: 'UnifrakturMaguntia', cursive; }
-.dec-level-9 .gin-name { font-family: 'Pirata One', cursive; }
-.dec-level-9 .ingredients { font-family: 'Playfair Display', serif; font-style: italic; }
-.dec-level-9 .alcohol-content { font-family: 'IM Fell English SC', serif; }
-.dec-level-9 .amount { font-family: 'IM Fell English SC', serif; }
+/* Dekorationslevel 9 */
+.dec-level-9 .brand-name { font-family: 'Old Standard TT', serif; }
+.dec-level-9 .gin-name { font-family: 'Euphoria Script', cursive; }
+.dec-level-9 .ingredients { font-family: 'Libre Baskerville', serif; }
+.dec-level-9 .alcohol-content { font-family: 'Libre Baskerville', serif; }
+.dec-level-9 .amount { font-family: 'Libre Baskerville', serif; }
 
-.dec-level-10 .brand-name { font-family: 'UnifrakturMaguntia', cursive; }
-.dec-level-10 .gin-name { font-family: 'Berkshire Swash', cursive; }
-.dec-level-10 .ingredients { font-family: 'IM Fell DW Pica', serif; font-style: italic; }
-.dec-level-10 .alcohol-content { font-family: 'Cinzel Decorative', cursive; }
-.dec-level-10 .amount { font-family: 'Tangerine', cursive; font-weight: 700; }
+/* Dekorationslevel 10 – Maximale Verzierung */
+.dec-level-10 .brand-name { font-family: 'Uncial Antiqua', cursive; }
+.dec-level-10 .gin-name { font-family: 'Tangerine', cursive; }
+.dec-level-10 .ingredients { font-family: 'Old Standard TT', serif; }
+.dec-level-10 .alcohol-content { font-family: 'Old Standard TT', serif; }
+.dec-level-10 .amount { font-family: 'Old Standard TT', serif; }
