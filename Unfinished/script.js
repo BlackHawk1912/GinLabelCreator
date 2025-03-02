@@ -336,6 +336,13 @@ document.addEventListener('DOMContentLoaded', function() {
     function saveAsPNG() {
         const labelElement = document.querySelector('.label-preview');
         
+        // Get the gin name for the filename
+        let ginName = document.getElementById('ginName').value.trim();
+        // Create a safe filename by removing special characters and limiting length
+        let safeGinName = ginName.replace(/[^\w\s-]/g, '').replace(/\s+/g, '-').toLowerCase();
+        // If gin name is empty, use a default name
+        let fileName = safeGinName ? `${safeGinName}-label.png` : 'gin-label.png';
+        
         // Configure html2canvas with high-quality settings
         const options = {
             scale: 4, // Higher scale for better resolution
@@ -355,7 +362,7 @@ document.addEventListener('DOMContentLoaded', function() {
         html2canvas(labelElement, options).then(canvas => {
             // Create high-quality PNG
             const link = document.createElement('a');
-            link.download = 'gin-label.png';
+            link.download = fileName;
             link.href = canvas.toDataURL('image/png', 1.0); // Use maximum quality (1.0)
             link.click();
         }).catch(error => {
