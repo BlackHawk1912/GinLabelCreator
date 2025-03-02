@@ -89,6 +89,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // Get font boldness
         const brandNameBoldness = document.getElementById('brandNameBoldness').value;
         const ginNameBoldness = document.getElementById('ginNameBoldness').value;
+        const ginNameLineHeight = document.getElementById('ginNameLineHeight').value;
         const ingredientsBoldness = document.getElementById('ingredientsBoldness').value;
         const alcoholContentBoldness = document.getElementById('alcoholContentBoldness').value;
         const amountBoldness = document.getElementById('amountBoldness').value;
@@ -107,6 +108,9 @@ document.addEventListener('DOMContentLoaded', function() {
         document.querySelector('.alcohol-content').style.fontSize = `${alcoholContentSize}px`;
         document.querySelector('.amount').style.fontSize = `${amountSize}px`;
         
+        // Update line height
+        document.querySelector('.gin-name').style.lineHeight = ginNameLineHeight;
+
         // Update font boldness
         document.querySelector('.brand-name').style.fontWeight = brandNameBoldness;
         document.querySelector('.gin-name').style.fontWeight = ginNameBoldness;
@@ -364,6 +368,9 @@ document.addEventListener('DOMContentLoaded', function() {
             localStorage.setItem(id, slider.value);
         });
         
+        // Save line height
+        localStorage.setItem('ginNameLineHeight', document.getElementById('ginNameLineHeight').value);
+        
         // Save decoration level
         localStorage.setItem('decorationLevel', decorationLevelSlider.value);
         
@@ -423,6 +430,12 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
         
+        // Load line height
+        const savedLineHeight = localStorage.getItem('ginNameLineHeight');
+        if (savedLineHeight) {
+            document.getElementById('ginNameLineHeight').value = savedLineHeight;
+        }
+        
         // Load decoration level
         const savedDecorationLevel = localStorage.getItem('decorationLevel');
         if (savedDecorationLevel) {
@@ -479,13 +492,11 @@ document.addEventListener('DOMContentLoaded', function() {
         // Apply saved black and white setting
         if (savedBlackAndWhite === 'true') {
             blackAndWhiteToggle.checked = true;
-            colorControls.style.display = 'none';
             document.documentElement.style.setProperty('--main-color', '#000');
             document.documentElement.style.setProperty('--secondary-color', '#555555');
             document.documentElement.style.setProperty('--background-color', '#fff');
         } else {
             blackAndWhiteToggle.checked = false;
-            colorControls.style.display = 'flex';
             document.documentElement.style.setProperty('--main-color', savedPrimaryColor);
             document.documentElement.style.setProperty('--secondary-color', savedSecondaryColor);
             document.documentElement.style.setProperty('--background-color', savedBgColor);
@@ -677,6 +688,11 @@ document.addEventListener('DOMContentLoaded', function() {
         const ingredientsBoldness = fontWeights[getRandomNumber(0, fontWeights.length - 1)];
         const alcoholContentBoldness = fontWeights[getRandomNumber(0, fontWeights.length - 1)]; // Same random value will be used for both
         
+        // Randomize line heights
+        const ginNameLineHeight = (Math.random() * 1.2 + 0.8).toFixed(1); // Random value between 0.8 and 2
+        
+        document.getElementById('ginNameLineHeight').value = ginNameLineHeight;
+
         document.getElementById('brandNameBoldness').value = brandNameBoldness;
         document.getElementById('ginNameBoldness').value = ginNameBoldness;
         document.getElementById('ingredientsBoldness').value = ingredientsBoldness;
@@ -875,6 +891,25 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Use optimized functions for heavier operations
                 debouncedSaveToLocalStorage();
             });
+        });
+
+        // Line height slider event listener for gin name
+        const ginNameLineHeightSlider = document.getElementById('ginNameLineHeight');
+        const ginNameLineHeightValue = document.getElementById('ginNameLineHeightValue');
+        
+        ginNameLineHeightSlider.addEventListener('input', function() {
+            // Update the value display immediately
+            ginNameLineHeightValue.textContent = this.value;
+            
+            // Update the gin name line height directly for immediate feedback
+            const ginNameEl = document.querySelector('.gin-name');
+            if (ginNameEl) {
+                ginNameEl.style.lineHeight = this.value;
+            }
+            
+            // Use optimized functions for heavier operations
+            debouncedUpdateLabel();
+            debouncedSaveToLocalStorage();
         });
 
         // Decoration level slider with improved performance
