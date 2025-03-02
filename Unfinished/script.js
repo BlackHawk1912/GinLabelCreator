@@ -424,85 +424,193 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    // Clear all saved data and reset to defaults
-    function resetAll() {
-        // Clear localStorage
-        localStorage.clear();
+    // Utility function to get a random number within a range
+    function getRandomNumber(min, max) {
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    // Utility function to get a random color
+    function getRandomColor() {
+        // Generate a color that's visually pleasing - not too dark or too bright
+        const r = getRandomNumber(30, 220);
+        const g = getRandomNumber(30, 220);
+        const b = getRandomNumber(30, 220);
+        return `#${r.toString(16).padStart(2, '0')}${g.toString(16).padStart(2, '0')}${b.toString(16).padStart(2, '0')}`;
+    }
+
+    // Function to randomize all settings
+    function randomize() {
+        // Random gin brand names
+        const brandNames = [
+            "NORTHERN SPIRIT",
+            "ARTISANAL DRY",
+            "BOTANICAL CRAFT",
+            "DISTILLER'S SELECT",
+            "HANDCRAFTED PREMIUM",
+            "WILD HARVEST",
+            "COASTAL RESERVE",
+            "MASTER'S BATCH",
+            "HERITAGE DISTILLED",
+            "SIGNATURE COLLECTION"
+        ];
         
-        // Reset text inputs
-        textInputs.forEach(id => {
-            document.getElementById(id).value = '';
-        });
+        // Random gin names
+        const ginNames = [
+            "London Dry Gin",
+            "Barrel Aged Gin",
+            "Navy Strength Gin",
+            "Old Tom Gin",
+            "Sloe Gin",
+            "Botanical Gin",
+            "Citrus Gin",
+            "Small Batch Gin",
+            "Craft Gin",
+            "Reserve Gin"
+        ];
         
-        // Reset font size sliders to default values
-        document.getElementById('brandNameSize').value = 24;
-        document.getElementById('brandNameSizeValue').textContent = '24px';
-        document.getElementById('ginNameSize').value = 36;
-        document.getElementById('ginNameSizeValue').textContent = '36px';
-        document.getElementById('ingredientsSize').value = 12;
-        document.getElementById('ingredientsSizeValue').textContent = '12px';
-        document.getElementById('alcoholContentSize').value = 14;
-        document.getElementById('alcoholContentSizeValue').textContent = '14px';
-        document.getElementById('amountSize').value = 14;
-        document.getElementById('amountSizeValue').textContent = '14px';
+        // Common gin botanicals
+        const botanicals = [
+            "Juniper Berries",
+            "Coriander Seeds",
+            "Angelica Root",
+            "Orris Root",
+            "Cassia Bark",
+            "Cinnamon",
+            "Lemon Peel",
+            "Orange Peel",
+            "Cardamom",
+            "Licorice Root",
+            "Grains of Paradise",
+            "Cubeb Berries",
+            "Rose Petals",
+            "Lavender",
+            "Elderflower",
+            "Nutmeg",
+            "Ginger"
+        ];
         
-        // Reset font boldness sliders to default values
-        fontBoldnessSliders.forEach(id => {
-            const slider = document.getElementById(id);
-            slider.value = 400;
-            updateFontBoldnessValue(id, 400);
-        });
+        // Random alcohol content values
+        const alcoholContents = [
+            "37.5% ALC/VOL",
+            "40% ALC/VOL",
+            "42.3% ALC/VOL",
+            "43.1% ALC/VOL",
+            "44% ALC/VOL",
+            "45.7% ALC/VOL",
+            "47.3% ALC/VOL",
+            "57% ALC/VOL (NAVY STRENGTH)"
+        ];
         
-        // Reset decoration level
-        decorationLevelSlider.value = 5;
-        decorationLevelValue.textContent = '5';
-        document.documentElement.style.setProperty('--decoration-level', 5);
+        // Random bottle amounts
+        const amounts = [
+            "700ml / 23.7 fl oz",
+            "750ml / 25.4 fl oz",
+            "500ml / 16.9 fl oz",
+            "350ml / 11.8 fl oz",
+            "200ml / 6.8 fl oz",
+            "1L / 33.8 fl oz"
+        ];
         
-        // Reset border thickness
-        borderThicknessSlider.value = 2;
-        borderThicknessValue.textContent = '2px';
-        document.documentElement.style.setProperty('--border-width', '2px');
+        // Randomize text content
+        document.getElementById('brandName').value = brandNames[getRandomNumber(0, brandNames.length - 1)];
+        document.getElementById('ginName').value = ginNames[getRandomNumber(0, ginNames.length - 1)];
         
-        // Reset padding
-        paddingSlider.value = 20;
-        paddingValue.textContent = '20px';
-        document.documentElement.style.setProperty('--padding', 20);
+        // Create random ingredient list with 4-8 botanicals
+        const numBotanicals = getRandomNumber(4, 8);
+        const shuffledBotanicals = [...botanicals].sort(() => 0.5 - Math.random());
+        const selectedBotanicals = shuffledBotanicals.slice(0, numBotanicals);
+        document.getElementById('ingredients').value = selectedBotanicals.join(", ");
         
-        // Reset internal margin
-        internalMarginSlider.value = 10;
-        internalMarginValue.textContent = '10px';
-        document.documentElement.style.setProperty('--internal-margin', '10px');
+        document.getElementById('alcoholContent').value = alcoholContents[getRandomNumber(0, alcoholContents.length - 1)];
+        document.getElementById('amount').value = amounts[getRandomNumber(0, amounts.length - 1)];
         
-        // Reset color mode
-        blackAndWhiteToggle.checked = false;
+        // Randomize font sizes
+        document.getElementById('brandNameSize').value = getRandomNumber(18, 32);
+        document.getElementById('ginNameSize').value = getRandomNumber(28, 48);
+        document.getElementById('ingredientsSize').value = getRandomNumber(10, 14);
+        document.getElementById('alcoholContentSize').value = getRandomNumber(12, 18);
+        document.getElementById('amountSize').value = getRandomNumber(12, 18);
         
-        // Reset colors
-        document.getElementById('backgroundColor').value = '#F6F0ED';
-        document.getElementById('primaryColor').value = '#28536B';
-        document.getElementById('secondaryColor').value = '#7EA8BE';
+        // Randomize font weights
+        const fontWeights = [100, 200, 300, 400, 500, 600, 700, 800, 900];
+        document.getElementById('brandNameBoldness').value = fontWeights[getRandomNumber(0, fontWeights.length - 1)];
+        document.getElementById('ginNameBoldness').value = fontWeights[getRandomNumber(0, fontWeights.length - 1)];
+        document.getElementById('ingredientsBoldness').value = fontWeights[getRandomNumber(0, fontWeights.length - 1)];
+        document.getElementById('alcoholContentBoldness').value = fontWeights[getRandomNumber(0, fontWeights.length - 1)];
+        document.getElementById('amountBoldness').value = fontWeights[getRandomNumber(0, fontWeights.length - 1)];
         
-        document.documentElement.style.setProperty('--main-color', '#28536B');
-        document.documentElement.style.setProperty('--secondary-color', '#7EA8BE');
-        document.documentElement.style.setProperty('--background-color', '#F6F0ED');
+        // Randomize decoration and border
+        document.getElementById('decorationLevel').value = getRandomNumber(3, 8);
+        document.getElementById('borderThickness').value = getRandomNumber(1, 5);
         
-        document.getElementById('colorControls').style.display = 'block';
+        // Randomize padding and margins
+        document.getElementById('padding').value = getRandomNumber(25, 60);
+        document.getElementById('internalMargin').value = getRandomNumber(5, 20);
         
-        // Update the preview
+        // Randomly decide if we should use colors
+        const useColors = Math.random() > 0.5;
+        document.getElementById('blackAndWhite').checked = !useColors;
+        
+        if (useColors) {
+            // Randomize colors with pleasing combinations
+            const backgroundColor = getRandomColor();
+            const primaryColor = getRandomColor();
+            const secondaryColor = getRandomColor();
+            
+            document.getElementById('backgroundColor').value = backgroundColor;
+            document.getElementById('primaryColor').value = primaryColor;
+            document.getElementById('secondaryColor').value = secondaryColor;
+            
+            document.documentElement.style.setProperty('--background-color', backgroundColor);
+            document.documentElement.style.setProperty('--main-color', primaryColor);
+            document.documentElement.style.setProperty('--secondary-color', secondaryColor);
+            document.getElementById('colorControls').style.display = 'block';
+        } else {
+            // Black & White mode
+            document.documentElement.style.setProperty('--main-color', '#000');
+            document.documentElement.style.setProperty('--secondary-color', '#555555');
+            document.documentElement.style.setProperty('--background-color', '#fff');
+            document.getElementById('colorControls').style.display = 'none';
+        }
+        
+        // Update all slider value displays
+        updateFontSizeValues();
+        updateFontBoldnessValues();
+        updateDecorationLevelValue();
+        updateOtherValues();
+        
+        // Update the label with new values
         updateLabel();
         updateDecorationLevel();
         
-        // Initialize padding value on page load
-        document.documentElement.style.setProperty('--padding', paddingSlider.value);
-        paddingValue.textContent = `${paddingSlider.value}px`;
-        
-        // Initialize internal margin value on page load
-        document.documentElement.style.setProperty('--internal-margin', internalMarginSlider.value + 'px');
-        internalMarginValue.textContent = `${internalMarginSlider.value}px`;
-        
-        // Hide all font size and boldness sliders since all inputs are empty
-        textInputs.forEach(id => {
-            toggleSliderVisibility(id, '');
+        // Save to local storage
+        saveToLocalStorage();
+    }
+    
+    // Helper functions to update values
+    function updateFontSizeValues() {
+        fontSizeSliders.forEach(id => {
+            const value = document.getElementById(id).value;
+            document.getElementById(`${id}Value`).textContent = `${value}px`;
         });
+    }
+    
+    function updateFontBoldnessValues() {
+        fontBoldnessSliders.forEach(id => {
+            const value = document.getElementById(id).value;
+            updateFontBoldnessValue(id, value);
+        });
+    }
+    
+    function updateDecorationLevelValue() {
+        const value = decorationLevelSlider.value;
+        decorationLevelValue.textContent = value;
+    }
+    
+    function updateOtherValues() {
+        borderThicknessValue.textContent = `${borderThicknessSlider.value}px`;
+        paddingValue.textContent = `${paddingSlider.value}px`;
+        internalMarginValue.textContent = `${internalMarginSlider.value}px`;
     }
 
     // Debounce function to limit how often a function is called
@@ -564,6 +672,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 debouncedUpdateLabel();
                 debouncedSaveToLocalStorage();
             });
+            
+            // Check initial state and show sliders for non-empty inputs
+            const initialValue = document.getElementById(id).value;
+            toggleSliderVisibility(id, initialValue);
         });
         
         // Font size slider event listeners with improved performance
@@ -704,7 +816,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         document.getElementById('saveButton').addEventListener('click', saveAsPNG);
 
-        document.getElementById('clearButton').addEventListener('click', resetAll);
+        document.getElementById('randomizeButton').addEventListener('click', randomize);
         
         // Initialize padding value on page load
         document.documentElement.style.setProperty('--padding', paddingSlider.value);

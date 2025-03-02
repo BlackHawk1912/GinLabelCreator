@@ -199,8 +199,7 @@ textarea {
 }
 
 .slider-value {
-    flex: 0 0 50px;
-    text-align: right;
+    width: 80px;
 }
 
 /* Medium screens - adjust control layout */
@@ -220,10 +219,11 @@ textarea {
 }
 
 button {
+    display: inline-block;
+    padding: 8px 15px;
     background-color: var(--main-color);
     color: var(--background-color);
-    border: 1px solid var(--main-color);
-    padding: 10px 15px;
+    border: none;
     margin: 10px 5px;
     border-radius: 5px;
     cursor: pointer;
@@ -246,6 +246,32 @@ button:hover {
     background-color: white;
     color: #a83232;
     border: 1px solid #a83232;
+}
+
+#randomizeButton {
+    background-color: #6d28d9;
+    color: white;
+    font-weight: bold;
+    padding: 10px 20px;
+    font-size: 18px;
+    display: block;
+    width: 100%;
+    max-width: 300px;
+    margin: 0 auto;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+#randomizeButton:hover {
+    background-color: #5b21b6;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+}
+
+#randomizeButton:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .brand-name {
@@ -827,7 +853,6 @@ input:checked + .slider:before {
 /* Tab System Styling */
 .tab-container {
     width: 100%;
-    margin-bottom: 20px;
 }
 
 .tab-navigation {
@@ -866,6 +891,7 @@ input:checked + .slider:before {
 .tab-content {
     display: none;
     padding: 30px;
+    padding-bottom: 0px;
     background-color: #fff;
     border-radius: 0 0 8px 8px;
 }
@@ -879,7 +905,6 @@ input:checked + .slider:before {
     font-weight: bold;
     margin: 10px 0;
     padding-bottom: 5px;
-    color: var(--main-color);
 }
 
 /* Accordion for mobile view */
