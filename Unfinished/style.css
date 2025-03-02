@@ -5,6 +5,7 @@
     --secondary-color: #555555;
     --background-color: #fff;
     --border-width: 2px;
+    --internal-margin: 10px;
 }
 
 * {
@@ -81,7 +82,7 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    gap: 10px;
+    gap: var(--internal-margin);
     z-index: 1;
 }
 
@@ -174,11 +175,11 @@ button:hover {
 }
 
 .gin-name {
-    margin-bottom: 15px;
+    margin-bottom: calc(var(--internal-margin) * 1.2);
 }
 
 .ingredients, .alcohol-content, .amount {
-    margin-bottom: 10px;
+    margin-bottom: calc(var(--internal-margin) * 1.2);
 }
 
 .bottom-info {
@@ -261,7 +262,7 @@ button:hover {
 .divider {
     height: 2px;
     background-color: var(--secondary-color);
-    margin: 10px 0;
+    margin: var(--internal-margin) 0;
     position: relative;
     opacity: 0;
 }
@@ -408,7 +409,7 @@ button:hover {
     background: none;
     border: none;
     position: relative;
-    margin: 15px 0;
+    margin: calc(var(--internal-margin) * 1.2) 0;
 }
 
 .dec-level-7 .divider::before,
@@ -453,7 +454,7 @@ button:hover {
 /* Level 8: More pronounced wavy divider */
 .dec-level-8 .divider {
     height: 15px;
-    margin: 18px 0;
+    margin: calc(var(--internal-margin) * 1.3) 0;
 }
 
 .dec-level-8 .divider::before,
@@ -468,7 +469,7 @@ button:hover {
 /* Level 9: Deeper wavy divider */
 .dec-level-9 .divider {
     height: 18px;
-    margin: 20px 0;
+    margin: calc(var(--internal-margin) * 1.4) 0;
 }
 
 .dec-level-9 .divider::before,
@@ -483,7 +484,7 @@ button:hover {
 /* Level 10: Double wavy divider */
 .dec-level-10 .divider {
     height: 20px;
-    margin: 22px 0;
+    margin: calc(var(--internal-margin) * 1.5) 0;
 }
 
 .dec-level-10 .divider::before,
@@ -536,7 +537,7 @@ button:hover {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 10px 0;
+    margin: var(--internal-margin) 0;
 }
 
 .flourish svg {

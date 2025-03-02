@@ -115,6 +115,14 @@
             </div>
             
             <div class="control-group">
+                <div class="slider-container">
+                    <label for="internalMargin">Internal Margin (px):</label>
+                    <input type="range" id="internalMargin" min="0" max="30" value="10">
+                    <span id="internalMarginValue" class="slider-value">10px</span>
+                </div>
+            </div>
+            
+            <div class="control-group">
                 <div class="toggle-container">
                     <label for="blackAndWhite">Black & White Only:</label>
                     <label class="toggle-switch">
@@ -222,6 +230,8 @@
             const blackAndWhiteToggle = document.getElementById('blackAndWhite');
             const paddingSlider = document.getElementById('padding');
             const paddingValue = document.getElementById('paddingValue');
+            const internalMarginSlider = document.getElementById('internalMargin');
+            const internalMarginValue = document.getElementById('internalMarginValue');
             const colorControls = document.getElementById('colorControls');
             const backgroundColorInput = document.getElementById('backgroundColor');
             const primaryColorInput = document.getElementById('primaryColor');
@@ -490,6 +500,9 @@
                 // Save padding
                 localStorage.setItem('padding', paddingSlider.value);
                 
+                // Save internal margin
+                localStorage.setItem('internalMargin', internalMarginSlider.value);
+                
                 // Save color mode
                 localStorage.setItem('blackAndWhite', blackAndWhiteToggle.checked);
                 
@@ -550,6 +563,14 @@
                     paddingSlider.value = savedPadding;
                     paddingValue.textContent = `${savedPadding}px`;
                     document.documentElement.style.setProperty('--padding', savedPadding);
+                }
+                
+                // Load internal margin
+                const savedInternalMargin = localStorage.getItem('internalMargin');
+                if (savedInternalMargin) {
+                    internalMarginSlider.value = savedInternalMargin;
+                    internalMarginValue.textContent = `${savedInternalMargin}px`;
+                    document.documentElement.style.setProperty('--internal-margin', savedInternalMargin + 'px');
                 }
                 
                 // Load color mode and colors
@@ -632,6 +653,11 @@
                 paddingSlider.value = 20;
                 paddingValue.textContent = '20px';
                 document.documentElement.style.setProperty('--padding', 20);
+                
+                // Reset internal margin
+                internalMarginSlider.value = 10;
+                internalMarginValue.textContent = '10px';
+                document.documentElement.style.setProperty('--internal-margin', '10px');
                 
                 // Reset color mode
                 blackAndWhiteToggle.checked = false;
@@ -788,6 +814,19 @@
                 debouncedSaveToLocalStorage();
             });
 
+            // Internal margin slider with improved performance
+            internalMarginSlider.addEventListener('input', function() {
+                // Update the value display immediately
+                internalMarginValue.textContent = `${this.value}px`;
+                
+                // Set the CSS property immediately
+                document.documentElement.style.setProperty('--internal-margin', this.value + 'px');
+                
+                // Use optimized functions for heavier operations
+                debouncedUpdateLabel();
+                debouncedSaveToLocalStorage();
+            });
+
             blackAndWhiteToggle.addEventListener('change', () => {
                 const colorControls = document.getElementById('colorControls');
                 
@@ -840,6 +879,10 @@
             // Initialize padding value on page load
             document.documentElement.style.setProperty('--padding', paddingSlider.value);
             paddingValue.textContent = `${paddingSlider.value}px`;
+            
+            // Initialize internal margin value on page load
+            document.documentElement.style.setProperty('--internal-margin', internalMarginSlider.value + 'px');
+            internalMarginValue.textContent = `${internalMarginSlider.value}px`;
         });
     </script>
 </body>
