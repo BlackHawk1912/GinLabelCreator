@@ -260,6 +260,26 @@
                         flourishElements[1].style.display = 'none';
                     }
                 }
+                
+                // Handle bottom info layout - center when only one item is present
+                const bottomInfo = document.querySelector('.bottom-info');
+                const amountElement = document.querySelector('.amount');
+                const alcoholContentElement = document.querySelector('.alcohol-content');
+                
+                if (alcoholContent.trim() !== '' && amount.trim() !== '') {
+                    // Both present - use space-between layout
+                    bottomInfo.style.justifyContent = 'space-between';
+                    amountElement.style.textAlign = 'left';
+                    alcoholContentElement.style.textAlign = 'right';
+                } else if (alcoholContent.trim() !== '') {
+                    // Only alcohol content - center it
+                    bottomInfo.style.justifyContent = 'center';
+                    alcoholContentElement.style.textAlign = 'center';
+                } else if (amount.trim() !== '') {
+                    // Only amount - center it
+                    bottomInfo.style.justifyContent = 'center';
+                    amountElement.style.textAlign = 'center';
+                }
             }
 
             function updateDecorationLevel() {
