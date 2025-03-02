@@ -824,3 +824,7 @@ input:checked + .slider:before {
 .dec-level-10 .ingredients { font-family: 'Old Standard TT', serif; }
 .dec-level-10 .alcohol-content { font-family: 'Old Standard TT', serif; }
 .dec-level-10 .amount { font-family: 'Old Standard TT', serif; }
+
+.preview-container button {
+    margin-top: 20px;
+}
