@@ -20,7 +20,7 @@
                 <input type="text" id="brandName" value="ARTISANAL LONDON DRY">
                 <div class="slider-container">
                     <label for="brandNameSize">Font Size:</label>
-                    <input type="range" id="brandNameSize" min="0" max="72" value="24">
+                    <input type="range" id="brandNameSize" min="0" max="100" value="24">
                     <span id="brandNameSizeValue" class="slider-value">24px</span>
                 </div>
             </div>
@@ -30,7 +30,7 @@
                 <input type="text" id="ginName" value="JUNIPER BOTANIST">
                 <div class="slider-container">
                     <label for="ginNameSize">Font Size:</label>
-                    <input type="range" id="ginNameSize" min="0" max="72" value="36">
+                    <input type="range" id="ginNameSize" min="0" max="100" value="36">
                     <span id="ginNameSizeValue" class="slider-value">36px</span>
                 </div>
             </div>
@@ -40,7 +40,7 @@
                 <textarea id="ingredients">Handcrafted with juniper berries, coriander seed, angelica root, orris root, licorice, cassia bark, and a hint of citrus</textarea>
                 <div class="slider-container">
                     <label for="ingredientsSize">Font Size:</label>
-                    <input type="range" id="ingredientsSize" min="0" max="72" value="12">
+                    <input type="range" id="ingredientsSize" min="0" max="100" value="12">
                     <span id="ingredientsSizeValue" class="slider-value">12px</span>
                 </div>
             </div>
@@ -50,7 +50,7 @@
                 <input type="text" id="alcoholContent" value="43.5% ABV">
                 <div class="slider-container">
                     <label for="alcoholContentSize">Font Size:</label>
-                    <input type="range" id="alcoholContentSize" min="0" max="72" value="14">
+                    <input type="range" id="alcoholContentSize" min="0" max="100" value="14">
                     <span id="alcoholContentSizeValue" class="slider-value">14px</span>
                 </div>
             </div>
@@ -60,7 +60,7 @@
                 <input type="text" id="amount" value="750ml / 25.4 fl oz">
                 <div class="slider-container">
                     <label for="amountSize">Font Size:</label>
-                    <input type="range" id="amountSize" min="0" max="72" value="14">
+                    <input type="range" id="amountSize" min="0" max="100" value="14">
                     <span id="amountSizeValue" class="slider-value">14px</span>
                 </div>
             </div>
@@ -538,10 +538,15 @@
                 
                 // Reset font size sliders to default values
                 document.getElementById('brandNameSize').value = 24;
+                document.getElementById('brandNameSizeValue').textContent = '24px';
                 document.getElementById('ginNameSize').value = 36;
+                document.getElementById('ginNameSizeValue').textContent = '36px';
                 document.getElementById('ingredientsSize').value = 12;
+                document.getElementById('ingredientsSizeValue').textContent = '12px';
                 document.getElementById('alcoholContentSize').value = 14;
+                document.getElementById('alcoholContentSizeValue').textContent = '14px';
                 document.getElementById('amountSize').value = 14;
+                document.getElementById('amountSizeValue').textContent = '14px';
                 
                 // Reset decoration level
                 decorationLevelSlider.value = 5;
@@ -580,7 +585,9 @@
 
             fontSizeSliders.forEach(id => {
                 const slider = document.getElementById(id);
+                const valueSpan = document.getElementById(`${id}Value`);
                 slider.addEventListener('input', () => {
+                    valueSpan.textContent = `${slider.value}px`;
                     updateLabel();
                     saveToLocalStorage();
                 });
