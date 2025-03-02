@@ -19,6 +19,15 @@ document.addEventListener('DOMContentLoaded', function() {
     const primaryColorInput = document.getElementById('primaryColor');
     const secondaryColorInput = document.getElementById('secondaryColor');
 
+    // Track which inputs have been modified by the user
+    const userModifiedInputs = {
+        brandName: false,
+        ginName: false,
+        ingredients: false,
+        alcoholContent: false,
+        amount: false
+    };
+
     // Tab Functionality
     function setupTabs() {
         const tabButtons = document.querySelectorAll('.tab-button');
@@ -377,6 +386,12 @@ document.addEventListener('DOMContentLoaded', function() {
         localStorage.setItem('backgroundColor', backgroundColorInput.value);
         localStorage.setItem('primaryColor', primaryColorInput.value);
         localStorage.setItem('secondaryColor', secondaryColorInput.value);
+        
+        // Save user modified inputs status
+        localStorage.setItem('userModifiedInputs', JSON.stringify(userModifiedInputs));
+        
+        // Save a marker that we have settings saved
+        localStorage.setItem('labelSettings', 'true');
     }
     
     // Load saved values from localStorage
@@ -387,9 +402,6 @@ document.addEventListener('DOMContentLoaded', function() {
             if (savedValue) {
                 document.getElementById(id).value = savedValue;
             }
-            
-            // Toggle visibility based on loaded value
-            toggleSliderVisibility(id, document.getElementById(id).value);
         });
         
         // Load font size sliders
@@ -416,7 +428,6 @@ document.addEventListener('DOMContentLoaded', function() {
         if (savedDecorationLevel) {
             decorationLevelSlider.value = savedDecorationLevel;
             decorationLevelValue.textContent = savedDecorationLevel;
-            document.documentElement.style.setProperty('--decoration-level', savedDecorationLevel);
         }
         
         // Load border thickness
@@ -424,7 +435,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (savedBorderThickness) {
             borderThicknessSlider.value = savedBorderThickness;
             borderThicknessValue.textContent = `${savedBorderThickness}px`;
-            document.documentElement.style.setProperty('--border-width', savedBorderThickness + 'px');
+            document.documentElement.style.setProperty('--border-thickness', savedBorderThickness);
         }
         
         // Load padding
@@ -460,34 +471,33 @@ document.addEventListener('DOMContentLoaded', function() {
         const savedPrimaryColor = localStorage.getItem('primaryColor') || '#28536B';
         const savedSecondaryColor = localStorage.getItem('secondaryColor') || '#7EA8BE';
         
-        document.getElementById('backgroundColor').value = savedBgColor;
-        document.getElementById('primaryColor').value = savedPrimaryColor;
-        document.getElementById('secondaryColor').value = savedSecondaryColor;
+        // Set color inputs
+        backgroundColorInput.value = savedBgColor;
+        primaryColorInput.value = savedPrimaryColor;
+        secondaryColorInput.value = savedSecondaryColor;
         
-        if (savedBlackAndWhite !== null) {
-            blackAndWhiteToggle.checked = savedBlackAndWhite === 'true';
-            if (blackAndWhiteToggle.checked) {
-                // Black & White mode
-                document.documentElement.style.setProperty('--main-color', '#000');
-                document.documentElement.style.setProperty('--secondary-color', '#555555');
-                document.documentElement.style.setProperty('--background-color', '#fff');
-                colorControls.style.display = 'none';
-            } else {
-                // Color mode
-                document.documentElement.style.setProperty('--main-color', savedPrimaryColor);
-                document.documentElement.style.setProperty('--secondary-color', savedSecondaryColor);
-                document.documentElement.style.setProperty('--background-color', savedBgColor);
-                colorControls.style.display = 'block';
-            }
+        // Apply saved black and white setting
+        if (savedBlackAndWhite === 'true') {
+            blackAndWhiteToggle.checked = true;
+            colorControls.style.display = 'none';
+            document.documentElement.style.setProperty('--main-color', '#000');
+            document.documentElement.style.setProperty('--secondary-color', '#555555');
+            document.documentElement.style.setProperty('--background-color', '#fff');
+        } else {
+            blackAndWhiteToggle.checked = false;
+            colorControls.style.display = 'flex';
+            document.documentElement.style.setProperty('--main-color', savedPrimaryColor);
+            document.documentElement.style.setProperty('--secondary-color', savedSecondaryColor);
+            document.documentElement.style.setProperty('--background-color', savedBgColor);
         }
         
-        // Set initial visibility of font size and boldness sliders based on input values
-        textInputs.forEach(id => {
-            const initialValue = document.getElementById(id).value;
-            toggleSliderVisibility(id, initialValue);
-        });
+        // Load user modified inputs status
+        const savedUserModifiedInputs = localStorage.getItem('userModifiedInputs');
+        if (savedUserModifiedInputs) {
+            Object.assign(userModifiedInputs, JSON.parse(savedUserModifiedInputs));
+        }
         
-        // Call updateLabel to ensure all elements are properly aligned
+        // Update the label with loaded values
         updateLabel();
         updateDecorationLevel();
     }
@@ -626,17 +636,27 @@ document.addEventListener('DOMContentLoaded', function() {
         ];
         
         // Randomize text content
-        document.getElementById('brandName').value = brandNames[getRandomNumber(0, brandNames.length - 1)];
-        document.getElementById('ginName').value = ginNames[getRandomNumber(0, ginNames.length - 1)];
+        if (!userModifiedInputs.brandName) {
+            document.getElementById('brandName').value = brandNames[getRandomNumber(0, brandNames.length - 1)];
+        }
+        if (!userModifiedInputs.ginName) {
+            document.getElementById('ginName').value = ginNames[getRandomNumber(0, ginNames.length - 1)];
+        }
         
         // Create random ingredient list with 4-8 botanicals
-        const numBotanicals = getRandomNumber(4, 8);
-        const shuffledBotanicals = [...botanicals].sort(() => 0.5 - Math.random());
-        const selectedBotanicals = shuffledBotanicals.slice(0, numBotanicals);
-        document.getElementById('ingredients').value = selectedBotanicals.join(", ");
+        if (!userModifiedInputs.ingredients) {
+            const numBotanicals = getRandomNumber(4, 8);
+            const shuffledBotanicals = [...botanicals].sort(() => 0.5 - Math.random());
+            const selectedBotanicals = shuffledBotanicals.slice(0, numBotanicals);
+            document.getElementById('ingredients').value = selectedBotanicals.join(", ");
+        }
         
-        document.getElementById('alcoholContent').value = alcoholContents[getRandomNumber(0, alcoholContents.length - 1)];
-        document.getElementById('amount').value = amounts[getRandomNumber(0, amounts.length - 1)];
+        if (!userModifiedInputs.alcoholContent) {
+            document.getElementById('alcoholContent').value = alcoholContents[getRandomNumber(0, alcoholContents.length - 1)];
+        }
+        if (!userModifiedInputs.amount) {
+            document.getElementById('amount').value = amounts[getRandomNumber(0, amounts.length - 1)];
+        }
         
         // Randomize font sizes
         const brandNameSize = getRandomNumber(18, 24);
@@ -799,6 +819,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 
                 // Toggle slider visibility based on input value
                 toggleSliderVisibility(id, inputValue);
+                
+                // Mark input as user-modified
+                userModifiedInputs[id] = true;
                 
                 debouncedUpdateLabel();
                 debouncedSaveToLocalStorage();
