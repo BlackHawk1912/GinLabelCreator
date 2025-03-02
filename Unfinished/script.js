@@ -283,11 +283,33 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function saveAsPNG() {
-        html2canvas(document.querySelector('.label-preview')).then(canvas => {
+        const labelElement = document.querySelector('.label-preview');
+        
+        // Configure html2canvas with high-quality settings
+        const options = {
+            scale: 4, // Higher scale for better resolution
+            useCORS: true, // Enable CORS to properly load external resources
+            allowTaint: true, // Allow cross-origin images
+            backgroundColor: null, // Transparent background
+            logging: false, // Disable logging
+            imageTimeout: 0, // No timeout for image loading
+            letterRendering: true, // Better text rendering
+            removeContainer: true, // Clean up after rendering
+            ignoreElements: (element) => {
+                // Ignore elements that might cause issues
+                return element.classList && element.classList.contains('no-export');
+            }
+        };
+        
+        html2canvas(labelElement, options).then(canvas => {
+            // Create high-quality PNG
             const link = document.createElement('a');
-            link.download = 'label.png';
-            link.href = canvas.toDataURL();
+            link.download = 'gin-label.png';
+            link.href = canvas.toDataURL('image/png', 1.0); // Use maximum quality (1.0)
             link.click();
+        }).catch(error => {
+            console.error('Error generating PNG:', error);
+            alert('There was an error generating your label. Please try again.');
         });
     }
 
