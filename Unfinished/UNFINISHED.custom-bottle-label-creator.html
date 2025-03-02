@@ -255,6 +255,30 @@
                     bottomInfoEl.style.display = 'flex';
                 }
                 
+                // Handle flourish decorations - only show when text before and after are not empty
+                const flourishElements = document.querySelectorAll('.flourish.decoration');
+                
+                // First flourish - between brand-name and gin-name
+                const brandNameEl = document.querySelector('.brand-name');
+                const ginNameEl = document.querySelector('.gin-name');
+                if (flourishElements[0]) {
+                    if (brandNameEl.style.display === 'none' || ginNameEl.style.display === 'none') {
+                        flourishElements[0].style.display = 'none';
+                    } else {
+                        flourishElements[0].style.display = 'block';
+                    }
+                }
+                
+                // Second flourish - between ingredients and bottom-info
+                const ingredientsEl = document.querySelector('.ingredients');
+                if (flourishElements[1]) {
+                    if (ingredientsEl.style.display === 'none' || bottomInfoEl.style.display === 'none') {
+                        flourishElements[1].style.display = 'none';
+                    } else {
+                        flourishElements[1].style.display = 'block';
+                    }
+                }
+                
                 // Adjust layout to prevent overflow
                 adjustLayout();
             }
