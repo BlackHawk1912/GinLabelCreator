@@ -3,705 +3,278 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<script src="script.js"></script>
-    <title>Gin Bottle Label Creator</title>
-    <style>
-        * {
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Georgia', serif;
-            max-width: 100%;
-            margin: 0 auto;
-            padding: 10px;
-            background-color: #f8f8f8;
-            line-height: 1.5;
-        }
-        
-        h1, h2 {
-            text-align: center;
-        }
-        
-        .container {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-        
-        .form-container {
-            background-color: white;
-            padding: 15px;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-        
-        .form-group {
-            margin-bottom: 15px;
-        }
-        
-        label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-        }
-        
-        input, textarea, select {
-            width: 100%;
-            padding: 8px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            font-family: inherit;
-        }
-        
-        textarea {
-            height: 100px;
-            resize: vertical;
-        }
-        
-        button {
-            background-color: #333;
-            color: white;
-            border: none;
-            padding: 10px 15px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 16px;
-            width: 100%;
-        }
-        
-        button:hover {
-            background-color: #555;
-        }
-        
-        .checkbox-group {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        
-        .checkbox-group input {
-            width: auto;
-        }
-        
-        .slider-container {
-            margin-top: 5px;
-        }
-        
-        .slider-label {
-            display: flex;
-            justify-content: space-between;
-            font-size: 12px;
-        }
-        
-        .controls-section {
-            border-top: 1px solid #ddd;
-            margin-top: 20px;
-            padding-top: 15px;
-        }
-        
-        .accordion {
-            background-color: #f1f1f1;
-            color: #333;
-            cursor: pointer;
-            padding: 12px;
-            width: 100%;
-            text-align: left;
-            border: none;
-            outline: none;
-            transition: 0.4s;
-            margin-bottom: 10px;
-            font-weight: bold;
-            border-radius: 4px;
-        }
-        
-        .accordion:hover {
-            background-color: #ddd;
-        }
-        
-        .panel {
-            padding: 0 12px;
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.2s ease-out;
-            background-color: white;
-        }
-        
-        .active {
-            background-color: #e0e0e0;
-        }
-        
-        .label-preview {
-            background-color: white;
-            padding: 15px;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        
-        .gin-label {
-            width: 100%;
-            max-width: 350px;
-            min-height: 350px;
-            border: 5px double #000;
-            margin: 0 auto;
-            padding: 10px;
-            background-color: white;
-            position: relative;
-            font-family: 'Georgia', serif;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            aspect-ratio: 1/1;
-        }
-        
-        .gin-name {
-            font-size: 40px;
-            text-align: center;
-            font-weight: bold;
-            margin-top: 40px;
-            margin-bottom: 0;
-            letter-spacing: 2px;
-            line-height: 1.1;
-            position: relative;
-            z-index: 2;
-            word-wrap: break-word;
-            overflow-wrap: break-word;
-            padding: 0 5px;
-        }
-        
-        .gin-type {
-            font-size: 24px;
-            text-align: center;
-            margin-bottom: 5px;
-            font-style: italic;
-            position: relative;
-            z-index: 2;
-            word-wrap: break-word;
-            overflow-wrap: break-word;
-            padding: 0 5px;
-        }
-        
-        .divider {
-            border-top: 1px solid black;
-            margin: 5px 20px;
-            position: relative;
-            z-index: 2;
-        }
-        
-        .abv {
-            font-size: 24px;
-            text-align: center;
-            margin: 5px 0;
-            font-weight: bold;
-            position: relative;
-            z-index: 2;
-        }
-        
-        .ingredients {
-            font-size: 14px;
-            padding: 5px 0;
-            text-align: center;
-            margin-bottom: 40px;
-            position: relative;
-            z-index: 2;
-            word-wrap: break-word;
-            overflow-wrap: break-word;
-            padding: 0 10px;
-        }
-        
-        .ornament {
-            text-align: center;
-            font-size: 24px;
-            margin: 0;
-            line-height: 1;
-            position: relative;
-            z-index: 1;
-        }
-        
-        .ornament-layer {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 1;
-        }
-        
-        .corner {
-            position: absolute;
-            font-size: 32px;
-        }
-        
-        .top-left {
-            top: 5px;
-            left: 5px;
-        }
-        
-        .top-right {
-            top: 5px;
-            right: 5px;
-        }
-        
-        .bottom-left {
-            bottom: 5px;
-            left: 5px;
-        }
-        
-        .bottom-right {
-            bottom: 5px;
-            right: 5px;
-        }
-        
-        .border-pattern {
-            position: absolute;
-            font-size: 12px;
-            display: flex;
-        }
-        
-        .top-border {
-            top: 5px;
-            left: 40px;
-            right: 40px;
-            justify-content: center;
-        }
-        
-        .bottom-border {
-            bottom: 5px;
-            left: 40px;
-            right: 40px;
-            justify-content: center;
-        }
-        
-        .left-border {
-            left: 5px;
-            top: 40px;
-            bottom: 40px;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .right-border {
-            right: 5px;
-            top: 40px;
-            bottom: 40px;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .frame {
-            border: 1px solid black;
-            position: absolute;
-            top: 35px;
-            left: 35px;
-            right: 35px;
-            bottom: 35px;
-            pointer-events: none;
-            z-index: 1;
-        }
-        
-        .secondary-frame {
-            border: 2px solid black;
-            position: absolute;
-            top: 45px;
-            left: 45px;
-            right: 45px;
-            bottom: 45px;
-            pointer-events: none;
-            z-index: 1;
-        }
-        
-        .baroque-top {
-            position: absolute;
-            top: 15px;
-            left: 0;
-            right: 0;
-            text-align: center;
-            font-size: 20px;
-            z-index: 1;
-        }
-        
-        .baroque-bottom {
-            position: absolute;
-            bottom: 15px;
-            left: 0;
-            right: 0;
-            text-align: center;
-            font-size: 20px;
-            z-index: 1;
-        }
-        
-        .print-btn {
-            margin-top: 20px;
-            background-color: #444;
-            max-width: 200px;
-        }
-        
-        /* Mobile-friendly adjustments */
-        @media (min-width: 768px) {
-            .container {
-                flex-direction: row;
-                align-items: flex-start;
-            }
-            
-            .form-container, .label-preview {
-                flex: 1;
-            }
-            
-            .gin-label {
-                height: 350px; /* Fixed height for desktop */
-            }
-            
-            button {
-                width: auto;
-            }
-        }
-        
-        @media print {
-            body * {
-                visibility: hidden;
-            }
-            .gin-label, .gin-label * {
-                visibility: visible;
-            }
-            .gin-label {
-                position: absolute;
-                left: 0;
-                top: 0;
-                border: 5px double #000 !important;
-                print-color-adjust: exact;
-                -webkit-print-color-adjust: exact;
-            }
-        }
-    </style>
+    <title>Custom Gin Bottle Label Creator</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Poppins:wght@400;700&family=Lato:wght@400;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Merriweather:wght@400;700&family=Marcellus:wght@400;700&family=EB+Garamond:wght@400;700&family=Prata&family=Cormorant+Garamond:wght@400;700&family=Italiana&family=Cinzel:wght@400;700&family=Dancing+Script:wght@400;700&family=Gloock&family=Great+Vibes&family=Libre+Baskerville:wght@400;700&family=Parisienne&family=Old+Standard+TT&family=Euphoria+Script&family=Uncial+Antiqua&family=Tangerine:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 </head>
 <body>
-    <h1>Black & White Gin Bottle Label Creator</h1>
+    <h1>Custom Gin Bottle Label Creator</h1>
     
     <div class="container">
-        <div class="form-container">
-            <h2>Enter Label Information</h2>
-            <div class="form-group">
-                <label for="ginName">Gin Name:</label>
-                <input type="text" id="ginName" placeholder="e.g. Juniper Crown" value="Juniper Crown">
-                <div class="slider-container">
-                    <label for="ginNameSize">Text Size: <span id="ginNameSizeValue">40</span>px</label>
-                    <input type="range" id="ginNameSize" min="20" max="60" value="40" class="slider">
-                </div>
-            </div>
-            
-            <div class="form-group">
-                <div class="checkbox-group">
-                    <input type="checkbox" id="useAllCaps" checked>
-                    <label for="useAllCaps">Use ALL CAPS for gin name</label>
-                </div>
-            </div>
-            
-            <div class="form-group">
-                <label for="ginType">Gin Type (optional):</label>
-                <input type="text" id="ginType" placeholder="e.g. London Dry Gin" value="London Dry Gin">
-                <div class="slider-container">
-                    <label for="ginTypeSize">Text Size: <span id="ginTypeSizeValue">24</span>px</label>
-                    <input type="range" id="ginTypeSize" min="12" max="36" value="24" class="slider">
-                </div>
-            </div>
-            
-            <div class="form-group">
-                <label for="alcoholContent">Alcohol Content (%):</label>
-                <input type="number" id="alcoholContent" placeholder="e.g. 40" min="0" max="100" value="40">
-                <div class="slider-container">
-                    <label for="abvSize">Text Size: <span id="abvSizeValue">24</span>px</label>
-                    <input type="range" id="abvSize" min="12" max="36" value="24" class="slider">
-                </div>
-            </div>
-            
-            <div class="form-group">
-                <label for="ingredients">Ingredients List:</label>
-                <textarea id="ingredients" placeholder="e.g. Juniper berries, coriander seed, angelica root...">Grain Neutral Spirits, Juniper Berries, Coriander Seeds, Angelica Root, Orris Root, Lemon Peel, Cassia Bark, Licorice Root</textarea>
-                <div class="slider-container">
-                    <label for="ingredientsSize">Text Size: <span id="ingredientsSizeValue">14</span>px</label>
-                    <input type="range" id="ingredientsSize" min="10" max="20" value="14" class="slider">
-                </div>
-            </div>
-            
-            <button class="accordion">Ornament Settings</button>
-            <div class="panel">
-                <div class="form-group">
-                    <label for="ornamentDensity">Ornament Density:</label>
-                    <input type="range" id="ornamentDensity" min="0" max="10" value="7" class="slider">
-                    <div class="slider-label">
-                        <span>Minimal</span>
-                        <span>Moderate</span>
-                        <span>Maximum</span>
+        <div class="preview-container">
+            <div class="label-preview">
+                <div class="label dec-level-5">
+                    <div class="inner-border decoration"></div>
+                    <div class="double-border decoration"></div>
+                    <div class="triple-border decoration"></div>
+                    
+                    <div class="corner corner-tl decoration">
+                        <svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M2 2C2 10 10 10 18 2" stroke="currentColor" fill="none" stroke-width="1" />
+                            <path d="M2 6C2 12 8 12 14 6" stroke="currentColor" fill="none" stroke-width="1" />
+                            <path d="M6 2C12 2 12 8 6 14" stroke="currentColor" fill="none" stroke-width="1" />
+                        </svg>
+                    </div>
+                    <div class="corner corner-tr decoration">
+                        <svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M18 2C10 2 10 10 18 18" stroke="currentColor" fill="none" stroke-width="1" />
+                            <path d="M14 2C8 2 8 8 14 14" stroke="currentColor" fill="none" stroke-width="1" />
+                            <path d="M18 6C12 6 12 12 6 12" stroke="currentColor" fill="none" stroke-width="1" />
+                        </svg>
+                    </div>
+                    <div class="corner corner-bl decoration">
+                        <svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M2 18C10 18 10 10 2 2" stroke="currentColor" fill="none" stroke-width="1" />
+                            <path d="M6 18C12 18 12 12 6 6" stroke="currentColor" fill="none" stroke-width="1" />
+                            <path d="M2 14C8 14 8 8 14 8" stroke="currentColor" fill="none" stroke-width="1" />
+                        </svg>
+                    </div>
+                    <div class="corner corner-br decoration">
+                        <svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M18 18C10 18 10 10 18 2" stroke="currentColor" fill="none" stroke-width="1" />
+                            <path d="M14 18C8 18 8 12 14 6" stroke="currentColor" fill="none" stroke-width="1" />
+                            <path d="M18 14C12 14 12 8 6 8" stroke="currentColor" fill="none" stroke-width="1" />
+                        </svg>
+                    </div>
+                    
+                    <div class="label-content">
+                        <div class="brand-name"></div>
+                        <div class="flourish decoration">
+                            <svg width="100" height="20" viewBox="0 0 100 20" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M20 10H40M60 10H80M50 5L50 15" stroke="currentColor" stroke-width="1" />
+                                <circle cx="50" cy="10" r="3" stroke="currentColor" fill="none" />
+                            </svg>
+                        </div>
+                        <div class="gin-name">von SchnakenGin</div>
+                        <div class="divider decoration">
+                            <div class="divider-center"></div>
+                        </div>
+                        <div class="ingredients">Wacholder, Orangenschale, Ingwer, Kardamom, Zitronengras, Malvenblüte</div>
+                        <div class="divider decoration">
+                            <div class="divider-center"></div>
+                        </div>
+                        <div class="bottom-info">
+                            <span class="amount"></span>
+                            <span class="alcohol-content"></span>
+                        </div>
                     </div>
                 </div>
-                
-                <div class="form-group">
-                    <label for="cornerSize">Corner Ornament Size:</label>
-                    <input type="range" id="cornerSize" min="20" max="50" value="32" class="slider">
-                    <div class="slider-label">
-                        <span>Small</span>
-                        <span>Medium</span>
-                        <span>Large</span>
-                    </div>
-                </div>
-                
-                <div class="form-group">
-                    <label for="borderStyle">Border Style:</label>
-                    <select id="borderStyle">
-                        <option value="double">Double Line</option>
-                        <option value="solid">Solid Line</option>
-                        <option value="dashed">Dashed Line</option>
-                    </select>
-                </div>
             </div>
+            <button id="saveButton">DOWNLOAD</button>
         </div>
         
-        <div class="label-preview">
-            <h2>Label Preview</h2>
-            
-            <div class="gin-label" id="ginLabel">
-                <div class="ornament-layer">
-                    <!-- Corner Decorations -->
-                    <div class="corner top-left">❦</div>
-                    <div class="corner top-right">❧</div>
-                    <div class="corner bottom-left">❧</div>
-                    <div class="corner bottom-right">❦</div>
-                    
-                    <!-- Border Patterns -->
-                    <div class="border-pattern top-border">✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦</div>
-                    <div class="border-pattern bottom-border">✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦</div>
-                    <div class="border-pattern left-border">✧<br>✧<br>✧<br>✧<br>✧<br>✧<br>✧<br>✧</div>
-                    <div class="border-pattern right-border">✧<br>✧<br>✧<br>✧<br>✧<br>✧<br>✧<br>✧</div>
-                    
-                    <!-- Frames -->
-                    <div class="frame"></div>
-                    <div class="secondary-frame"></div>
-                    
-                    <!-- Baroque Ornaments -->
-                    <div class="baroque-top">❈ ❈ ❈</div>
-                    <div class="baroque-bottom">❈ ❈ ❈</div>
+        <div class="controls">
+            <div class="tab-container">
+                <div class="tab-navigation">
+                    <button class="tab-button active" data-tab="content-tab">Content</button>
+                    <button class="tab-button" data-tab="typography-tab">Typography</button>
+                    <button class="tab-button" data-tab="decoration-tab">Layout & Decoration</button>
+                    <button class="tab-button" data-tab="colors-tab">Colors</button>
                 </div>
                 
-                <div class="ornament" style="margin-top: 15px;">⚜ ⚜ ⚜</div>
-                <div class="gin-name" id="labelGinName">JUNIPER CROWN</div>
-                <div class="gin-type" id="labelGinType">London Dry Gin</div>
-                <div class="divider"></div>
-                <div class="abv" id="labelAbv">40% ALC./VOL.</div>
-                <div class="divider"></div>
-                <div class="ornament">☙ ❦ ❧</div>
-                <div class="ingredients" id="labelIngredients">
-                    <strong>INGREDIENTS:</strong><br>
-                    Grain Neutral Spirits, Juniper Berries, Coriander Seeds, Angelica Root, Orris Root, Lemon Peel, Cassia Bark, Licorice Root
+                <!-- Content Tab -->
+                <div id="content-tab" class="tab-content active">
+                    <div class="inline-control-group">
+                        <div class="control-group half-width">
+                            <label class="tab-section-title" for="brandName">Brand Name</label>
+                            <textarea id="brandName">ARTISANAL LONDON DRY</textarea>
+                        </div>
+                        
+                        <div class="control-group half-width">
+                            <label class="tab-section-title" for="ginName">Gin Name</label>
+                            <textarea id="ginName">London Dry Gin</textarea>
+                        </div>
+                    </div>
+                    
+                    <div class="control-group">
+                        <label class="tab-section-title" for="ingredients">Ingredients</label>
+                        <textarea id="ingredients">Juniper, Coriander Seeds, Angelica Root, Orris Root, Cassia Bark, Cinnamon, Lemon Peel, Orange Peel</textarea>
+                    </div>
+                    
+                    <div class="inline-control-group">
+                        <div class="control-group half-width">
+                            <label class="tab-section-title" for="alcoholContent">Alcohol Content</label>
+                            <input type="text" id="alcoholContent" value="43.3% ALC/VOL">
+                        </div>
+                        
+                        <div class="control-group half-width">
+                            <label class="tab-section-title" for="amount">Amount</label>
+                            <input type="text" id="amount" value="750ml / 25.4 fl oz">
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Typography Tab -->
+                <div id="typography-tab" class="tab-content">
+                    <div class="tab-section-title">Brand Name Typography</div>
+                    <div class="control-group">
+                        <div class="slider-container">
+                            <label for="brandNameSize">Size</label>
+                            <input type="range" id="brandNameSize" min="0" max="100" value="24">
+                            <span id="brandNameSizeValue" class="slider-value">24px</span>
+                        </div>
+                        <div class="slider-container">
+                            <label for="brandNameBoldness">Weight</label>
+                            <input type="range" id="brandNameBoldness" min="100" max="900" step="100" value="400">
+                            <span id="brandNameBoldnessValue" class="slider-value">Normal</span>
+                        </div>
+                    </div>
+                    
+                    <div class="tab-section-title">Gin Name Typography</div>
+                    <div class="control-group">
+                        <div class="slider-container">
+                            <label for="ginNameSize">Size</label>
+                            <input type="range" id="ginNameSize" min="0" max="100" value="36">
+                            <span id="ginNameSizeValue" class="slider-value">36px</span>
+                        </div>
+                        <div class="slider-container">
+                            <label for="ginNameBoldness">Weight</label>
+                            <input type="range" id="ginNameBoldness" min="100" max="900" step="100" value="400">
+                            <span id="ginNameBoldnessValue" class="slider-value">Normal</span>
+                        </div>
+                        <div class="slider-container">
+                            <label for="ginNameLineHeight">Line Height</label>
+                            <input type="range" id="ginNameLineHeight" min="0" max="3" step="0.1" value="1.5">
+                            <span id="ginNameLineHeightValue" class="slider-value">1.5</span>
+                        </div>
+                    </div>
+                    
+                    <div class="tab-section-title">Ingredients Typography</div>
+                    <div class="control-group">
+                        <div class="slider-container">
+                            <label for="ingredientsSize">Size</label>
+                            <input type="range" id="ingredientsSize" min="0" max="100" value="12">
+                            <span id="ingredientsSizeValue" class="slider-value">12px</span>
+                        </div>
+                        <div class="slider-container">
+                            <label for="ingredientsBoldness">Weight</label>
+                            <input type="range" id="ingredientsBoldness" min="100" max="900" step="100" value="400">
+                            <span id="ingredientsBoldnessValue" class="slider-value">Normal</span>
+                        </div>
+                    </div>
+                    
+                    <div class="tab-section-title">Alcohol Content Typography</div>
+                    <div class="control-group">
+                        <div class="slider-container">
+                            <label for="alcoholContentSize">Size</label>
+                            <input type="range" id="alcoholContentSize" min="0" max="100" value="14">
+                            <span id="alcoholContentSizeValue" class="slider-value">14px</span>
+                        </div>
+                        <div class="slider-container">
+                            <label for="alcoholContentBoldness">Weight</label>
+                            <input type="range" id="alcoholContentBoldness" min="100" max="900" step="100" value="400">
+                            <span id="alcoholContentBoldnessValue" class="slider-value">Normal</span>
+                        </div>
+                    </div>
+                    
+                    <div class="tab-section-title">Amount Typography</div>
+                    <div class="control-group">
+                        <div class="slider-container">
+                            <label for="amountSize">Size</label>
+                            <input type="range" id="amountSize" min="0" max="100" value="14">
+                            <span id="amountSizeValue" class="slider-value">14px</span>
+                        </div>
+                        <div class="slider-container">
+                            <label for="amountBoldness">Weight</label>
+                            <input type="range" id="amountBoldness" min="100" max="900" step="100" value="400">
+                            <span id="amountBoldnessValue" class="slider-value">Normal</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Layout & Decoration Tab -->
+                <div id="decoration-tab" class="tab-content">
+                    <div class="tab-section-title">Border & Decoration</div>
+                    <div class="control-group">
+                        <div class="slider-container">
+                            <label for="decorationLevel">Amount</label>
+                            <input type="range" id="decorationLevel" min="0" max="10" value="5">
+                            <span id="decorationLevelValue" class="slider-value">5</span>
+                        </div>
+
+                        <div class="slider-container">
+                            <label for="borderThickness">Thickness</label>
+                            <input type="range" id="borderThickness" min="1" max="5" value="2">
+                            <span id="borderThicknessValue" class="slider-value">2px</span>
+                        </div>
+                    </div>
+                    
+                    <div class="tab-section-title">Spacing</div>
+                    <div class="control-group">
+                        <div class="slider-container">
+                            <label for="padding">Border Padding</label>
+                            <input type="range" id="padding" min="10" max="100" value="40">
+                            <span id="paddingValue" class="slider-value">40px</span>
+                        </div>
+
+                        <div class="slider-container">
+                            <label for="internalMargin">Vertical Margin</label>
+                            <input type="range" id="internalMargin" min="0" max="30" value="10">
+                            <span id="internalMarginValue" class="slider-value">10px</span>
+                        </div>
+                    </div>
+                    
+                    <div class="tab-section-title">Dimensions</div>
+                    <div class="control-group">
+                        <div class="slider-container">
+                            <label for="labelWidth">Label Width</label>
+                            <input type="range" id="labelWidth" min="200" max="500" value="300">
+                            <span id="labelWidthValue" class="slider-value">300px</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Colors Tab -->
+                <div id="colors-tab" class="tab-content">
+                    <div class="control-group">
+                        <div class="toggle-container">
+                            <label for="blackAndWhite">Black & White Only</label>
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="blackAndWhite" checked>
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                        
+                        <div id="colorControls">
+                            <div class="tab-section-title">Color Selection</div>
+                            <div class="color-control">
+                                <label for="backgroundColor">Background</label>
+                                <input type="color" id="backgroundColor" value="#F6F0ED">
+                            </div>
+                            
+                            <div class="color-control">
+                                <label for="primaryColor">Primary</label>
+                                <input type="color" id="primaryColor" value="#28536B">
+                            </div>
+                            
+                            <div class="color-control">
+                                <label for="secondaryColor">Secondary</label>
+                                <input type="color" id="secondaryColor" value="#7EA8BE">
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             
-            <button class="print-btn" onclick="window.print();">Print Label</button>
+            <div class="control-group actions">
+                <button id="randomizeButton">Randomize</button>
+            </div>
         </div>
     </div>
     
-    <script>
-        // Initialize accordion functionality
-        var acc = document.getElementsByClassName("accordion");
-        for (var i = 0; i < acc.length; i++) {
-            acc[i].addEventListener("click", function() {
-                this.classList.toggle("active");
-                var panel = this.nextElementSibling;
-                if (panel.style.maxHeight) {
-                    panel.style.maxHeight = null;
-                } else {
-                    panel.style.maxHeight = panel.scrollHeight + "px";
-                }
-            });
-        }
-        
-        // Get all form input elements that should trigger live updates
-        const formInputs = document.querySelectorAll('input, textarea, select');
-        
-        // Add event listeners for live updates
-        formInputs.forEach(input => {
-            input.addEventListener('input', updateLabel);
-        });
-        
-        // Update text size display values as sliders change
-        document.getElementById('ginNameSize').addEventListener('input', function() {
-            document.getElementById('ginNameSizeValue').textContent = this.value;
-        });
-        
-        document.getElementById('ginTypeSize').addEventListener('input', function() {
-            document.getElementById('ginTypeSizeValue').textContent = this.value;
-        });
-        
-        document.getElementById('abvSize').addEventListener('input', function() {
-            document.getElementById('abvSizeValue').textContent = this.value;
-        });
-        
-        document.getElementById('ingredientsSize').addEventListener('input', function() {
-            document.getElementById('ingredientsSizeValue').textContent = this.value;
-        });
-        
-        // Initialize with sample data
-        updateLabel();
-        
-        function updateLabel() {
-            // Get content values
-            const ginName = document.getElementById('ginName').value || 'Gin Name';
-            const useAllCaps = document.getElementById('useAllCaps').checked;
-            const ginType = document.getElementById('ginType').value || 'Premium Gin';
-            const alcoholContent = document.getElementById('alcoholContent').value || '40';
-            const ingredients = document.getElementById('ingredients').value || 'Ingredients not specified';
-            
-            // Get font size values
-            const ginNameSize = document.getElementById('ginNameSize').value;
-            const ginTypeSize = document.getElementById('ginTypeSize').value;
-            const abvSize = document.getElementById('abvSize').value;
-            const ingredientsSize = document.getElementById('ingredientsSize').value;
-            
-            // Get ornament settings
-            const ornamentDensity = parseInt(document.getElementById('ornamentDensity').value);
-            const cornerSize = document.getElementById('cornerSize').value;
-            const borderStyle = document.getElementById('borderStyle').value;
-            
-            // Update content
-            document.getElementById('labelGinName').textContent = useAllCaps ? ginName.toUpperCase() : ginName;
-            document.getElementById('labelGinType').textContent = ginType;
-            document.getElementById('labelAbv').textContent = `${alcoholContent}% ALC./VOL.`;
-            document.getElementById('labelIngredients').innerHTML = `<strong>INGREDIENTS:</strong><br>${ingredients}`;
-            
-            // Update text sizes
-            document.getElementById('labelGinName').style.fontSize = `${ginNameSize}px`;
-            document.getElementById('labelGinType').style.fontSize = `${ginTypeSize}px`;
-            document.getElementById('labelAbv').style.fontSize = `${abvSize}px`;
-            document.getElementById('labelIngredients').style.fontSize = `${ingredientsSize}px`;
-            
-            // Update ornament visibility based on density
-            const corners = document.querySelectorAll('.corner');
-            const borders = document.querySelectorAll('.border-pattern');
-            const frames = document.querySelectorAll('.frame, .secondary-frame');
-            const baroques = document.querySelectorAll('.baroque-top, .baroque-bottom');
-            const centerOrnaments = document.querySelectorAll('.ornament');
-            
-            // Update corner size
-            corners.forEach(corner => {
-                corner.style.fontSize = `${cornerSize}px`;
-            });
-            
-            // Update border style
-            document.querySelector('.gin-label').style.border = borderStyle === 'double' ? '5px double #000' : 
-                                                               borderStyle === 'dashed' ? '5px dashed #000' : 
-                                                               '5px solid #000';
-            
-            // Toggle elements based on ornament density
-            if (ornamentDensity < 3) {
-                // Minimal ornaments
-                toggleElements(corners, ornamentDensity > 0);
-                toggleElements(borders, false);
-                toggleElements(frames, false);
-                toggleElements(baroques, false);
-                toggleElements(centerOrnaments, ornamentDensity > 1);
-            } else if (ornamentDensity < 7) {
-                // Moderate ornaments
-                toggleElements(corners, true);
-                toggleElements(borders, ornamentDensity > 4);
-                toggleElements(frames, ornamentDensity > 5);
-                toggleElements(baroques, false);
-                toggleElements(centerOrnaments, true);
-            } else {
-                // Maximum ornaments
-                toggleElements(corners, true);
-                toggleElements(borders, true);
-                toggleElements(frames, true);
-                toggleElements(baroques, ornamentDensity > 8);
-                toggleElements(centerOrnaments, true);
-            }
-            
-            // Calculate and adjust spacing based on content length and font sizes
-            const label = document.getElementById('ginLabel');
-            const ginNameElement = document.getElementById('labelGinName');
-            const ingredientsElement = document.getElementById('labelIngredients');
-            
-            // Adjust top and bottom margins based on content length and ornament density
-            const nameLength = ginName.length;
-            const ingredientsLength = ingredients.length;
-            
-            let topMargin = 40;
-            let bottomMargin = 40;
-            
-            // Reduce margins for longer text or larger font sizes
-            if (nameLength > 15 || parseInt(ginNameSize) > 45) {
-                topMargin = Math.max(15, topMargin - 10);
-            }
-            
-            if (ingredientsLength > 150 || parseInt(ingredientsSize) > 16) {
-                bottomMargin = Math.max(15, bottomMargin - 10);
-            }
-            
-            // Further adjust based on ornament density
-            if (ornamentDensity > 5) {
-                topMargin = Math.max(20, topMargin);
-                bottomMargin = Math.max(20, bottomMargin);
-            } else if (ornamentDensity < 3) {
-                topMargin = Math.max(10, topMargin - 15);
-                bottomMargin = Math.max(10, bottomMargin - 15);
-            }
-            
-            ginNameElement.style.marginTop = `${topMargin}px`;
-            ingredientsElement.style.marginBottom = `${bottomMargin}px`;
-            
-            // Adjust vertical spacing for balance if needed
-            const totalContentHeight = calculateTotalContentHeight();
-            const labelHeight = label.offsetHeight;
-            const availableSpace = labelHeight - totalContentHeight;
-            
-            if (availableSpace < 0) {
-                // Content doesn't fit, reduce some margins
-                const reduction = Math.min(10, Math.abs(availableSpace) / 4);
-                ginNameElement.style.marginTop = `${Math.max(5, topMargin - reduction)}px`;
-                ingredientsElement.style.marginBottom = `${Math.max(5, bottomMargin - reduction)}px`;
-            }
-        }
-        
-        function calculateTotalContentHeight() {
-            const ginNameHeight = document.getElementById('labelGinName').offsetHeight;
-            const ginTypeHeight = document.getElementById('labelGinType').offsetHeight;
-            const abvHeight = document.getElementById('labelAbv').offsetHeight;
-            const ingredientsHeight = document.getElementById('labelIngredients').offsetHeight;
-            const ornamentHeight = document.querySelectorAll('.ornament')[0].offsetHeight * 2; // Top and bottom ornaments
-            const dividerHeight = document.querySelectorAll('.divider')[0].offsetHeight * 2; // Two dividers
-            
-            const nameMarginTop = parseInt(window.getComputedStyle(document.getElementById('labelGinName')).marginTop);
-            const ingredientsMarginBottom = parseInt(window.getComputedStyle(document.getElementById('labelIngredients')).marginBottom);
-            
-            return ginNameHeight + ginTypeHeight + abvHeight + ingredientsHeight + ornamentHeight + dividerHeight + nameMarginTop + ingredientsMarginBottom;
-        }
-        
-        function toggleElements(elements, show) {
-            elements.forEach(el => {
-                el.style.display = show ? 'block' : 'none';
-                if (el.className.includes('border-pattern')) {
-                    el.style.display = show ? 'flex' : 'none';
-                }
-            });
-        }
-        
-        // Handle window resize to adjust label proportions
-        window.addEventListener('resize', function() {
-            // Force aspect ratio to stay 1:1 for mobile
-            if (window.innerWidth < 768) {
-                const labelWidth = document.getElementById('ginLabel').offsetWidth;
-                document.getElementById('ginLabel').style.height = `${labelWidth}px`;
-            }
-        });
-        
-        // Initial trigger for resize to set correct dimensions
-        window.dispatchEvent(new Event('resize'));
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
