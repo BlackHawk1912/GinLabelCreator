@@ -91,7 +91,10 @@
                 </div>
             </div>
             
-            <button id="saveButton">Download Label as PNG</button>
+            <div class="control-group">
+                <button id="saveButton">Download Label</button>
+                <button id="clearButton">Reset All</button>
+            </div>
         </div>
         
         <div class="preview-container">
@@ -101,29 +104,32 @@
                     <div class="double-border decoration"></div>
                     <div class="triple-border decoration"></div>
                     
-                    <div class="corner corner-tl decoration"></div>
-                    <div class="corner corner-tr decoration"></div>
-                    <div class="corner corner-bl decoration"></div>
-                    <div class="corner corner-br decoration"></div>
-                    
-                    <div class="ornament ornament-tl decoration">
+                    <div class="corner corner-tl decoration">
                         <svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M10 1L12 8H19L13 12L15 19L10 15L5 19L7 12L1 8H8L10 1Z" stroke="currentColor" fill="none" />
+                            <path d="M2 2C2 10 10 10 18 2" stroke="currentColor" fill="none" stroke-width="1" />
+                            <path d="M2 6C2 12 8 12 14 6" stroke="currentColor" fill="none" stroke-width="1" />
+                            <path d="M6 2C12 2 12 8 6 14" stroke="currentColor" fill="none" stroke-width="1" />
                         </svg>
                     </div>
-                    <div class="ornament ornament-tr decoration">
+                    <div class="corner corner-tr decoration">
                         <svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M10 1L12 8H19L13 12L15 19L10 15L5 19L7 12L1 8H8L10 1Z" stroke="currentColor" fill="none" />
+                            <path d="M18 2C10 2 10 10 18 18" stroke="currentColor" fill="none" stroke-width="1" />
+                            <path d="M14 2C8 2 8 8 14 14" stroke="currentColor" fill="none" stroke-width="1" />
+                            <path d="M18 6C12 6 12 12 6 12" stroke="currentColor" fill="none" stroke-width="1" />
                         </svg>
                     </div>
-                    <div class="ornament ornament-bl decoration">
+                    <div class="corner corner-bl decoration">
                         <svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M10 1L12 8H19L13 12L15 19L10 15L5 19L7 12L1 8H8L10 1Z" stroke="currentColor" fill="none" />
+                            <path d="M2 18C10 18 10 10 2 2" stroke="currentColor" fill="none" stroke-width="1" />
+                            <path d="M6 18C12 18 12 12 6 6" stroke="currentColor" fill="none" stroke-width="1" />
+                            <path d="M2 14C8 14 8 8 14 8" stroke="currentColor" fill="none" stroke-width="1" />
                         </svg>
                     </div>
-                    <div class="ornament ornament-br decoration">
+                    <div class="corner corner-br decoration">
                         <svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M10 1L12 8H19L13 12L15 19L10 15L5 19L7 12L1 8H8L10 1Z" stroke="currentColor" fill="none" />
+                            <path d="M18 18C10 18 10 10 18 2" stroke="currentColor" fill="none" stroke-width="1" />
+                            <path d="M14 18C8 18 8 12 14 6" stroke="currentColor" fill="none" stroke-width="1" />
+                            <path d="M18 14C12 14 12 8 6 8" stroke="currentColor" fill="none" stroke-width="1" />
                         </svg>
                     </div>
                     
@@ -346,26 +352,144 @@
                 });
             }
 
+            // Save all user input to localStorage
+            function saveToLocalStorage() {
+                // Save text inputs
+                textInputs.forEach(id => {
+                    const element = document.getElementById(id);
+                    localStorage.setItem(id, element.value);
+                });
+                
+                // Save font size sliders
+                fontSizeSliders.forEach(id => {
+                    const slider = document.getElementById(id);
+                    localStorage.setItem(id, slider.value);
+                });
+                
+                // Save decoration level
+                localStorage.setItem('decorationLevel', decorationLevelSlider.value);
+                
+                // Save padding
+                localStorage.setItem('padding', paddingSlider.value);
+                
+                // Save color mode
+                localStorage.setItem('blackAndWhite', blackAndWhiteToggle.checked);
+            }
+            
+            // Load saved values from localStorage
+            function loadFromLocalStorage() {
+                // Load text inputs
+                textInputs.forEach(id => {
+                    const savedValue = localStorage.getItem(id);
+                    if (savedValue) {
+                        document.getElementById(id).value = savedValue;
+                    }
+                });
+                
+                // Load font size sliders
+                fontSizeSliders.forEach(id => {
+                    const savedValue = localStorage.getItem(id);
+                    if (savedValue) {
+                        const slider = document.getElementById(id);
+                        slider.value = savedValue;
+                    }
+                });
+                
+                // Load decoration level
+                const savedDecorationLevel = localStorage.getItem('decorationLevel');
+                if (savedDecorationLevel) {
+                    decorationLevelSlider.value = savedDecorationLevel;
+                    decorationLevelValue.textContent = savedDecorationLevel;
+                    document.documentElement.style.setProperty('--decoration-level', savedDecorationLevel);
+                }
+                
+                // Load padding
+                const savedPadding = localStorage.getItem('padding');
+                if (savedPadding) {
+                    paddingSlider.value = savedPadding;
+                    paddingValue.textContent = `${savedPadding}px`;
+                    document.documentElement.style.setProperty('--padding', savedPadding);
+                }
+                
+                // Load color mode
+                const savedBlackAndWhite = localStorage.getItem('blackAndWhite');
+                if (savedBlackAndWhite !== null) {
+                    blackAndWhiteToggle.checked = savedBlackAndWhite === 'true';
+                    if (blackAndWhiteToggle.checked) {
+                        document.documentElement.style.setProperty('--main-color', '#000');
+                        document.documentElement.style.setProperty('--background-color', '#fff');
+                    } else {
+                        document.documentElement.style.setProperty('--main-color', '#28536B');
+                        document.documentElement.style.setProperty('--background-color', '#F6F0ED');
+                    }
+                }
+            }
+            
+            // Clear all saved data and reset to defaults
+            function clearAllData() {
+                // Clear localStorage
+                localStorage.clear();
+                
+                // Reset text inputs
+                textInputs.forEach(id => {
+                    document.getElementById(id).value = '';
+                });
+                
+                // Reset font size sliders to default values
+                document.getElementById('brandNameSize').value = 24;
+                document.getElementById('ginNameSize').value = 36;
+                document.getElementById('ingredientsSize').value = 12;
+                document.getElementById('alcoholContentSize').value = 14;
+                document.getElementById('amountSize').value = 14;
+                
+                // Reset decoration level
+                decorationLevelSlider.value = 5;
+                decorationLevelValue.textContent = '5';
+                document.documentElement.style.setProperty('--decoration-level', 5);
+                
+                // Reset padding
+                paddingSlider.value = 40;
+                paddingValue.textContent = '40px';
+                document.documentElement.style.setProperty('--padding', 40);
+                
+                // Reset color mode
+                blackAndWhiteToggle.checked = false;
+                document.documentElement.style.setProperty('--main-color', '#28536B');
+                document.documentElement.style.setProperty('--background-color', '#F6F0ED');
+                
+                // Update the label with reset values
+                updateLabel();
+                updateDecorationLevel();
+            }
+
             // Set up listeners
             textInputs.forEach(id => {
-                document.getElementById(id).addEventListener('input', updateLabel);
+                document.getElementById(id).addEventListener('input', () => {
+                    updateLabel();
+                    saveToLocalStorage();
+                });
             });
 
             fontSizeSliders.forEach(id => {
                 const slider = document.getElementById(id);
-                slider.addEventListener('input', updateLabel);
+                slider.addEventListener('input', () => {
+                    updateLabel();
+                    saveToLocalStorage();
+                });
             });
 
             decorationLevelSlider.addEventListener('input', () => {
                 decorationLevelValue.textContent = decorationLevelSlider.value;
                 document.documentElement.style.setProperty('--decoration-level', decorationLevelSlider.value);
                 updateDecorationLevel();
+                saveToLocalStorage();
             });
 
             paddingSlider.addEventListener('input', () => {
                 paddingValue.textContent = `${paddingSlider.value}px`;
                 document.documentElement.style.setProperty('--padding', paddingSlider.value);
                 updateLabel();
+                saveToLocalStorage();
             });
 
             blackAndWhiteToggle.addEventListener('change', () => {
@@ -376,13 +500,21 @@
                     document.documentElement.style.setProperty('--main-color', '#28536B');
                     document.documentElement.style.setProperty('--background-color', '#F6F0ED');
                 }
+                saveToLocalStorage();
             });
 
             document.getElementById('saveButton').addEventListener('click', saveAsPNG);
 
+            document.getElementById('clearButton').addEventListener('click', clearAllData);
+
             // Initial calls
+            loadFromLocalStorage(); // Load saved data first
             updateLabel();
             updateDecorationLevel();
+            
+            // Initialize padding value on page load
+            document.documentElement.style.setProperty('--padding', paddingSlider.value);
+            paddingValue.textContent = `${paddingSlider.value}px`;
         });
     </script>
 </body>
