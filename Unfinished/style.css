@@ -230,49 +230,27 @@ button {
     cursor: pointer;
     font-size: 16px;
     transition: all 0.3s ease;
-}
-
-button:hover {
-    background-color: var(--background-color);
-    color: var(--main-color);
-}
-
-#clearButton {
-    background-color: #a83232;
-    color: white;
-    border: 1px solid #a83232;
-}
-
-#clearButton:hover {
-    background-color: white;
-    color: #a83232;
-    border: 1px solid #a83232;
-}
-
-#randomizeButton {
-    background-color: #6d28d9;
-    color: white;
-    font-weight: bold;
-    padding: 10px 20px;
-    font-size: 18px;
-    display: block;
-    width: 100%;
-    max-width: 300px;
-    margin: 0 auto;
-    text-transform: uppercase;
-    letter-spacing: 1px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-#randomizeButton:hover {
-    background-color: #5b21b6;
+button:hover {
     transform: translateY(-2px);
     box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
 }
 
-#randomizeButton:active {
+button:active {
     transform: translateY(0);
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+#randomizeButton {
+    background-color: #6d28d9;
+    display: block;
+    margin: 0 auto;
+}
+
+#randomizeButton {
+    color: white;
 }
 
 .brand-name {
