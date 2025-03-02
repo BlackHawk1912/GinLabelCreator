@@ -212,96 +212,54 @@
             }
 
             function updateLabel() {
-                textInputs.forEach(id => {
-                    const inputEl = document.getElementById(id); // define inputEl
-                    const className = idToClass(id);
-                    
-                    // Special handling for alcohol content and amount which are now spans
-                    if (id === 'alcoholContent' || id === 'amount') {
-                        const targetEl = document.querySelector(`.${className}`);
-                        if (!targetEl) return; // Handle missing DOM elements safely
-                        
-                        targetEl.textContent = inputEl.value;
-                        
-                        // Hide if empty
-                        if (!inputEl.value.trim()) {
-                            targetEl.style.display = 'none';
-                        } else {
-                            targetEl.style.display = 'inline-block';
-                            
-                            // Update font size
-                            const fontSizeEl = document.getElementById(`${id}Size`);
-                            targetEl.style.fontSize = `${fontSizeEl.value}px`;
-                        }
-                    } else {
-                        const targetEl = document.querySelector(`.${className}`);
-                        if (!targetEl) return; // Handle missing DOM elements safely
-                        
-                        // Handle line breaks for textareas
-                        if (inputEl.tagName === 'TEXTAREA') {
-                            targetEl.innerHTML = inputEl.value.replace(/\n/g, '<br>');
-                        } else {
-                            targetEl.textContent = inputEl.value;
-                        }
-                        
-                        // Hide if empty
-                        if (!inputEl.value.trim()) {
-                            targetEl.style.display = 'none';
-                        } else {
-                            targetEl.style.display = 'block';
-                            
-                            // Update font size
-                            const fontSizeEl = document.getElementById(`${id}Size`);
-                            targetEl.style.fontSize = `${fontSizeEl.value}px`;
-                            
-                            // Adjust line height for better readability
-                            if (fontSizeEl.value > 20) {
-                                targetEl.style.lineHeight = '1.2';
-                            } else {
-                                targetEl.style.lineHeight = '1.5';
-                            }
-                        }
-                    }
-                });
+                // Get all input values
+                const brandName = document.getElementById('brandName').value;
+                const ginName = document.getElementById('ginName').value;
+                const ingredients = document.getElementById('ingredients').value;
+                const alcoholContent = document.getElementById('alcoholContent').value;
+                const amount = document.getElementById('amount').value;
                 
-                // Show or hide the bottom-info container based on whether its children are visible
-                const alcoholContentEl = document.querySelector('.alcohol-content');
-                const amountEl = document.querySelector('.amount');
-                const bottomInfoEl = document.querySelector('.bottom-info');
+                // Get font sizes
+                const brandNameSize = document.getElementById('brandNameSize').value;
+                const ginNameSize = document.getElementById('ginNameSize').value;
+                const ingredientsSize = document.getElementById('ingredientsSize').value;
+                const alcoholContentSize = document.getElementById('alcoholContentSize').value;
+                const amountSize = document.getElementById('amountSize').value;
                 
-                if ((!alcoholContentEl.textContent.trim() && !amountEl.textContent.trim()) || 
-                    (alcoholContentEl.style.display === 'none' && amountEl.style.display === 'none')) {
-                    bottomInfoEl.style.display = 'none';
-                } else {
-                    bottomInfoEl.style.display = 'flex';
-                }
+                // Update the preview
+                document.querySelector('.brand-name').textContent = brandName;
+                document.querySelector('.gin-name').textContent = ginName;
+                document.querySelector('.ingredients').textContent = ingredients;
+                document.querySelector('.alcohol-content').textContent = alcoholContent;
+                document.querySelector('.amount').textContent = amount;
                 
-                // Handle flourish decorations - only show when text before and after are not empty
+                // Update font sizes
+                document.querySelector('.brand-name').style.fontSize = `${brandNameSize}px`;
+                document.querySelector('.gin-name').style.fontSize = `${ginNameSize}px`;
+                document.querySelector('.ingredients').style.fontSize = `${ingredientsSize}px`;
+                document.querySelector('.alcohol-content').style.fontSize = `${alcoholContentSize}px`;
+                document.querySelector('.amount').style.fontSize = `${amountSize}px`;
+                
+                // Get all flourish decorations
                 const flourishElements = document.querySelectorAll('.flourish.decoration');
                 
-                // First flourish - between brand-name and gin-name
-                const brandNameEl = document.querySelector('.brand-name');
-                const ginNameEl = document.querySelector('.gin-name');
+                // First flourish (between brand and gin name) - show only if both brand and gin name are present
                 if (flourishElements[0]) {
-                    if (brandNameEl.style.display === 'none' || ginNameEl.style.display === 'none') {
+                    if (brandName.trim() !== '' && ginName.trim() !== '') {
+                        flourishElements[0].style.display = 'flex';
+                    } else {
                         flourishElements[0].style.display = 'none';
-                    } else {
-                        flourishElements[0].style.display = 'block';
                     }
                 }
                 
-                // Second flourish - between ingredients and bottom-info
-                const ingredientsEl = document.querySelector('.ingredients');
+                // Second flourish (between ingredients and bottom info) - show only if both alcohol content and amount are present
                 if (flourishElements[1]) {
-                    if (ingredientsEl.style.display === 'none' || bottomInfoEl.style.display === 'none') {
-                        flourishElements[1].style.display = 'none';
+                    if (alcoholContent.trim() !== '' && amount.trim() !== '') {
+                        flourishElements[1].style.display = 'flex';
                     } else {
-                        flourishElements[1].style.display = 'block';
+                        flourishElements[1].style.display = 'none';
                     }
                 }
-                
-                // Adjust layout to prevent overflow
-                adjustLayout();
             }
 
             function updateDecorationLevel() {
@@ -575,36 +533,95 @@
                 updateDecorationLevel();
             }
 
-            // Set up listeners
+            // Debounce function to limit how often a function is called
+            function debounce(func, wait) {
+                let timeout;
+                return function() {
+                    const context = this;
+                    const args = arguments;
+                    clearTimeout(timeout);
+                    timeout = setTimeout(() => {
+                        func.apply(context, args);
+                    }, wait);
+                };
+            }
+            
+            // Use requestAnimationFrame for smooth UI updates
+            function rafDebounce(func) {
+                let rafId = null;
+                return function() {
+                    const context = this;
+                    const args = arguments;
+                    if (rafId) {
+                        cancelAnimationFrame(rafId);
+                    }
+                    rafId = requestAnimationFrame(() => {
+                        func.apply(context, args);
+                        rafId = null;
+                    });
+                };
+            }
+            
+            // Create optimized versions of heavy functions
+            const debouncedUpdateLabel = rafDebounce(updateLabel);
+            const debouncedSaveToLocalStorage = debounce(saveToLocalStorage, 500);
+            const debouncedUpdateDecorationLevel = rafDebounce(updateDecorationLevel);
+            
+            // Set up text input listeners
             textInputs.forEach(id => {
                 document.getElementById(id).addEventListener('input', () => {
-                    updateLabel();
-                    saveToLocalStorage();
+                    debouncedUpdateLabel();
+                    debouncedSaveToLocalStorage();
                 });
             });
-
+            
+            // Font size slider event listeners with improved performance
             fontSizeSliders.forEach(id => {
                 const slider = document.getElementById(id);
                 const valueSpan = document.getElementById(`${id}Value`);
-                slider.addEventListener('input', () => {
-                    valueSpan.textContent = `${slider.value}px`;
-                    updateLabel();
-                    saveToLocalStorage();
+                
+                // Use input event for real-time updates
+                slider.addEventListener('input', function() {
+                    // Update the value display immediately
+                    valueSpan.textContent = `${this.value}px`;
+                    
+                    // Update the corresponding element's font size directly for immediate feedback
+                    const className = idToClass(id.replace('Size', ''));
+                    const targetEl = document.querySelector(`.${className}`);
+                    if (targetEl) {
+                        targetEl.style.fontSize = `${this.value}px`;
+                    }
+                    
+                    // Use requestAnimationFrame for the heavier operations
+                    debouncedUpdateLabel();
+                    debouncedSaveToLocalStorage();
                 });
             });
 
-            decorationLevelSlider.addEventListener('input', () => {
-                decorationLevelValue.textContent = decorationLevelSlider.value;
-                document.documentElement.style.setProperty('--decoration-level', decorationLevelSlider.value);
-                updateDecorationLevel();
-                saveToLocalStorage();
+            // Decoration level slider with improved performance
+            decorationLevelSlider.addEventListener('input', function() {
+                // Update the value display immediately
+                decorationLevelValue.textContent = this.value;
+                
+                // Set the CSS property immediately
+                document.documentElement.style.setProperty('--decoration-level', this.value);
+                
+                // Use optimized functions for heavier operations
+                debouncedUpdateDecorationLevel();
+                debouncedSaveToLocalStorage();
             });
 
-            paddingSlider.addEventListener('input', () => {
-                paddingValue.textContent = `${paddingSlider.value}px`;
-                document.documentElement.style.setProperty('--padding', paddingSlider.value);
-                updateLabel();
-                saveToLocalStorage();
+            // Padding slider with improved performance
+            paddingSlider.addEventListener('input', function() {
+                // Update the value display immediately
+                paddingValue.textContent = `${this.value}px`;
+                
+                // Set the CSS property immediately
+                document.documentElement.style.setProperty('--padding', this.value);
+                
+                // Use optimized functions for heavier operations
+                debouncedUpdateLabel();
+                debouncedSaveToLocalStorage();
             });
 
             blackAndWhiteToggle.addEventListener('change', () => {
