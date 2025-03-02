@@ -571,19 +571,29 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('amount').value = amounts[getRandomNumber(0, amounts.length - 1)];
         
         // Randomize font sizes
-        document.getElementById('brandNameSize').value = getRandomNumber(18, 32);
-        document.getElementById('ginNameSize').value = getRandomNumber(28, 48);
-        document.getElementById('ingredientsSize').value = getRandomNumber(10, 14);
-        document.getElementById('alcoholContentSize').value = getRandomNumber(12, 18);
-        document.getElementById('amountSize').value = getRandomNumber(12, 18);
+        const brandNameSize = getRandomNumber(18, 24);
+        const ginNameSize = getRandomNumber(42, 60); // Make gin name significantly larger than brand name
+        const ingredientsSize = getRandomNumber(10, 14);
+        const alcoholContentSize = getRandomNumber(12, 18); // Same random value will be used for both
+        
+        document.getElementById('brandNameSize').value = brandNameSize;
+        document.getElementById('ginNameSize').value = ginNameSize;
+        document.getElementById('ingredientsSize').value = ingredientsSize;
+        document.getElementById('alcoholContentSize').value = alcoholContentSize;
+        document.getElementById('amountSize').value = alcoholContentSize; // Use same size as alcohol content
         
         // Randomize font weights
         const fontWeights = [100, 200, 300, 400, 500, 600, 700, 800, 900];
-        document.getElementById('brandNameBoldness').value = fontWeights[getRandomNumber(0, fontWeights.length - 1)];
-        document.getElementById('ginNameBoldness').value = fontWeights[getRandomNumber(0, fontWeights.length - 1)];
-        document.getElementById('ingredientsBoldness').value = fontWeights[getRandomNumber(0, fontWeights.length - 1)];
-        document.getElementById('alcoholContentBoldness').value = fontWeights[getRandomNumber(0, fontWeights.length - 1)];
-        document.getElementById('amountBoldness').value = fontWeights[getRandomNumber(0, fontWeights.length - 1)];
+        const brandNameBoldness = fontWeights[getRandomNumber(0, fontWeights.length - 1)];
+        const ginNameBoldness = fontWeights[getRandomNumber(0, fontWeights.length - 1)];
+        const ingredientsBoldness = fontWeights[getRandomNumber(0, fontWeights.length - 1)];
+        const alcoholContentBoldness = fontWeights[getRandomNumber(0, fontWeights.length - 1)]; // Same random value will be used for both
+        
+        document.getElementById('brandNameBoldness').value = brandNameBoldness;
+        document.getElementById('ginNameBoldness').value = ginNameBoldness;
+        document.getElementById('ingredientsBoldness').value = ingredientsBoldness;
+        document.getElementById('alcoholContentBoldness').value = alcoholContentBoldness;
+        document.getElementById('amountBoldness').value = alcoholContentBoldness; // Use same boldness as alcohol content
         
         // Randomize decoration and border
         document.getElementById('decorationLevel').value = getRandomNumber(3, 8);
