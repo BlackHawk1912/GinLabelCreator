@@ -125,8 +125,8 @@ h1 {
         margin-bottom: 15px;
     }
     
-    .header-controls .theme-toggle-container {
-        display: none;
+    .theme-toggle-container {
+        display: none !important;
     }
     
     .container::after {
@@ -335,9 +335,6 @@ button:active {
 
 #randomizeButton {
     background-color: #6d28d9;
-}
-
-#randomizeButton {
     color: white;
 }
 
@@ -846,7 +843,6 @@ input:checked + .slider:before {
     padding: 0;
 }
 
-/* Theme toggle styles */
 .header-controls {
     display: flex;
     justify-content: space-between;
@@ -876,10 +872,6 @@ input:checked + .slider:before {
     
     .theme-toggle-container {
         display: none;
-    }
-    
-    .mobile-theme-toggle-container {
-        display: flex;
     }
 }
 
@@ -950,7 +942,6 @@ input:checked + .slider:before {
     border-radius: 50%;
 }
 
-/* Mobile theme toggle at the bottom */
 .mobile-theme-toggle-container {
     display: none;
     align-items: center;
@@ -959,13 +950,102 @@ input:checked + .slider:before {
 }
 
 @media (max-width: 768px) {
-    /* Hide desktop toggle and show mobile toggle */
-    .theme-toggle-container {
-        display: none;
-    }
-    
     .mobile-theme-toggle-container {
         display: flex;
+    }
+}
+
+.tab-container {
+    width: 100%;
+}
+
+.tab-navigation {
+    display: flex;
+    background-color: #f5f5f5;
+    border-radius: 8px 8px 0 0;
+    overflow: hidden;
+}
+
+.tab-button {
+    flex: 1;
+    background-color: var(--body-bg);
+    border: none;
+    color: var(--text-color);
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+    margin: 0;
+    border-radius: 0;
+    color: #666;
+    border-right: 1px solid #ddd;
+    box-shadow: none;
+    transform: none;
+    padding: 10px 15px;
+}
+
+.tab-button:hover {
+    background-color: #ebebeb;
+    transform: none;
+    box-shadow: none;
+}
+
+.tab-button:active {
+    transform: none;
+    box-shadow: none;
+}
+
+.tab-button.active {
+    background-color: var(--tab-active-bg);
+    box-shadow: none;
+    color: var(--text-color);
+}
+
+.tab-button:last-child {
+    border-right: none;
+}
+
+.tab-button:hover {
+    background-color: #ebebeb;
+}
+
+.tab-button.active {
+    background-color: var(--tab-active-bg);
+    color: var(--text-color);
+}
+
+.tab-content {
+    display: none;
+    padding: 30px;
+    padding-bottom: 0px;
+    background-color: var(--card-bg);
+    border-radius: 0 0 8px 8px;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+.tab-section-title {
+    font-size: 16px;
+    font-weight: bold;
+    margin: 10px 0;
+    padding-bottom: 5px;
+    color: var(--heading-color);
+}
+
+/* Accordion for mobile view */
+@media (max-width: 768px) {
+    .tab-navigation {
+        flex-direction: column;
+    }
+    
+    .tab-button {
+        border-right: none;
+        border-bottom: 1px solid var(--border-color);
+    }
+    
+    .tab-button:last-child {
+        border-bottom: none;
     }
 }
 
@@ -1049,204 +1129,6 @@ input:checked + .slider:before {
 
 .preview-container button {
     margin: 20px;
-}
-
-/* Tab System Styling */
-.tab-container {
-    width: 100%;
-}
-
-.tab-navigation {
-    display: flex;
-    background-color: #f5f5f5;
-    border-radius: 8px 8px 0 0;
-    overflow: hidden;
-}
-
-.tab-button {
-    flex: 1;
-    background-color: var(--body-bg);
-    border: none;
-    color: var(--text-color);
-    cursor: pointer;
-    font-weight: bold;
-    transition: background-color 0.3s ease;
-    margin: 0;
-    border-radius: 0;
-    color: #666;
-    border-right: 1px solid #ddd;
-    box-shadow: none;
-    transform: none;
-    padding: 10px 15px;
-}
-
-.tab-button:hover {
-    background-color: #ebebeb;
-    transform: none;
-    box-shadow: none;
-}
-
-.tab-button.active {
-    background-color: var(--tab-active-bg);
-    box-shadow: none;
-    color: var(--text-color);
-}
-
-.tab-button:last-child {
-    border-right: none;
-}
-
-.tab-button:hover {
-    background-color: #ebebeb;
-}
-
-.tab-button.active {
-    background-color: var(--tab-active-bg);
-    color: var(--text-color);
-}
-
-.tab-content {
-    display: none;
-    padding: 30px;
-    padding-bottom: 0px;
-    background-color: var(--card-bg);
-    border-radius: 0 0 8px 8px;
-}
-
-.tab-content.active {
-    display: block;
-}
-
-.tab-section-title {
-    font-size: 16px;
-    font-weight: bold;
-    margin: 10px 0;
-    padding-bottom: 5px;
-    color: var(--heading-color);
-}
-
-/* Accordion for mobile view */
-@media (max-width: 768px) {
-    .tab-navigation {
-        flex-direction: column;
-    }
-    
-    .tab-button {
-        border-right: none;
-        border-bottom: 1px solid var(--border-color);
-    }
-    
-    .tab-button:last-child {
-        border-bottom: none;
-    }
-}
-
-/* Header controls for dark mode toggle */
-.header-controls {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-    padding: 0 20px;
-    flex-wrap: wrap;
-}
-
-.header-controls h1 {
-    margin-bottom: 0;
-    flex: 1;
-    text-align: left;
-}
-
-@media (max-width: 768px) {
-    .header-controls {
-        flex-direction: column;
-        align-items: center;
-        gap: 10px;
-    }
-    
-    .header-controls h1 {
-        text-align: center;
-        margin-bottom: 15px;
-    }
-    
-    .theme-toggle-container {
-        position: fixed;
-        bottom: 20px;
-        left: 20px;
-        z-index: 1000;
-        background-color: var(--card-bg);
-        padding: 10px;
-        border-radius: 8px;
-        box-shadow: 0 2px 10px var(--shadow-color);
-        margin-bottom: 0;
-    }
-}
-
-.theme-toggle-container {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.theme-toggle-text {
-    font-size: 14px;
-    cursor: pointer;
-}
-
-.theme-toggle {
-    position: relative;
-    display: inline-block;
-    width: 50px;
-    height: 24px;
-    cursor: pointer;
-}
-
-.theme-toggle input {
-    opacity: 0;
-    width: 0;
-    height: 0;
-}
-
-.slider {
-    position: absolute;
-    cursor: pointer;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: #ccc;
-    transition: .4s;
-}
-
-.slider:before {
-    position: absolute;
-    content: "";
-    height: 16px;
-    width: 16px;
-    left: 4px;
-    bottom: 4px;
-    background-color: white;
-    transition: .4s;
-}
-
-input:checked + .slider {
-    background-color: #4a90e2;
-}
-
-input:focus + .slider {
-    box-shadow: 0 0 1px #4a90e2;
-}
-
-input:checked + .slider:before {
-    transform: translateX(26px);
-}
-
-.slider.round {
-    border-radius: 34px;
-}
-
-.slider.round:before {
-    border-radius: 50%;
 }
 
 /* Dark mode styles - only apply when data-theme="dark" is set */
