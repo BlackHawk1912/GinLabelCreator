@@ -163,7 +163,6 @@ h1 {
     
     .controls {
         min-width: unset;
-        padding: 12px;
     }
 
     .label {
@@ -972,7 +971,6 @@ input:checked + .slider:before {
     border: none;
     color: var(--text-color);
     cursor: pointer;
-    font-weight: bold;
     transition: background-color 0.3s ease;
     margin: 0;
     border-radius: 0;
@@ -1036,16 +1034,34 @@ input:checked + .slider:before {
 /* Accordion for mobile view */
 @media (max-width: 768px) {
     .tab-navigation {
-        flex-direction: column;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: thin;
+        white-space: nowrap;
     }
     
     .tab-button {
-        border-right: none;
-        border-bottom: 1px solid var(--border-color);
+        flex: 0 0 auto;
+        border-right: 1px solid var(--border-color);
+        border-bottom: none;
+        min-width: max-content;
+        padding: 10px 20px;
     }
     
     .tab-button:last-child {
-        border-bottom: none;
+        border-right: none;
+    }
+    
+    /* Hide scrollbar for Chrome, Safari and Opera */
+    .tab-navigation::-webkit-scrollbar {
+        height: 4px;
+    }
+    
+    /* Handle */
+    .tab-navigation::-webkit-scrollbar-thumb {
+        background: var(--border-color);
+        border-radius: 4px;
     }
 }
 
