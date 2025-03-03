@@ -18,6 +18,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const backgroundColorInput = document.getElementById('backgroundColor');
     const primaryColorInput = document.getElementById('primaryColor');
     const secondaryColorInput = document.getElementById('secondaryColor');
+    const darkModeToggle = document.getElementById('darkModeToggle');
 
     // Track which inputs have been modified by the user
     const userModifiedInputs = {
@@ -27,6 +28,55 @@ document.addEventListener('DOMContentLoaded', function() {
         alcoholContent: false,
         amount: false
     };
+
+    // Dark mode functionality
+    function initDarkMode() {
+        // Check for saved theme preference or use preferred color scheme
+        const savedTheme = localStorage.getItem('theme');
+        const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+        const themeToggleText = document.querySelector('.theme-toggle-text');
+        
+        if (savedTheme === 'dark' || (!savedTheme && prefersDarkScheme.matches)) {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            darkModeToggle.checked = true;
+        } else {
+            document.documentElement.setAttribute('data-theme', 'light');
+            darkModeToggle.checked = false;
+        }
+        
+        // Add event listener for theme toggle
+        darkModeToggle.addEventListener('change', function() {
+            if (this.checked) {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                document.documentElement.setAttribute('data-theme', 'light');
+                localStorage.setItem('theme', 'light');
+            }
+        });
+        
+        // Allow clicking on the text to toggle dark mode as well
+        if (themeToggleText) {
+            themeToggleText.addEventListener('click', function() {
+                darkModeToggle.checked = !darkModeToggle.checked;
+                // Trigger the change event
+                darkModeToggle.dispatchEvent(new Event('change'));
+            });
+        }
+        
+        // Listen for changes in system preference
+        prefersDarkScheme.addEventListener('change', (e) => {
+            if (!localStorage.getItem('theme')) {
+                if (e.matches) {
+                    document.documentElement.setAttribute('data-theme', 'dark');
+                    darkModeToggle.checked = true;
+                } else {
+                    document.documentElement.setAttribute('data-theme', 'light');
+                    darkModeToggle.checked = false;
+                }
+            }
+        });
+    }
 
     // Tab Functionality
     function setupTabs() {
@@ -839,8 +889,13 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Initialize the application
     function init() {
-        // Initial update
+        // Initialize dark mode
+        initDarkMode();
+        
+        // Initialize tabs
         setupTabs();
+        
+        // Initial update
         updateLabel();
         updateDecorationLevel();
         adjustLayout();
