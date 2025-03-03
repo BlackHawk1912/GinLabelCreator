@@ -6,7 +6,7 @@ A beautiful, interactive web application for creating custom gin bottle labels w
 
 ## ✨ Features
 
-- **🎨 Fully Customizable Content**
+- **🖼️ Fully Customizable Content**
   - Brand name, gin name, ingredients list, alcohol content, and bottle size
   - Support for multi-line text with proper formatting
 
@@ -16,14 +16,14 @@ A beautiful, interactive web application for creating custom gin bottle labels w
   - Line height adjustment for multi-line text
   - Wide variety of font families that automatically change with decoration styles
 
-- **🏗️ Layout & Decoration**
+- **📐 Layout & Decoration**
   - 10 decoration levels from minimalist to ornate
   - Adjustable border thickness for different label styles
   - Customizable padding and internal margins
   - Resizable label width to fit different bottle sizes
   - Elegant corner decorations and flourishes
 
-- **🎭 Color Customization**
+- **🎨 Color Customization**
   - Background color control
   - Primary and secondary text color selection
   - Black & white mode toggle for classic labels
