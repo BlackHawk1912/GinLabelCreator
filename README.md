@@ -2,7 +2,7 @@
 
 A beautiful, interactive web application for creating custom gin bottle labels with professional design elements.
 
-![Gin Label Creator](https://github.com/BlackHawk1912/GinLabelCreator/raw/main/preview.png)
+[Gin Label Creator](https://blackhawk1912.github.io/GinLabelCreator/)
 
 ## ✨ Features
 
@@ -38,7 +38,7 @@ A beautiful, interactive web application for creating custom gin bottle labels w
   - Perfect for inspiration or quick starting points
 
 ## 🚀 Getting Started
-1. Visit GitHub Page at [https://github.com/BlackHawk1912/GinLabelCreator](https://github.com/BlackHawk1912/GinLabelCreator)
+1. Visit [GitHub Page](https://blackhawk1912.github.io/GinLabelCreator/)
 
 or
 
