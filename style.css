@@ -85,7 +85,6 @@ h1 {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: flex-start;
 }
 
 /* Make preview fixed on desktop */
@@ -185,15 +184,14 @@ textarea {
 
 button {
     display: inline-block;
-    padding: 8px 15px;
-    background-color: var(--button-bg);
-    color: var(--button-text);
+    padding: 10px 15px;
+    font-weight: bold;
     border: none;
-    margin: 10px 5px;
-    border-radius: 5px;
+    border-radius: 4px;
     cursor: pointer;
-    font-size: 16px;
-    transition: all 0.3s ease;
+    transition: all 0.2s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
@@ -207,10 +205,26 @@ button:active {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+.buttons-container {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    margin: 0 0 15px 0;
+}
+
+.buttons-container button {
+    min-width: 120px;
+    margin: 0 10px;
+}
+
 #randomizeButton {
     background-color: #6d28d9;
     color: white;
-    margin-top: 0px;
+}
+
+#saveButton {
+    background-color: #047857;
+    color: white;
 }
 
 .brand-name {
@@ -978,7 +992,7 @@ input:checked + .slider:before {
 .dec-level-10 .amount { font-family: 'Old Standard TT', serif; }
 
 .preview-container button {
-    margin: 20px;
+    margin: 0;
 }
 
 /* Dark mode styles - only apply when data-theme="dark" is set */
@@ -1017,6 +1031,14 @@ input:checked + .slider:before {
 
 [data-theme="dark"] button:hover {
     background-color: var(--dark-button-hover);
+}
+
+[data-theme="dark"] #randomizeButton {
+    background-color: #8b5cf6;
+}
+
+[data-theme="dark"] #saveButton {
+    background-color: #059669;
 }
 
 [data-theme="dark"] .tab-button {
